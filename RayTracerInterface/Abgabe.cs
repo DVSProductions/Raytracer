@@ -1,17 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
+
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace RayTracerInterface {
@@ -24,7 +16,7 @@ namespace RayTracerInterface {
 			render(w, h);
 		}
 		async void render(int w, int h) {
-			var target = "..\\..\\..\\doc\\";
+			var target = System.IO.Path.GetFullPath("..\\..\\..\\doc\\");
 			if(!Directory.Exists(target)) Directory.CreateDirectory(target);
 			for(int n = 0; n < LibraryHandler.OutputFiles.Count; n++) {
 				LibraryHandler.render(n, w, h);
@@ -41,8 +33,14 @@ namespace RayTracerInterface {
 				if(File.Exists(tfile)) File.Delete(tfile);
 				File.Move(LibraryHandler.OutputFiles[n], target + LibraryHandler.OutputFiles[n]);
 			}
+			tbConsole.Text += $"Abgabe complete.\nResults in {System.IO.Path.GetFullPath(target)}\n";
 		}
 		Action onBack;
 		public Action OnBack { get => onBack; set => onBack = value; }
+
+		private void Button_Click(object sender, RoutedEventArgs e) => 
+			_ = System.Diagnostics.Process.Start("explorer", $"\"{System.IO.Path.GetFullPath("..\\..\\..\\doc\\")}\"");
+
+		private void Button_Click_1(object sender, RoutedEventArgs e) => onBack();
 	}
 }

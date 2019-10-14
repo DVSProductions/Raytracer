@@ -9,6 +9,8 @@
       Title="Abgabe">
 
     <Grid>
-		<TextBlock FontSize="18" Foreground="White" x:Name="tbConsole" FontFamily="Consolas"/>
+		<TextBlock FontSize="18" Foreground="White" x:Name="tbConsole" FontFamily="Consolas" TextWrapping="Wrap"/>
+		<Button Padding="10,5" Margin="10" Content="Open Output Directory" VerticalAlignment="Bottom" HorizontalAlignment="Right" Style="{DynamicResource BTStyle}" Click="Button_Click"/>
+		<Button Padding="10,5" Margin="10" Content="Return" VerticalAlignment="Bottom" HorizontalAlignment="Left" Style="{DynamicResource BTStyle}" Click="Button_Click_1" />
 	</Grid>
 </Page>
