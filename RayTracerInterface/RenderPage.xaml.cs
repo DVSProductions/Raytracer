@@ -10,9 +10,12 @@ namespace RayTracerInterface {
 	/// <summary>
 	/// Interaktionslogik für RenderPage.xaml
 	/// </summary>
-	public partial class RenderPage : Page {
+	public partial class RenderPage : Page, IRenderPage {
 		int idx;
 		public Action onBack;
+
+		public Action OnBack { get => onBack; set => onBack=value; }
+
 		public RenderPage(int outputIDX, int width, int height) {
 			idx = outputIDX;
 			InitializeComponent();

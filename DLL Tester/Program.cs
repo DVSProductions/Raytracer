@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using RayTracerInterface;
 namespace DLL_Tester {
 	class Program {
-		static void testOnce() {
+		static void TestOnce() {
 			LibraryHandler.render(1, 16000, 9000);
 			Console.WriteLine("Rendering");
 			while(true) {
@@ -20,7 +20,7 @@ namespace DLL_Tester {
 			int x = 16, y = 9;
 			LibraryHandler.render(1, x, y);
 			Console.WriteLine("Rendering");
-			while(LibraryHandler.status()!=x) {
+			while(LibraryHandler.status() != x) {
 				Console.WriteLine("\r" + LibraryHandler.status());
 				Thread.Sleep(200);
 			}

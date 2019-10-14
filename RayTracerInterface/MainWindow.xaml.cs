@@ -19,12 +19,12 @@ namespace RayTracerInterface {
 	/// Interaktionslogik für MainWindow.xaml
 	/// </summary>
 	public partial class MainWindow : Window {
-		void OpenPage3(RenderPage p) {
+		void OpenPage3(IRenderPage p) {
 			pageViewer.Content = p;
-			p.onBack = () => pageViewer.GoBack();
+			p.OnBack = () => pageViewer.GoBack();
 		}
 		void OpenPage2() => pageViewer.Content = new CompilationSettings(OpenPage3);
-		void preexecution() {
+		void Preexecution() {
 			var para = Environment.GetCommandLineArgs();
 			if(para[0] != Assembly.GetExecutingAssembly().Location) {
 				var s = "";
@@ -39,7 +39,7 @@ namespace RayTracerInterface {
 				LibraryHandler.TryLoadLib(para[1]);
 		}
 		public MainWindow() {
-			preexecution();
+			Preexecution();
 			InitializeComponent();
 			if(LibraryHandler.isLoaded) OpenPage2();
 			else

@@ -68,8 +68,5 @@ namespace RayTracerInterface {
 		public static extern int status();
 		[DllImport(dll, CallingConvention = CallingConvention.Cdecl)]
 		public static extern int returnValue();
-
-		
-
 	}
 }

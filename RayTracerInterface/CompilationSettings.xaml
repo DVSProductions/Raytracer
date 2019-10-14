@@ -44,6 +44,9 @@
 				<Label VerticalAlignment="Top" HorizontalAlignment="Left" Foreground="White" Padding="5,1" Margin="10,0,20,0"  Background="{DynamicResource BGColor}">Aufgabe</Label>
 			</Grid>
 		</WrapPanel>
-		<Button Style="{DynamicResource BTStyle}" FontSize="20" VerticalAlignment="Bottom" HorizontalAlignment="Right" Padding="10,5" Margin="10" Click="Button_Click">Render</Button>
+		<StackPanel Margin="10"  VerticalAlignment="Bottom" HorizontalAlignment="Right" Orientation="Horizontal" >
+			<Button Style="{DynamicResource BTStyle}" FontSize="20" Padding="10,5" Margin="0"  Click="Button_Click">Render</Button>
+		</StackPanel>
+		<Button Style="{DynamicResource BTStyle}" FontSize="20" Padding="10,5" Margin="10,10" VerticalAlignment="Bottom" HorizontalAlignment="Center" Click="Button_Click_1">Abgabe Modus</Button>
 	</Grid>
 </Page>

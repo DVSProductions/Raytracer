@@ -7,13 +7,12 @@ namespace RayTracerInterface {
 	/// Interaktionslogik für CompilationSettings.xaml
 	/// </summary>
 	public partial class CompilationSettings : Page {
-		Action<RenderPage> switchToRenderPage;
+		Action<IRenderPage> switchToRenderPage;
 		double ratio = 16.0 / 9.0;
-		public CompilationSettings(Action<RenderPage> switchToRenderPage) {
+		public CompilationSettings(Action<IRenderPage> switchToRenderPage) {
 			InitializeComponent();
-			foreach(var s in LibraryHandler.OutputFiles) {
+			foreach(var s in LibraryHandler.OutputFiles)
 				cbFiles.Items.Add(s);
-			}
 			this.switchToRenderPage = switchToRenderPage;
 		}
 		private void CheckBox_Click(object sender, RoutedEventArgs e) {
@@ -44,6 +43,15 @@ namespace RayTracerInterface {
 				int w = int.Parse(tbW.Text), h = int.Parse(tbH.Text);
 				if(LibraryHandler.render(idx, w, h))
 					switchToRenderPage(new RenderPage(idx, w, h));
+			}
+			catch(Exception ex) {
+				MessageBox.Show(ex.Message);
+			}
+		}
+
+		private void Button_Click_1(object sender, RoutedEventArgs e) {
+			try {
+				switchToRenderPage(new Abgabe(int.Parse(tbW.Text), int.Parse(tbH.Text)));
 			}
 			catch(Exception ex) {
 				MessageBox.Show(ex.Message);
