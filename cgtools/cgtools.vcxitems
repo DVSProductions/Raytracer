@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup Label="Globals">
+    <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <HasSharedItems>true</HasSharedItems>
+    <ItemsProjectGuid>{9b9d2a86-4bad-4afb-97d0-b8bea0486e1d}</ItemsProjectGuid>
+  </PropertyGroup>
+  <ItemDefinitionGroup>
+    <ClCompile>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories);$(MSBuildThisFileDirectory)</AdditionalIncludeDirectories>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ProjectCapability Include="SourceItemsFromImports" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="$(MSBuildThisFileDirectory)cgtools.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Color.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)ColorFunc.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Image.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)ImageWriter.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)lodepng.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Color.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Image.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)ImageWriter.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)lodepng.cpp" />
+  </ItemGroup>
+</Project>
