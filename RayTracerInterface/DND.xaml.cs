@@ -31,8 +31,25 @@ namespace RayTracerInterface {
 				MessageBox.Show("Please Drag&Drop the Renderer dll", "Error");
 				return;
 			}
-			LibraryHandler.TryLoadLib(path);
+			if(LibraryHandler.TryLoadLib(path))
 			onComplete();
+		}
+
+		private void Button_Click(object sender, RoutedEventArgs e) {
+			var dlg = new Microsoft.Win32.OpenFileDialog {
+				DefaultExt = "*.dll;",
+				CheckFileExists = true,
+				CheckPathExists = true,
+				Multiselect = false,
+				RestoreDirectory = true,
+				DereferenceLinks = true,
+				Title = "Please select the renderer file",
+				Filter = "Renderer *.dll|*.dll"
+			};
+			if(dlg.ShowDialog() == true) {
+				if(LibraryHandler.TryLoadLib(dlg.FileName))
+					onComplete();
+			}
 		}
 	}
 }

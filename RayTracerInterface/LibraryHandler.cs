@@ -9,7 +9,7 @@ using System.Windows;
 namespace RayTracerInterface {
 	class LibraryHandler {
 		public static bool isLoaded = false;
-		private const string dll = "intenalLib.dll";
+		public const string dll = "intenalLib.dll";
 		[DllImport(dll, CallingConvention = CallingConvention.Cdecl)]
 		[return: MarshalAs(UnmanagedType.BStr)]
 		private static extern string LibInfo();
