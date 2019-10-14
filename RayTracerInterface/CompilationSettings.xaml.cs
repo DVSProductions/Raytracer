@@ -42,8 +42,8 @@ namespace RayTracerInterface {
 			}
 			try {
 				int w = int.Parse(tbW.Text), h = int.Parse(tbH.Text);
-				LibraryHandler.render(idx, w, h).ToString();
-				switchToRenderPage(new RenderPage(idx, w, h));
+				if(LibraryHandler.render(idx, w, h))
+					switchToRenderPage(new RenderPage(idx, w, h));
 			}
 			catch(Exception ex) {
 				MessageBox.Show(ex.Message);

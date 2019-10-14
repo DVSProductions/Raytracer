@@ -10,9 +10,13 @@
 
 	<Grid Background="Black">
 		<Button x:Name="btExport" Content="Open location" Margin="5" Height="30" Width="100" VerticalAlignment="Bottom" HorizontalAlignment="Right" Style="{DynamicResource BTStyle}" Click="btExport_Click"/>
-		<Button x:Name="btBack" Content="Change Settings" Margin="5" Height="30" Width="100" VerticalAlignment="Bottom" HorizontalAlignment="Left" Style="{DynamicResource BTStyle}" Click="btBack_Click"/>
-		<ProgressBar x:Name="pbStatus" Background="{DynamicResource BGColor}" Foreground="{DynamicResource LightRed}" Value="10"/>
+		<ProgressBar Margin="-25" x:Name="pbStatus" Background="{DynamicResource BGColor}" Foreground="{DynamicResource LightRed}" Value="11">
+			<ProgressBar.Effect>
+				<BlurEffect Radius="50"/>
+			</ProgressBar.Effect>
+		</ProgressBar>
 		<Label x:Name="lbStatus" Foreground="White" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontSize="30">Rendering</Label>
+		<Button Visibility="Hidden" x:Name="btBack" Content="Change Settings" Margin="5" Height="30" Width="100" VerticalAlignment="Bottom" HorizontalAlignment="Left" Style="{DynamicResource BTStyle}" Click="btBack_Click"/>
 		<Image x:Name="iResults" Margin="0,0,0,40"/>
 	</Grid>
 </Page>

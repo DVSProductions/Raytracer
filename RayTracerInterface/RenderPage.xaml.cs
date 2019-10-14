@@ -24,15 +24,21 @@ namespace RayTracerInterface {
 			while(pbStatus.Maximum != pbStatus.Value) {
 				var s = LibraryHandler.status();
 				pbStatus.Value = s;
-				await Task.Delay(100);
+				await Task.Delay(33);
 			}
 			pbStatus.IsIndeterminate = true;
 			lbStatus.Content = "Exporting png";
-			while(LibraryHandler.returnValue() == -1) await Task.Delay(250);
+			while(LibraryHandler.returnValue() == -1) await Task.Delay(100);
 			pbStatus.IsIndeterminate = false;
 			pbStatus.Visibility = Visibility.Hidden;
+			btBack.Visibility = Visibility.Visible;
 			if(LibraryHandler.returnValue() == 0) {
-				iResults.Source = new BitmapImage(new System.Uri(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + "\\" + LibraryHandler.OutputFiles[idx]));
+				var image = new BitmapImage();
+				image.BeginInit();
+				image.CacheOption = BitmapCacheOption.OnLoad;
+				image.UriSource = new Uri(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + "\\" + LibraryHandler.OutputFiles[idx]);
+				image.EndInit();
+				iResults.Source = image;
 				lbStatus.Visibility = Visibility.Hidden;
 			}
 			else {
