@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Reflection;
 using System.Threading.Tasks;
 using System.Windows;
@@ -11,6 +12,7 @@ namespace RayTracerInterface {
 	/// </summary>
 	public partial class RenderPage : Page {
 		int idx;
+		public Action onBack;
 		public RenderPage(int outputIDX, int width, int height) {
 			idx = outputIDX;
 			InitializeComponent();
@@ -25,15 +27,22 @@ namespace RayTracerInterface {
 				await Task.Delay(100);
 			}
 			pbStatus.IsIndeterminate = true;
+			lbStatus.Content = "Exporting png";
 			while(LibraryHandler.returnValue() == -1) await Task.Delay(250);
 			pbStatus.IsIndeterminate = false;
+			pbStatus.Visibility = Visibility.Hidden;
 			if(LibraryHandler.returnValue() == 0) {
-				pbStatus.Visibility = Visibility.Hidden;
 				iResults.Source = new BitmapImage(new System.Uri(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + "\\" + LibraryHandler.OutputFiles[idx]));
+				lbStatus.Visibility = Visibility.Hidden;
 			}
 			else {
-				MessageBox.Show($"Image Compression failed: {LibraryHandler.LodeReturnDecode(LibraryHandler.returnValue())}", "Compression Error");
+				btExport.Visibility = Visibility.Hidden;
+				lbStatus.Content = $"Image Compression failed\n{LibraryHandler.LodeReturnDecode(LibraryHandler.returnValue())}";
 			}
 		}
+
+		private void btBack_Click(object sender, RoutedEventArgs e) =>onBack();
+
+		private void btExport_Click(object sender, RoutedEventArgs e) => _ = System.Diagnostics.Process.Start("explorer", $"/select,\"{Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + "\\" + LibraryHandler.OutputFiles[idx]}\"");
 	}
 }

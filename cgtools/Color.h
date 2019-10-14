@@ -8,6 +8,8 @@ public:
 	double r, g, b;
 	Color();
 	Color(double r,double g, double b);
+	Color(const Color* toCopy);
+	Color(Color* toCopy);
 	~Color();
 	static Color add(Color a, Color b, std::initializer_list<Color> vs = {});
 	static Color subtract(Color a, Color b, std::initializer_list<Color> vs = {});

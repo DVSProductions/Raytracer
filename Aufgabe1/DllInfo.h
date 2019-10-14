@@ -1,4 +1,10 @@
 #pragma once
+#define DLL_DEBUG false
+#if DLL_DEBUG
+#include <iostream>
+#include <Windows.h>
+using namespace std;
+#endif
 #include <thread>
 #include <string>
 /// <summary>
@@ -13,3 +19,4 @@ extern std::thread worker;
 extern int progress;
 extern int lodepngReturn;
 extern int width, height;
+extern int scaling;

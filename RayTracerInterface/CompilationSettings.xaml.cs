@@ -36,18 +36,18 @@ namespace RayTracerInterface {
 				tbW.Text = ((int) (ratio * i)).ToString();
 		}
 		private void Button_Click(object sender, RoutedEventArgs e) {
-			int w = int.Parse(tbW.Text), h = int.Parse(tbH.Text);
 			var idx = cbFiles.SelectedIndex;
+			if(idx == -1) {
+				MessageBox.Show("Please Select a Target File");
+			}
 			try {
-				//MessageBox.Show(
-					LibraryHandler.render(idx, w, h).ToString()
-					//)
-					;
+				int w = int.Parse(tbW.Text), h = int.Parse(tbH.Text);
+				LibraryHandler.render(idx, w, h).ToString();
+				switchToRenderPage(new RenderPage(idx, w, h));
 			}
 			catch(Exception ex) {
 				MessageBox.Show(ex.Message);
 			}
-			switchToRenderPage(new RenderPage(idx, w, h));
 		}
 	}
 }

@@ -5,11 +5,14 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:RayTracerInterface"
       mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="800"
+      d:DesignHeight="450" d:DesignWidth="720"
       Title="RenderPage">
 
-    <Grid>
+	<Grid Background="Black">
+		<Button x:Name="btExport" Content="Open location" Margin="5" Height="30" Width="100" VerticalAlignment="Bottom" HorizontalAlignment="Right" Style="{DynamicResource BTStyle}" Click="btExport_Click"/>
+		<Button x:Name="btBack" Content="Change Settings" Margin="5" Height="30" Width="100" VerticalAlignment="Bottom" HorizontalAlignment="Left" Style="{DynamicResource BTStyle}" Click="btBack_Click"/>
 		<ProgressBar x:Name="pbStatus" Background="{DynamicResource BGColor}" Foreground="{DynamicResource LightRed}" Value="10"/>
-		<Image x:Name="iResults"/>
+		<Label x:Name="lbStatus" Foreground="White" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontSize="30">Rendering</Label>
+		<Image x:Name="iResults" Margin="0,0,0,40"/>
 	</Grid>
 </Page>

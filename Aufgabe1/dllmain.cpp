@@ -23,9 +23,12 @@ extern "C" {
 	__declspec(dllexport) BSTR __cdecl OutputFile(int idx) {
 		return ANSItoBSTR(files[idx].c_str());
 	}
+	//bool joined = false;
 	__declspec(dllexport) bool render(int Option, int x, int y) {
+		//joined = false;
 		width = x;
 		height = y;
+		scaling = max(width, height)/160;
 		try {
 			return workswitch(Option);
 		}
@@ -37,6 +40,10 @@ extern "C" {
 	/// returns result from 0-width
 	/// </summary>
 	__declspec(dllexport) int status() {
+		//if (progress == width&&!joined) {
+		//	joined = true;
+		//	worker.join();
+		//}
 		return progress;
 	}
 	/// <summary>

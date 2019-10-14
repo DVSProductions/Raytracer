@@ -8,3 +8,4 @@ int progress = 0;
 int lodepngReturn = -1;
 
 int width, height;
+int scaling = 1;

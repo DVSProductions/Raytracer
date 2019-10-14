@@ -8,14 +8,37 @@ using System.Threading.Tasks;
 using RayTracerInterface;
 namespace DLL_Tester {
 	class Program {
-		static void Main(string[] args) {
-			LibraryHandler.TryLoadLib("C:\\Users\\DVSProductions\\OneDrive\\Uni\\Medieninformatik\\Semester 3\\Computergrafik Grundlagen\\Aufgabe1\\x64\\Release\\Renderer1.dll");
-			LibraryHandler.render(0, 16000, 9000);
+		static void testOnce() {
+			LibraryHandler.render(1, 16000, 9000);
 			Console.WriteLine("Rendering");
 			while(true) {
-				Console.WriteLine("\r"+LibraryHandler.status());
+				Console.WriteLine("\r" + LibraryHandler.status());
 				Thread.Sleep(200);
 			}
+		}
+		static void TestTwice() {
+			int x = 16, y = 9;
+			LibraryHandler.render(1, x, y);
+			Console.WriteLine("Rendering");
+			while(LibraryHandler.status()!=x) {
+				Console.WriteLine("\r" + LibraryHandler.status());
+				Thread.Sleep(200);
+			}
+			Thread.Sleep(200);
+			Console.WriteLine("Redoing...");
+			Thread.Sleep(200);
+			LibraryHandler.render(1, x, y);
+			Console.WriteLine("Rendering");
+			Thread.Sleep(200);
+			while(LibraryHandler.status() != x) {
+				Console.WriteLine("\r" + LibraryHandler.status());
+				Thread.Sleep(200);
+			}
+			Console.WriteLine("Done");
+		}
+		static void Main(string[] args) {
+			LibraryHandler.TryLoadLib(@"D:\OneDrive\Uni\Medieninformatik\Semester 3\Computergrafik Grundlagen\Abgabe\x64\Release\Aufgabe1.dll");
+			TestTwice();
 		}
 	}
 }

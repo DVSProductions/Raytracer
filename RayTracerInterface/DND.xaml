@@ -9,6 +9,6 @@
       Title="DND">
 
     <Grid Drop="Grid_Drop" AllowDrop="True">
-		<Label Content="Drag &amp; Drop Renderer DLL here" FontSize="30" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
+		<Label Foreground="White" Content="Drag &amp; Drop Renderer DLL here" FontSize="30" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
     </Grid>
 </Page>

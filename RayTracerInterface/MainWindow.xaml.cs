@@ -19,7 +19,10 @@ namespace RayTracerInterface {
 	/// Interaktionslogik für MainWindow.xaml
 	/// </summary>
 	public partial class MainWindow : Window {
-		void OpenPage3(RenderPage p) => pageViewer.Content = p;
+		void OpenPage3(RenderPage p) {
+			pageViewer.Content = p;
+			p.onBack = () => pageViewer.GoBack();
+		}
 		void OpenPage2() => pageViewer.Content = new CompilationSettings(OpenPage3);
 		void preexecution() {
 			var para = Environment.GetCommandLineArgs();

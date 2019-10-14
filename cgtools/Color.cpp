@@ -13,13 +13,27 @@ Color::Color(double red, double green, double blue) {
 	b = blue;
 }
 
+Color::Color(const Color* toCopy) {
+	r = toCopy->r;
+	g = toCopy->g;
+	b = toCopy->b;
+};
+Color::Color(Color* toCopy) {
+	r = toCopy->r;
+	g = toCopy->g;
+	b = toCopy->b;
+}
+
 Color::~Color() {
 }
 
 Color Color::add(Color a, Color b, std::initializer_list<Color> vs) {
-	Color r = color(a.r + b.r, a.g + b.g, a.b + b.b);
-	for (Color v : vs)
-		r = color(r.r + v.r, r.g + v.g, r.b + v.b);
+	Color r =  color(a.r + b.r, a.g + b.g, a.b + b.b);
+	for (Color v : vs) {
+		r.r += v.r;
+		r.g += v.g;
+		r.b += v.b;
+	}
 	return r;
 }
 
