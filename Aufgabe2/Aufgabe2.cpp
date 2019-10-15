@@ -1,34 +1,39 @@
-// Aufgabe1.cpp : https://tramberend.beuth-hochschule.de/lehre/19-ws/bmi-cgg/assignments/a01-page.html
+// Aufgabe2.cpp : https://tramberend.beuth-hochschule.de/lehre/19-ws/bmi-cgg/assignments/a02-page.html
 //
-#include "A1Defines.h"
+//#include "A2Defines.h"
 #include "DllInfo.h"
 #include "cgtools.h"
 #include "Image.h"
-#include "ConstantColor.h"
-#include "ColoredSquare.h"
 #include "lodepng.h"
 #include <direct.h>
-#include "Checkered.h"
 #include <Windows.h>
-const std::string files[] = { "a01-image.png","a01-square.png","a01-checkered-background.png","_" };
+#include <functional>
+#include "Circle.h"
+#include "CircleRenderer.h"
+const std::string files[] = { "a02-discs.png","_" };
 
 Image* image;
 ColorFunc* renderer;// = ConstantColor(red);
 void RenderLoop() {
 #if DLL_DEBUG
 	cout << "->RL";
-	Sleep(100);
+	//Sleep(100);
 #endif
 	for (int x = 0; x != width; x++, progress = x)
 		for (int y = 0; y != height; y++) {
 #if DLL_DEBUG
 			cout << "->GC";
-			Sleep(10);
+			//Sleep(10);
 #endif
-			image->setPixel(x, y, renderer->getColor(x, y));
+			auto c = renderer->getColor(x, y);
 #if DLL_DEBUG
-			cout << "->W"<<endl;
-			Sleep(10);
+			cout <<"->"<<c.toString();
+			//Sleep(10);
+#endif
+			image->setPixel(x, y, c);
+#if DLL_DEBUG
+			cout << "->W" << endl;
+			//Sleep(10);
 #endif
 		}
 #if DLL_DEBUG
@@ -47,8 +52,15 @@ void rendercycle(std::string filename) {
 	image = &i;
 	RenderLoop();
 	lodepngReturn = image->write(filename);
-	image = nullptr;
 }
+void rendercyclev2(std::string filename, std::function<void()> preparation) {
+	Image i(width, height);
+	image = &i;
+	preparation();
+	RenderLoop();
+	lodepngReturn = image->write(filename);
+}
+
 
 void RenderWorker(std::string filename, ColorFunc* rend) {
 #if DLL_DEBUG
@@ -59,34 +71,40 @@ void RenderWorker(std::string filename, ColorFunc* rend) {
 	lodepngReturn = -1;
 	renderer = rend;
 #if DLL_DEBUG
-	cout << "->go"<<endl;
+	cout << "->go" << endl;
 	Sleep(100);
 #endif
 	worker = std::thread(rendercycle, filename);
 	worker.detach();
 }
+void RenderWorker(std::string filename, ColorFunc* rend, std::function<void()>preparation) {
+#if DLL_DEBUG
+	cout << "->RW2";
+	Sleep(100);
+#endif
+	progress = 0;
+	lodepngReturn = -1;
+	renderer = rend;
+#if DLL_DEBUG
+	cout << "->go" << endl;
+	Sleep(100);
+#endif
+	worker = std::thread(rendercyclev2, filename, preparation);
+	worker.detach();
+}
+
 bool workswitch(int Option) {
 #if DLL_DEBUG
-	cout << "WS"<<endl;
+	cout << "WS" << endl;
 #endif
 	switch (Option) {
-		case(0):
-		{
-			RenderWorker(files[Option], new ConstantColor(&red));
-			return true;
-		}
-		case(1):
-		{
-			RenderWorker(files[Option], new ColoredSquare(&color(1, 1, 0), 15, width, height));
-			return true;
-		}
-		case(2):
-		{
-			RenderWorker(files[Option], new Checkered(&gray, &white, &color(1, 1, 0), 1, 15, width, height));
-			return true;
-		}
-		default:
-			return false;
+	case(0):
+	{
+		RenderWorker(files[Option], new CircleRenderer(width,height));
+		return true;
+	}
+	default:
+		return false;
 	}
 }
 //int main() {

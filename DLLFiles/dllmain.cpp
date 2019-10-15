@@ -28,11 +28,11 @@ extern "C" {
 		//joined = false;
 		width = x;
 		height = y;
-		scaling = max(width, height)/160;
+		scaling = max(width, height) / 160;
 		try {
 			return workswitch(Option);
 		}
-		catch(...){
+		catch (...) {
 			return false;
 		}
 	}

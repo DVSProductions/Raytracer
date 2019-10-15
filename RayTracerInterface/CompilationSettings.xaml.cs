@@ -38,6 +38,7 @@ namespace RayTracerInterface {
 			var idx = cbFiles.SelectedIndex;
 			if(idx == -1) {
 				MessageBox.Show("Please Select a Target File");
+				return;
 			}
 			try {
 				int w = int.Parse(tbW.Text), h = int.Parse(tbH.Text);

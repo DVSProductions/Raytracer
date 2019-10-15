@@ -6,6 +6,6 @@ using System.Threading.Tasks;
 
 namespace RayTracerInterface {
 	public interface IRenderPage {
-		public Action OnBack { get; set; }
+		Action OnBack { get; set; }
 	}
 }

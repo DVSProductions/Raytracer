@@ -14,7 +14,7 @@ namespace RayTracerInterface {
 	/// </summary>
 	public partial class App : Application {
 		public App() {
-			if(File.Exists(LibraryHandler.dll)) File.Delete(LibraryHandler.dll);
+			//if(File.Exists(LibraryHandler.dll)) File.Delete(LibraryHandler.dll);
 		}
 	}
 }

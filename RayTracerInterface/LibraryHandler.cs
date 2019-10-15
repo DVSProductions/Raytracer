@@ -36,12 +36,14 @@ namespace RayTracerInterface {
 					}
 				}
 				File.Copy(path, dll);
+				while(!File.Exists(dll)) System.Threading.Thread.Sleep(50);
 				isLoaded = true;
-				Console.WriteLine(LibraryInfo);
+				//Console.WriteLine(LibraryInfo);
 				return true;
 			}
 			catch(Exception ex) {
-				Console.Error.WriteLine(ex.Message);
+				//Console.Error.WriteLine(ex.Message);
+				//MessageBox.Show(ex.Message);
 				return false;
 			}
 		}

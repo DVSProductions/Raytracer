@@ -76,6 +76,11 @@ Color Color::hue(double h) {
 	return clamp(color(abs(h * 6 - 3) - 1, 2 - abs(h * 6 - 2), 2 - abs(h * 6 - 4)));
 }
 
+Color Color::RNG()
+{
+	return Color((rand()%1000)/1000.0,(rand()%1000)/1000.0,(rand()%1000)/1000.0);
+}
+
 bool Color::operator==(Color v) {
 	return v.r == r && v.g == g && v.b == b;
 }

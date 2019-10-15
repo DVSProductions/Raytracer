@@ -9,7 +9,7 @@ using RayTracerInterface;
 namespace DLL_Tester {
 	class Program {
 		static void TestOnce() {
-			LibraryHandler.render(1, 16000, 9000);
+			LibraryHandler.render(0, 160, 90);
 			Console.WriteLine("Rendering");
 			while(true) {
 				Console.WriteLine("\r" + LibraryHandler.status());
@@ -37,8 +37,8 @@ namespace DLL_Tester {
 			Console.WriteLine("Done");
 		}
 		static void Main(string[] args) {
-			LibraryHandler.TryLoadLib(@"D:\OneDrive\Uni\Medieninformatik\Semester 3\Computergrafik Grundlagen\Abgabe\x64\Release\Aufgabe1.dll");
-			TestTwice();
+			LibraryHandler.TryLoadLib(@"..\..\..\x64\Release\Aufgabe2.dll");
+			TestOnce();
 		}
 	}
 }

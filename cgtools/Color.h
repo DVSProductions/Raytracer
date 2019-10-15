@@ -20,6 +20,7 @@ public:
 	static Color clamp(Color v);
 	static Color hsvToRgb(Color hsv);
 	static Color hue(double h);
+	static Color RNG();
 	std::string toString();
 	bool operator==(Color c);
 };
