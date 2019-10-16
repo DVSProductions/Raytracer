@@ -4,6 +4,8 @@ class Circle
 {
 	double x;
 	double y;
+	double boundXP, boundXN;
+	double boundYP, boundYN;
 public:
 	Color color;
 	double radius;

@@ -9,10 +9,11 @@ using RayTracerInterface;
 namespace DLL_Tester {
 	class Program {
 		static void TestOnce() {
-			LibraryHandler.render(0, 160, 90);
+			int scaling = 1;
+			LibraryHandler.render(0, 16*scaling, 9 * scaling);
 			Console.WriteLine("Rendering");
 			while(true) {
-				Console.WriteLine("\r" + LibraryHandler.status());
+				//Console.WriteLine("\r" + LibraryHandler.status());
 				Thread.Sleep(200);
 			}
 		}

@@ -3,9 +3,9 @@
 #include <exception>
 
 
-unsigned int ImageWriter::write(std::string filename, double * data, int width, int height, bool linear) {
+unsigned int ImageWriter::write(std::string filename, double* data, int width, int height, bool linear) {
 	std::vector<uint8_t> parsed;
-	parsed.reserve(width*height * 4);
+	parsed.reserve(4ul * width * height);
 	for (int y = 0; y != height; y++) {
 		for (int x = 0; x != width; x++) {
 			int i = (width * y + x) * 3;

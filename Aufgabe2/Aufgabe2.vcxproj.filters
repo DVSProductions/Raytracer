@@ -24,12 +24,18 @@
     <ClCompile Include="CircleRenderer.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
+    <ClCompile Include="StratifiedSampling.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Circle.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
     <ClInclude Include="CircleRenderer.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="StratifiedSampling.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
   </ItemGroup>

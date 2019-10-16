@@ -13,7 +13,7 @@
 const std::string files[] = { "a01-image.png","a01-square.png","a01-checkered-background.png","_" };
 
 Image* image;
-ColorFunc* renderer;// = ConstantColor(red);
+Renderer* renderer;// = ConstantColor(red);
 void RenderLoop() {
 #if DLL_DEBUG
 	cout << "->RL";
@@ -50,7 +50,7 @@ void rendercycle(std::string filename) {
 	image = nullptr;
 }
 
-void RenderWorker(std::string filename, ColorFunc* rend) {
+void RenderWorker(std::string filename, Renderer* rend) {
 #if DLL_DEBUG
 	cout << "->RW";
 	Sleep(100);

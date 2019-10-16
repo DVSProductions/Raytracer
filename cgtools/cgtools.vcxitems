@@ -16,7 +16,7 @@
   <ItemGroup>
     <ClInclude Include="$(MSBuildThisFileDirectory)cgtools.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Color.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)ColorFunc.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Renderer.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Image.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)ImageWriter.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)lodepng.h" />

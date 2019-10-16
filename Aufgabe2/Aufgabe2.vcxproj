@@ -160,10 +160,12 @@
     <ClCompile Include="Aufgabe2.cpp" />
     <ClCompile Include="Circle.cpp" />
     <ClCompile Include="CircleRenderer.cpp" />
+    <ClCompile Include="StratifiedSampling.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Circle.h" />
     <ClInclude Include="CircleRenderer.h" />
+    <ClInclude Include="StratifiedSampling.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

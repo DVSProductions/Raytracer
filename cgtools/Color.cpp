@@ -1,6 +1,5 @@
 #include "Color.h"
 #include <cmath>
-
 Color::Color() {
 	r = 0;
 	g = 0;
@@ -28,7 +27,7 @@ Color::~Color() {
 }
 
 Color Color::add(Color a, Color b, std::initializer_list<Color> vs) {
-	Color r =  color(a.r + b.r, a.g + b.g, a.b + b.b);
+	Color r = color(a.r + b.r, a.g + b.g, a.b + b.b);
 	for (Color v : vs) {
 		r.r += v.r;
 		r.g += v.g;
@@ -39,7 +38,7 @@ Color Color::add(Color a, Color b, std::initializer_list<Color> vs) {
 
 Color Color::subtract(Color a, Color b, std::initializer_list<Color> vs) {
 	Color r = color(a.r - b.r, a.g - b.g, a.b - b.b);
-	for (Color v : vs) 
+	for (Color v : vs)
 		r = color(r.r - v.r, r.g - v.g, r.b - v.b);
 	return r;
 }
@@ -76,9 +75,9 @@ Color Color::hue(double h) {
 	return clamp(color(abs(h * 6 - 3) - 1, 2 - abs(h * 6 - 2), 2 - abs(h * 6 - 4)));
 }
 
-Color Color::RNG()
-{
-	return Color((rand()%1000)/1000.0,(rand()%1000)/1000.0,(rand()%1000)/1000.0);
+Color Color::RNG(std::mt19937 mt) {
+	std::uniform_real_distribution<double> rng(0, 1);
+	return Color(rng(mt), rng(mt), rng(mt));
 }
 
 bool Color::operator==(Color v) {

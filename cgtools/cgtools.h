@@ -1,5 +1,5 @@
 #include "Color.h"
 #include "lodepng.h"
-#include "ColorFunc.h"
+#include "Renderer.h"
 #include "Image.h"
 #include "ImageWriter.h"

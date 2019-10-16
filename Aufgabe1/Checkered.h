@@ -1,7 +1,7 @@
 #pragma once
-#include "ColorFunc.h"
+#include "Renderer.h"
 #include "ColoredSquare.h"
-class Checkered : public ColorFunc {
+class Checkered : public Renderer {
 	Color A, B;
 	int mod;
 	ColoredSquare child;

@@ -1,6 +1,6 @@
 #pragma once
-#include "ColorFunc.h"
-class ConstantColor : public ColorFunc {
+#include "Renderer.h"
+class ConstantColor : public Renderer {
 	Color color;
 public:
 	ConstantColor(const Color* color);

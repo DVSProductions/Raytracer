@@ -1,6 +1,6 @@
 #pragma once
-#include "ColorFunc.h"
-class ColoredSquare : public ColorFunc {
+#include "Renderer.h"
+class ColoredSquare : public Renderer {
 	double left, right, top, bottom;
 	Color color;
 public:

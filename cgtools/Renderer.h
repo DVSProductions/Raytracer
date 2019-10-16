@@ -1,6 +1,6 @@
 #pragma once
 #include "Color.h"
-class ColorFunc {
+class Renderer {
 public:
 	virtual Color getColor(double x, double y) = 0;
 };

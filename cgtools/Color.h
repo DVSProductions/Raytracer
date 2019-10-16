@@ -1,6 +1,7 @@
 #pragma once
 #include <string>
 #include <initializer_list>
+#include <random>
 #define color(r,g,b) Color(r,g,b)
 
 class Color {
@@ -20,7 +21,7 @@ public:
 	static Color clamp(Color v);
 	static Color hsvToRgb(Color hsv);
 	static Color hue(double h);
-	static Color RNG();
+	static Color RNG(std::mt19937 mt);
 	std::string toString();
 	bool operator==(Color c);
 };

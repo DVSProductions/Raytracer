@@ -1,17 +1,18 @@
 #include "Image.h"
 #include "ImageWriter.h"
 using namespace std;
-Image::Image(size_t width, size_t height) {
+Image::Image(size_t width, size_t height, double gamma) {
+	this->gamma = 1.0 / gamma;
 	sizeX = width;
 	sizeY = height;
-	buffer = new double[height*width * 3ul];
+	buffer = new double[height * width * 3ul];
 }
 
 void Image::setPixel(size_t x, size_t y, Color color) {
 	size_t idx = (y * sizeX + x) * 3ul;
-	buffer[idx++] = color.r;	
-	buffer[idx++] = color.g;
-	buffer[idx] = color.b;
+	buffer[idx++] = pow(color.r, this->gamma);
+	buffer[idx++] = pow(color.g, this->gamma);
+	buffer[idx] = pow(color.b, this->gamma);
 }
 
 unsigned int Image::write(std::string filename) {

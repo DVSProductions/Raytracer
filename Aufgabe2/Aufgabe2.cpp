@@ -7,13 +7,15 @@
 #include "lodepng.h"
 #include <direct.h>
 #include <Windows.h>
+#include<vector>
 #include <functional>
 #include "Circle.h"
 #include "CircleRenderer.h"
-const std::string files[] = { "a02-discs.png","_" };
+#include "StratifiedSampling.h"
+const std::string files[] = { "a02-discs.png","a02-supersampling.png","_" };
 
 Image* image;
-ColorFunc* renderer;// = ConstantColor(red);
+Renderer* renderer;// = ConstantColor(red);
 void RenderLoop() {
 #if DLL_DEBUG
 	cout << "->RL";
@@ -27,7 +29,7 @@ void RenderLoop() {
 #endif
 			auto c = renderer->getColor(x, y);
 #if DLL_DEBUG
-			cout <<"->"<<c.toString();
+			cout << "->" << c.toString();
 			//Sleep(10);
 #endif
 			image->setPixel(x, y, c);
@@ -42,27 +44,81 @@ void RenderLoop() {
 #endif
 	progress = width;
 }
-
 void rendercycle(std::string filename) {
 #if DLL_DEBUG
 	cout << "->RC";
 	Sleep(100);
 #endif
-	Image i(width, height);
+	Image i(width, height, 2.2);
 	image = &i;
 	RenderLoop();
 	lodepngReturn = image->write(filename);
 }
-void rendercyclev2(std::string filename, std::function<void()> preparation) {
-	Image i(width, height);
-	image = &i;
-	preparation();
-	RenderLoop();
+
+void RenderLoopT(int offset, int total) {
+#if DLL_DEBUG
+	cout << "->RL";
+	Sleep(1000);
+#endif
+	for (int x = offset; x < width; x += total, progress++)
+		for (int y = 0; y != height; y++)
+#if DLL_DEBUG
+		{
+			cout << "->GC";
+			//Sleep(10);
+			auto c = renderer->getColor(x, y);
+			cout << "->" << c.toString();
+			//Sleep(10);
+			image->setPixel(x, y, c);
+			//cout << "->W" << endl;
+			//Sleep(10);
+		}
+#else
+			image->setPixel(x, y, renderer->getColor(x, y));
+#endif
+
+}
+
+void rendercycleT(std::string filename) {
+#if DLL_DEBUG
+	cout << "->RC";
+	Sleep(1000);
+#endif
+	Image* i = new Image(width, height, 2.2);
+	image = i;
+	std::vector<std::thread*> workers;
+#if DLL_DEBUG
+	cout << "->LT";
+	Sleep(100);
+#endif
+	int th = std::thread::hardware_concurrency();
+	for (int n = 0; n < th; n++) {
+		workers.push_back( new std::thread(RenderLoopT, n, th));
+	}
+	//workers[1].
+#if DLL_DEBUG
+	std::cout << "->Wait";
+	Sleep(1000);
+#endif
+	for (int n = 0; n < workers.size(); n++) {
+		while (!workers[n]->joinable())Sleep(100);
+		workers[n]->join();
+	}
+#if DLL_DEBUG
+	cout << "->SP";
+	Sleep(2000);
+#endif
+	progress = width;
+#if DLL_DEBUG
+	cout << "->Writing";
+	Sleep(2000);
+#endif
 	lodepngReturn = image->write(filename);
 }
 
 
-void RenderWorker(std::string filename, ColorFunc* rend) {
+
+void RenderWorker(std::string filename, Renderer* rend) {
 #if DLL_DEBUG
 	cout << "->RW";
 	Sleep(100);
@@ -74,24 +130,24 @@ void RenderWorker(std::string filename, ColorFunc* rend) {
 	cout << "->go" << endl;
 	Sleep(100);
 #endif
-	worker = std::thread(rendercycle, filename);
+	worker = std::thread(rendercycleT, filename);
 	worker.detach();
 }
-void RenderWorker(std::string filename, ColorFunc* rend, std::function<void()>preparation) {
-#if DLL_DEBUG
-	cout << "->RW2";
-	Sleep(100);
-#endif
-	progress = 0;
-	lodepngReturn = -1;
-	renderer = rend;
-#if DLL_DEBUG
-	cout << "->go" << endl;
-	Sleep(100);
-#endif
-	worker = std::thread(rendercyclev2, filename, preparation);
-	worker.detach();
-}
+//void RenderWorker(std::string filename, Renderer* rend, std::function<void()>preparation) {
+//#if DLL_DEBUG
+//	cout << "->RW2";
+//	Sleep(100);
+//#endif
+//	progress = 0;
+//	lodepngReturn = -1;
+//	renderer = rend;
+//#if DLL_DEBUG
+//	cout << "->go" << endl;
+//	Sleep(100);
+//#endif
+//	worker = std::thread(rendercyclev2, filename, preparation);
+//	worker.detach();
+//}
 
 bool workswitch(int Option) {
 #if DLL_DEBUG
@@ -100,7 +156,12 @@ bool workswitch(int Option) {
 	switch (Option) {
 	case(0):
 	{
-		RenderWorker(files[Option], new CircleRenderer(width,height));
+		RenderWorker(files[Option], new CircleRenderer(width, height));
+		return true;
+	}
+	case(1):
+	{
+		RenderWorker(files[Option], new StratifiedSampling(10, new CircleRenderer(width, height)));
 		return true;
 	}
 	default:
