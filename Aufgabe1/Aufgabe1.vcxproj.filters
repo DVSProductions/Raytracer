@@ -15,9 +15,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="A1Defines.h">
-      <Filter>Headerdateien</Filter>
-    </ClInclude>
     <ClInclude Include="Checkered.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>

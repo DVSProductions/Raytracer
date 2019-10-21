@@ -1,5 +1,5 @@
 #include "ConstantColor.h"
-#include "A1Defines.h"
+#include "DLLInfo.h"
 #define _USE_MATH_DEFINES
 #include <math.h>
 ConstantColor::ConstantColor(Color* color) {

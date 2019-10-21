@@ -15,6 +15,11 @@ namespace RayTracerInterface {
 			InitializeComponent();
 			render(w, h);
 		}
+		/// <summary>
+		/// Finds all files in the Render DLL and renders them to the Abgabe directory
+		/// </summary>
+		/// <param name="w">width of all images</param>
+		/// <param name="h">height of all images</param>
 		async void render(int w, int h) {
 			var target = System.IO.Path.GetFullPath("..\\..\\..\\doc\\");
 			if(!Directory.Exists(target)) Directory.CreateDirectory(target);
@@ -35,12 +40,18 @@ namespace RayTracerInterface {
 			}
 			tbConsole.Text += $"Abgabe complete.\nResults in {System.IO.Path.GetFullPath(target)}\n";
 		}
-		Action onBack;
-		public Action OnBack { get => onBack; set => onBack = value; }
-
+		/// <summary>
+		/// Used by mainWindow to allow a page to navigate back
+		/// </summary>
+		public Action OnBack { get; set; }
+		/// <summary>
+		/// Opens the Abgabe directory
+		/// </summary>
 		private void Button_Click(object sender, RoutedEventArgs e) => 
 			_ = System.Diagnostics.Process.Start("explorer", $"\"{System.IO.Path.GetFullPath("..\\..\\..\\doc\\")}\"");
-
-		private void Button_Click_1(object sender, RoutedEventArgs e) => onBack();
+		/// <summary>
+		/// Handler for the back button. Navigates back
+		/// </summary>
+		private void Button_Click_1(object sender, RoutedEventArgs e) => OnBack();
 	}
 }

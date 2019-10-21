@@ -1,5 +1,5 @@
 #include "Checkered.h"
-#include "A1Defines.h"
+#include "DLLInfo.h"
 Checkered::Checkered(const Color* bgA, const  Color* bgB, const  Color* rect, int bgMOD, int rectA, int screenX, int screenY) :child(rect, rectA, screenX, screenY) {
 	A = Color(bgA);
 	B = Color(bgB);

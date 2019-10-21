@@ -9,6 +9,7 @@ Image::Image(size_t width, size_t height, double gamma) {
 }
 
 void Image::setPixel(size_t x, size_t y, Color color) {
+	if (x >= sizeX || y >= sizeY)return;
 	size_t idx = (y * sizeX + x) * 3ul;
 	buffer[idx++] = pow(color.r, this->gamma);
 	buffer[idx++] = pow(color.g, this->gamma);

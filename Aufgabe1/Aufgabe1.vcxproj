@@ -150,7 +150,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="A1Defines.h" />
     <ClInclude Include="Checkered.h" />
     <ClInclude Include="ColoredSquare.h" />
     <ClInclude Include="ConstantColor.h" />

@@ -1,6 +1,4 @@
 // Aufgabe1.cpp : https://tramberend.beuth-hochschule.de/lehre/19-ws/bmi-cgg/assignments/a01-page.html
-//
-#include "A1Defines.h"
 #include "DllInfo.h"
 #include "cgtools.h"
 #include "Image.h"
@@ -14,6 +12,9 @@ const std::string files[] = { "a01-image.png","a01-square.png","a01-checkered-ba
 
 Image* image;
 Renderer* renderer;// = ConstantColor(red);
+/// <summary>
+/// Generates the colors for every pixel and updates it's progress
+/// </summary>
 void RenderLoop() {
 #if DLL_DEBUG
 	cout << "->RL";
@@ -37,7 +38,10 @@ void RenderLoop() {
 #endif
 	progress = width;
 }
-
+/// <summary>
+/// Allocates memory and executes render loop
+/// </summary>
+/// <param name="filename"></param>
 void rendercycle(std::string filename) {
 #if DLL_DEBUG
 	cout << "->RC";
@@ -49,7 +53,11 @@ void rendercycle(std::string filename) {
 	lodepngReturn = image->write(filename);
 	image = nullptr;
 }
-
+/// <summary>
+/// Launches the render thread
+/// </summary>
+/// <param name="filename">output file</param>
+/// <param name="rend">renderer to use</param>
 void RenderWorker(std::string filename, Renderer* rend) {
 #if DLL_DEBUG
 	cout << "->RW";
@@ -65,6 +73,10 @@ void RenderWorker(std::string filename, Renderer* rend) {
 	worker = std::thread(rendercycle, filename);
 	worker.detach();
 }
+/// <summary>
+/// Decides which File to render and with what options
+/// </summary>
+/// <param name="Option">fileIDX</param>
 bool workswitch(int Option) {
 #if DLL_DEBUG
 	cout << "WS"<<endl;
@@ -89,11 +101,3 @@ bool workswitch(int Option) {
 			return false;
 	}
 }
-//int main() {
-//	_mkdir("..\\doc");
-//	std::cout << "DVSProductions RAYTRACER" << std::endl;
-//	/*rendercycle("..\\doc\\a01-image.png", ConstantColor(red));
-//	rendercycle("..\\doc\\a01-square.png", ColoredSquare(color(1, 1, 0), 15 * scaling, width, height));
-//	rendercycle("..\\doc\\a01-checkered-background.png", Checkered(gray, white, color(1, 1, 0), 1 * scaling, 15 * scaling, width, height));
-//*/
-//}

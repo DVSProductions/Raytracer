@@ -1,5 +1,5 @@
 #include "ColoredSquare.h"
-#include "A1Defines.h"
+#include "DLLInfo.h"
 ColoredSquare::ColoredSquare(const Color * color, int a, int screenX, int screenY) {
 #if DLL_DEBUG
 	cout << "->CSQ()";
