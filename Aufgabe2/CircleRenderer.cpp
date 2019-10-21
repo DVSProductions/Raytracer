@@ -10,14 +10,14 @@ bool cmp(const Circle& a, const Circle& b) {
 }
 CircleRenderer::CircleRenderer(int width, int height) {
 	std::random_device rd;
-	std::mt19937 mt(10);//rd());
+	//std::mt19937 mt(10);
+	std::mt19937 mt(rd());
 	std::uniform_int_distribution<int> rw(0, width);
 	std::uniform_int_distribution<int> rh(0, height);
-	std::uniform_int_distribution<int> rr(height / 100, height / 20);
-	int num = rand() % 200 + 100;
-	for (int n = 0; n < num; n++) {
+	std::uniform_int_distribution<int> rr(height / 100, height /10);
+	int num = std::uniform_int_distribution<int>(5000,10000)(mt);
+	for (int n = 0; n < num; n++) 
 		circles.push_back(Circle(rw(mt), rh(mt), rr(mt), Color::RNG(mt)));
-	}
 	std::sort(circles.begin(), circles.end(), cmp);
 }
 

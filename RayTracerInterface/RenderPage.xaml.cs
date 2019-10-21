@@ -25,14 +25,14 @@ namespace RayTracerInterface {
 			wait();
 		}
 		async void wait() {
-			//var sw=System.Diagnostics.Stopwatch.StartNew();
+			var sw=System.Diagnostics.Stopwatch.StartNew();
 			while (pbStatus.Maximum != pbStatus.Value) {
 				var s = LibraryHandler.status();
 				pbStatus.Value = s;
 				await Task.Delay(33);
 			}
-			//sw.Stop();
-			//MessageBox.Show(sw.ElapsedMilliseconds.ToString());
+			sw.Stop();
+			lbTime.Content = sw.ElapsedMilliseconds + "ms";
 			pbStatus.IsIndeterminate = true;
 			lbStatus.Content = "Exporting png";
 			while(LibraryHandler.returnValue() == -1) await Task.Delay(100);

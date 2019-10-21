@@ -6,6 +6,8 @@ class Circle
 	double y;
 	double boundXP, boundXN;
 	double boundYP, boundYN;
+	double innerYP, innerYN;
+	double innerXP, innerXN;
 public:
 	Color color;
 	double radius;

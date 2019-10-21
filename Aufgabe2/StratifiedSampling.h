@@ -4,6 +4,7 @@
 class StratifiedSampling : public Renderer {
 	int samples;
 	Renderer* child;
+	double samsq;
 	std::mt19937 mt;
 	std::uniform_real_distribution<double> dist;
 public:

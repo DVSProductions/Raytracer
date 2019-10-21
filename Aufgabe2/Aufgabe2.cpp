@@ -95,7 +95,6 @@ void rendercycleT(std::string filename) {
 	for (int n = 0; n < th; n++) {
 		workers.push_back( new std::thread(RenderLoopT, n, th));
 	}
-	//workers[1].
 #if DLL_DEBUG
 	std::cout << "->Wait";
 	Sleep(1000);
@@ -108,6 +107,7 @@ void rendercycleT(std::string filename) {
 	cout << "->SP";
 	Sleep(2000);
 #endif
+	workers.clear();
 	progress = width;
 #if DLL_DEBUG
 	cout << "->Writing";

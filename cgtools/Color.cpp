@@ -12,6 +12,11 @@ Color::Color(double red, double green, double blue) {
 	b = blue;
 }
 
+//Color::Color(double r, double g, double b, bool deletable) :Color(r, g, b)
+//{
+//	this->deletable = deletable;
+//}
+
 Color::Color(const Color* toCopy) {
 	r = toCopy->r;
 	g = toCopy->g;

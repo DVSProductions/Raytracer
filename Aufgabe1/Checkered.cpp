@@ -6,8 +6,9 @@ Checkered::Checkered(const Color* bgA, const  Color* bgB, const  Color* rect, in
 	mod = bgMOD * 2 * scaling;
 }
 
-Color Checkered::getColor(int x, int y) {
-	auto c = child.getColor(x, y);
-	return (!(c == black)) ? c : ((x % mod >= mod / 2) ? (y % mod < mod / 2) ? &A : &B : (y % mod < mod / 2) ? &B : &A);
+Color Checkered::getColor(double x, double y) {
+	int ix = (int)x, iy = (int)y;
+	auto c = child.getColor(ix, iy);
+	return (!(c == black)) ? c : ((ix % mod >= mod / 2) ? (iy % mod < mod / 2) ? &A : &B : (iy % mod < mod / 2) ? &B : &A);
 	//return !(c == black) ? c : ((x % mod >= mod / 2) && (y % mod < mod / 2) ? A : B;//kept it for sexapeal
 }

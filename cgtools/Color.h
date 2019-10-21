@@ -7,8 +7,10 @@
 class Color {
 public:	
 	double r, g, b;
+	//bool deletable=false;
 	Color();
 	Color(double r,double g, double b);
+	//Color(double r,double g, double b,bool deletable);
 	Color(const Color* toCopy);
 	Color(Color* toCopy);
 	~Color();
