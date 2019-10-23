@@ -1,12 +1,12 @@
 #include "Color.h"
 #include <cmath>
-Color::Color() {
+Color::Color()noexcept {
 	r = 0;
 	g = 0;
 	b = 0;
 }
 
-Color::Color(double red, double green, double blue) {
+Color::Color(double red, double green, double blue)noexcept {
 	r = red;
 	g = green;
 	b = blue;
@@ -17,74 +17,63 @@ Color::Color(double red, double green, double blue) {
 //	this->deletable = deletable;
 //}
 
-Color::Color(const Color* toCopy) {
+Color::Color(const Color* toCopy)noexcept {
 	r = toCopy->r;
 	g = toCopy->g;
 	b = toCopy->b;
 };
-Color::Color(Color* toCopy) {
+Color::Color(Color * toCopy)noexcept {
 	r = toCopy->r;
 	g = toCopy->g;
 	b = toCopy->b;
 }
 
-Color::~Color() {
+
+Color Color::operator+(const Color & a) noexcept{
+	return Color(a.r + r, a.g + g, a.b + b);
 }
 
-Color Color::add(Color a, Color b, std::initializer_list<Color> vs) {
-	Color r = color(a.r + b.r, a.g + b.g, a.b + b.b);
-	for (Color v : vs) {
-		r.r += v.r;
-		r.g += v.g;
-		r.b += v.b;
-	}
-	return r;
+Color Color::operator-(const Color & a) noexcept {
+	return Color(r - a.r, g - a.g, b - a.g);
 }
 
-Color Color::subtract(Color a, Color b, std::initializer_list<Color> vs) {
-	Color r = color(a.r - b.r, a.g - b.g, a.b - b.b);
-	for (Color v : vs)
-		r = color(r.r - v.r, r.g - v.g, r.b - v.b);
-	return r;
+Color Color::operator*(const Color & c) noexcept {
+	return Color(c.r * r, c.g * g, c.b * b);
 }
 
-Color Color::multiply(double s, Color a) {
-	return color(s * a.r, s * a.g, s * a.b);
+Color Color::operator*(const double &s) noexcept {
+	return Color(s * r, s * g, s * b);
 }
 
-Color Color::multiply(Color a, double s) {
-	return multiply(s, a);
+Color Color::operator/(const double &s) noexcept {
+	return Color(r / s, g / s, b / s);
 }
 
-Color Color::multiply(Color a, Color b) {
-	return color(a.r * b.r, a.g * b.g, a.b * b.b);
-}
-
-Color Color::divide(Color a, double s) {
-	return color(a.r / s, a.g / s, a.b / s);
-}
-
-Color Color::clamp(Color v) {
+Color Color::clamp(const Color & v)  noexcept {
 	return color(fmin(1, fmax(v.r, 0)), fmin(1, fmax(v.g, 0)), fmin(1, fmax(v.b, 0)));
 }
 
-Color Color::hsvToRgb(Color hsv) {
-	return multiply(hsv.b, add(multiply(hsv.g, subtract(hue(hsv.r), white)), white));
+Color Color::hsvToRgb(const Color & hsv) noexcept {
+	return hsv.b * (hsv.g * (hue(hsv.r) - c_white) + c_white);
 }
 
 std::string Color::toString() {
 	return "(Col:" + std::to_string(r) + ", " + std::to_string(g) + ", " + std::to_string(b) + ")";
 }
 
-Color Color::hue(double h) {
-	return clamp(color(abs(h * 6 - 3) - 1, 2 - abs(h * 6 - 2), 2 - abs(h * 6 - 4)));
+Color Color::hue(double h) noexcept {
+	return clamp(Color(abs(h * 6 - 3) - 1, 2 - abs(h * 6 - 2), 2 - abs(h * 6 - 4)));
 }
 
 Color Color::RNG(std::mt19937 mt) {
-	std::uniform_real_distribution<double> rng(0, 1);
+	const std::uniform_real_distribution<double> rng(0, 1);
 	return Color(rng(mt), rng(mt), rng(mt));
 }
 
-bool Color::operator==(Color v) {
+bool Color::operator==(const Color & v) noexcept{
 	return v.r == r && v.g == g && v.b == b;
+}
+
+Color operator*(const double &s, const Color& a)noexcept {
+	return Color(s * a.r, s * a.g, s * a.b);
 }

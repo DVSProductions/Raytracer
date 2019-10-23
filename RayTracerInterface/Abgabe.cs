@@ -11,9 +11,9 @@ namespace RayTracerInterface {
 	/// Interaction logic for Abgabe.xaml
 	/// </summary>
 	public partial class Abgabe : Page, IRenderPage {
-		public Abgabe(int w, int h) {
+		public Abgabe(int width, int height) {
 			InitializeComponent();
-			render(w, h);
+			render(width, height);
 		}
 		/// <summary>
 		/// Finds all files in the Render DLL and renders them to the Abgabe directory

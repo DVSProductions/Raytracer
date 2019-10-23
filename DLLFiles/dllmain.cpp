@@ -12,12 +12,12 @@ bool workswitch(int Option);
 /// </summary>
 /// <param name="input">c_str to convert</param>
 /// <returns></returns>
-BSTR ANSItoBSTR(const char* input) {
-	BSTR result = NULL;
-	int lenA = lstrlenA(input);
-	int lenW = ::MultiByteToWideChar(CP_ACP, 0, input, lenA, NULL, 0);
+BSTR ANSItoBSTR(const char* input)noexcept {
+	BSTR result = nullptr;
+	const int lenA = lstrlenA(input);
+	const int lenW = ::MultiByteToWideChar(CP_ACP, 0, input, lenA, nullptr, 0);
 	if (lenW > 0) {
-		result = ::SysAllocStringLen(0, lenW);
+		result = ::SysAllocStringLen(nullptr, lenW);
 		::MultiByteToWideChar(CP_ACP, 0, input, lenA, result, lenW);
 	}
 	return result;
@@ -31,7 +31,11 @@ extern "C" {
 	__declspec(dllexport) BSTR __cdecl LibInfo(void) {
 		return ::SysAllocString(L"Library Version 1.0");
 	}
-	///Sends A list of files that will be created by this program
+	/// <summary>
+	/// Sends A list of files that will be created by this program
+	/// </summary>
+	/// <param name="idx">index in the array</param>
+	/// <returns></returns>
 	__declspec(dllexport) BSTR __cdecl OutputFile(int idx) {
 		return ANSItoBSTR(files[idx].c_str());
 	}

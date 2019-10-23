@@ -29,7 +29,7 @@ Renderer* renderer;// = ConstantColor(red);
 /// </summary>
 /// <param name="offset">my thread index</param>
 /// <param name="total">total number of threads</param>
-void RenderLoop(int offset, int total) {
+void RenderLoop(int offset, int total)noexcept {
 #if DLL_DEBUG
 	cout << "->RL";
 	Sleep(1000);
@@ -77,8 +77,9 @@ void rendercycle(std::string filename) {
 	Sleep(1000);
 #endif
 	for (int n = 0; n < workers.size(); n++) {
-		while (!workers[n]->joinable())Sleep(100);
-		workers[n]->join();
+		const auto t = workers[n];
+		while (!t->joinable())Sleep(100);
+		t->join();
 	}
 #if DLL_DEBUG
 	cout << "->SP";
@@ -98,14 +99,13 @@ void rendercycle(std::string filename) {
 /// Launches the multithread worker
 /// </summary>
 /// <param name="rend">Renderer to use</param>
-void RenderWorker(std::string filename, Renderer* rend) {
+void RenderWorker(std::string filename) {
 #if DLL_DEBUG
 	cout << "->RW";
 	Sleep(100);
 #endif
 	progress = 0;
 	lodepngReturn = -1;
-	renderer = rend;
 #if DLL_DEBUG
 	cout << "->go" << endl;
 	Sleep(100);
@@ -123,16 +123,14 @@ bool workswitch(int Option) {
 #endif
 	switch (Option) {
 	case(0):
-	{
-		RenderWorker(files[Option], new CircleRenderer(width, height));
-		return true;
-	}
+		renderer = new CircleRenderer(width, height);
+		break;
 	case(1):
-	{
-		RenderWorker(files[Option], new StratifiedSampling(10, new CircleRenderer(width, height)));
-		return true;
-	}
+		renderer = new StratifiedSampling(10, new CircleRenderer(width, height));
+		break;
 	default:
 		return false;
 	}
+	RenderWorker(files[Option]);
+	return true;
 }

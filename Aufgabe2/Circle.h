@@ -32,10 +32,10 @@ public:
 	/// <param name="y">Y position</param>
 	/// <param name="radius">radius of the circle</param>
 	/// <param name="c">Color</param>
-	Circle(double x, double y, double radius, Color c);
+	Circle(double x, double y, double radius, Color c)noexcept;
 	/// <summary>
 	/// Detects if Point is within circle
 	/// </summary>
-	bool isPointInCircle(double x, double y);
+	bool isPointInCircle(double x, double y)noexcept;
 };
 

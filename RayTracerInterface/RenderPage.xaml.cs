@@ -8,9 +8,6 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 
 namespace RayTracerInterface {
-	/// <summary>
-	/// Interaktionslogik für RenderPage.xaml
-	/// </summary>
 	public partial class RenderPage : Page, IRenderPage {
 		/// <summary>
 		/// index of the outputFile
@@ -19,8 +16,8 @@ namespace RayTracerInterface {
 
 		public Action OnBack { get; set; }
 
-		public RenderPage(int outputIDX, int width, int height) {
-			idx = outputIDX;
+		public RenderPage(int outputIdx, int width) {
+			idx = outputIdx;
 			InitializeComponent();
 			pbStatus.Maximum = width;
 			pbStatus.Value = 0;
@@ -30,7 +27,7 @@ namespace RayTracerInterface {
 		/// Waits until the image has been rendered and then displays it
 		/// <para>
 		/// This functions reads the states reported by the DLL in order to display a graph on the render progress.
-		/// After the image has been rendered sucessfully it will read the image from disk and show it in <see cref="iResults"/></para>
+		/// After the image has been rendered successfully it will read the image from disk and show it in <see cref="iResults"/></para>
 		/// </summary>
 		async void Wait() {
 			var sw=System.Diagnostics.Stopwatch.StartNew();

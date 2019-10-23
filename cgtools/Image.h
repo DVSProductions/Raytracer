@@ -1,5 +1,6 @@
 #pragma once
 #include <string>
+#include <memory>
 #include "Color.h"
 class Image {
 	/// <summary>
@@ -9,7 +10,7 @@ class Image {
 	/// <summary>
 	/// Storage for RGB values (allocated with NEW not malloc)
 	/// </summary>
-	double * buffer;
+	std::unique_ptr<double []> buffer;
 	/// <summary>
 	/// Sizes of the buffer
 	/// </summary>
@@ -28,16 +29,12 @@ public:
 	/// <param name="x">x index</param>
 	/// <param name="y">y index</param>
 	/// <param name="color">color at this position</param>
-	void setPixel(size_t x, size_t y, Color color);
+	void setPixel(size_t x, size_t y, Color color) noexcept;
 	/// <summary>
 	/// Writes the Image to the given Path
 	/// </summary>
 	/// <param name="filename"></param>
 	/// <returns>lodepng response code</returns>
 	unsigned int write(std::string filename);
-	/// <summary>
-	/// releases all memory
-	/// </summary>
-	~Image();
 };
 

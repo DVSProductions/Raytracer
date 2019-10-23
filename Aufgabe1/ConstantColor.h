@@ -3,9 +3,8 @@
 class ConstantColor : public Renderer {
 	Color color;
 public:
-	ConstantColor(const Color* color);
-	ConstantColor(Color* color);
-	~ConstantColor();
-	Color getColor(double x, double y);
+	ConstantColor(const Color* color)noexcept;
+	ConstantColor(Color* color)noexcept;
+	Color getColor(double x, double y)noexcept override;
 };
 

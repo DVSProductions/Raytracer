@@ -15,12 +15,16 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DLLFiles", "DLLFiles\DLLFil
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Aufgabe2", "Aufgabe2\Aufgabe2.vcxproj", "{EFD94D21-23FD-4B80-A138-DD76F0B53B99}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Aufgabe3", "Aufgabe3\Aufgabe3.vcxproj", "{DB4550FB-B9AA-485C-B006-CBE2AB116148}"
+EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		cgtools\cgtools.vcxitems*{4990afe0-d3c0-4fde-a55c-fb1f6ef47c0e}*SharedItemsImports = 4
 		DLLFiles\DLLFiles.vcxitems*{4990afe0-d3c0-4fde-a55c-fb1f6ef47c0e}*SharedItemsImports = 4
 		cgtools\cgtools.vcxitems*{9b9d2a86-4bad-4afb-97d0-b8bea0486e1d}*SharedItemsImports = 9
 		DLLFiles\DLLFiles.vcxitems*{bfc32bdc-d89c-41ee-8321-2daff3325352}*SharedItemsImports = 9
+		cgtools\cgtools.vcxitems*{db4550fb-b9aa-485c-b006-cbe2ab116148}*SharedItemsImports = 4
+		DLLFiles\DLLFiles.vcxitems*{db4550fb-b9aa-485c-b006-cbe2ab116148}*SharedItemsImports = 4
 		cgtools\cgtools.vcxitems*{efd94d21-23fd-4b80-a138-dd76f0b53b99}*SharedItemsImports = 4
 		DLLFiles\DLLFiles.vcxitems*{efd94d21-23fd-4b80-a138-dd76f0b53b99}*SharedItemsImports = 4
 	EndGlobalSection
@@ -77,6 +81,16 @@ Global
 		{EFD94D21-23FD-4B80-A138-DD76F0B53B99}.Release|x64.Build.0 = Release|x64
 		{EFD94D21-23FD-4B80-A138-DD76F0B53B99}.Release|x86.ActiveCfg = Release|Win32
 		{EFD94D21-23FD-4B80-A138-DD76F0B53B99}.Release|x86.Build.0 = Release|Win32
+		{DB4550FB-B9AA-485C-B006-CBE2AB116148}.Debug|Any CPU.ActiveCfg = Debug|Win32
+		{DB4550FB-B9AA-485C-B006-CBE2AB116148}.Debug|x64.ActiveCfg = Debug|x64
+		{DB4550FB-B9AA-485C-B006-CBE2AB116148}.Debug|x64.Build.0 = Debug|x64
+		{DB4550FB-B9AA-485C-B006-CBE2AB116148}.Debug|x86.ActiveCfg = Debug|Win32
+		{DB4550FB-B9AA-485C-B006-CBE2AB116148}.Debug|x86.Build.0 = Debug|Win32
+		{DB4550FB-B9AA-485C-B006-CBE2AB116148}.Release|Any CPU.ActiveCfg = Release|Win32
+		{DB4550FB-B9AA-485C-B006-CBE2AB116148}.Release|x64.ActiveCfg = Release|x64
+		{DB4550FB-B9AA-485C-B006-CBE2AB116148}.Release|x64.Build.0 = Release|x64
+		{DB4550FB-B9AA-485C-B006-CBE2AB116148}.Release|x86.ActiveCfg = Release|Win32
+		{DB4550FB-B9AA-485C-B006-CBE2AB116148}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

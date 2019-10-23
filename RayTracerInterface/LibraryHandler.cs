@@ -43,7 +43,7 @@ namespace RayTracerInterface {
 		/// <summary>
 		/// Restarts the application in order to unload the old dll and then load in the new version
 		/// </summary>
-		/// <param name="p">path to ne new dll</param>
+		/// <param name="p">path to new dll</param>
 		private static void Reboot(string p) {
 			Process.Start(Assembly.GetExecutingAssembly().Location, $"\"{p}\"");
 			Environment.Exit(0);
@@ -83,7 +83,7 @@ namespace RayTracerInterface {
 			}
 		}
 		/// <summary>
-		/// Calls the DLL to recieve a output DLL filename
+		/// Calls the DLL to receive a output DLL filename
 		/// <para>
 		///		Returns "_" when the given index is out of range
 		/// </para>
@@ -94,7 +94,7 @@ namespace RayTracerInterface {
 		[return: MarshalAs(UnmanagedType.BStr)]
 		private static extern string OutputFile(int file);
 		/// <summary>
-		/// Internal storage for dynamically created outputfile list
+		/// Internal storage for dynamically created output-file list
 		/// </summary>
 		private static List<string> outfiles;
 		/// <summary>
@@ -121,6 +121,7 @@ namespace RayTracerInterface {
 		/// <param name="y">height</param>
 		/// <returns></returns>
 		[DllImport(dll, CallingConvention = CallingConvention.Cdecl)]
+		[return: MarshalAs(UnmanagedType.U1)]
 		public static extern bool render(int Option, int x, int y);
 		/// <summary>
 		/// Returns the number of rendered columns

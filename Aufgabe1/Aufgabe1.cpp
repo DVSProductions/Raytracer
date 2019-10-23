@@ -15,7 +15,7 @@ Renderer* renderer;// = ConstantColor(red);
 /// <summary>
 /// Generates the colors for every pixel and updates it's progress
 /// </summary>
-void RenderLoop() {
+void RenderLoop() noexcept {
 #if DLL_DEBUG
 	cout << "->RL";
 	Sleep(100);
@@ -28,7 +28,7 @@ void RenderLoop() {
 #endif
 			image->setPixel(x, y, renderer->getColor(x, y));
 #if DLL_DEBUG
-			cout << "->W"<<endl;
+			cout << "->W" << endl;
 			Sleep(10);
 #endif
 		}
@@ -57,17 +57,15 @@ void rendercycle(std::string filename) {
 /// Launches the render thread
 /// </summary>
 /// <param name="filename">output file</param>
-/// <param name="rend">renderer to use</param>
-void RenderWorker(std::string filename, Renderer* rend) {
+void RenderWorker(std::string filename) {
 #if DLL_DEBUG
 	cout << "->RW";
 	Sleep(100);
 #endif
 	progress = 0;
 	lodepngReturn = -1;
-	renderer = rend;
 #if DLL_DEBUG
-	cout << "->go"<<endl;
+	cout << "->go" << endl;
 	Sleep(100);
 #endif
 	worker = std::thread(rendercycle, filename);
@@ -79,25 +77,21 @@ void RenderWorker(std::string filename, Renderer* rend) {
 /// <param name="Option">fileIDX</param>
 bool workswitch(int Option) {
 #if DLL_DEBUG
-	cout << "WS"<<endl;
+	cout << "WS" << endl;
 #endif
 	switch (Option) {
-		case(0):
-		{
-			RenderWorker(files[Option], new ConstantColor(&red));
-			return true;
-		}
-		case(1):
-		{
-			RenderWorker(files[Option], new ColoredSquare(&color(1, 1, 0), 15, width, height));
-			return true;
-		}
-		case(2):
-		{
-			RenderWorker(files[Option], new Checkered(&gray, &white, &color(1, 1, 0), 1, 15, width, height));
-			return true;
-		}
-		default:
-			return false;
+	case(0):
+		renderer = new ConstantColor(&c_red);
+		break;
+	case(1):
+		renderer = new ColoredSquare(&color(1, 1, 0), 15, width, height);
+		break;
+	case(2):
+		renderer = new Checkered(&c_gray, &c_white, &color(1, 1, 0), 1, 15, width, height);
+		break;
+	default:
+		return false;
 	}
+	RenderWorker(files[Option]);
+	return true;
 }

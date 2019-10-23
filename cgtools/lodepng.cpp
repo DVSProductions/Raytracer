@@ -125,7 +125,7 @@ static void lodepng_memcpy(void* LODEPNG_RESTRICT dst,
 static size_t lodepng_strlen(const char* a) {
 	const char* orig = a;
 	/* avoid warning about unused function in case of disabled COMPILE... macros */
-	(void)lodepng_strlen;
+	//(void)lodepng_strlen;
 	while (*a) a++;
 	return (size_t)(a - orig);
 }
@@ -720,7 +720,7 @@ static unsigned HuffmanTree_makeTable(HuffmanTree* tree) {
 	/* compute total table size: size of first table plus all secondary tables for symbols longer than FIRSTBITS */
 	size = headsize;
 	for (i = 0; i < headsize; ++i) {
-		unsigned l = maxlens[i];
+		const unsigned l = maxlens[i];
 		if (l > FIRSTBITS) size += (1u << (l - FIRSTBITS));
 	}
 	tree->table_len = (unsigned char*)lodepng_malloc(size * sizeof(*tree->table_len));
@@ -736,10 +736,10 @@ static unsigned HuffmanTree_makeTable(HuffmanTree* tree) {
 	/*fill in the first table for long symbols: max prefix size and pointer to secondary tables*/
 	pointer = headsize;
 	for (i = 0; i < headsize; ++i) {
-		unsigned l = maxlens[i];
+		const unsigned l = maxlens[i];
 		if (l <= FIRSTBITS) continue;
 		tree->table_len[i] = l;
-		tree->table_value[i] = pointer;
+		tree->table_value[i] =static_cast<unsigned short>(pointer);
 		pointer += (1u << (l - FIRSTBITS));
 	}
 	lodepng_free(maxlens);
@@ -762,7 +762,7 @@ static unsigned HuffmanTree_makeTable(HuffmanTree* tree) {
 				unsigned index = reverse | (j << l);
 				if (tree->table_len[index] != 16) return 55; /*invalid tree: long symbol shares prefix with short symbol*/
 				tree->table_len[index] = l;
-				tree->table_value[index] = i;
+				tree->table_value[index] = static_cast<unsigned short>( i);
 			}
 		}
 		else {
@@ -780,7 +780,7 @@ static unsigned HuffmanTree_makeTable(HuffmanTree* tree) {
 				unsigned reverse2 = reverse >> FIRSTBITS; /* l - FIRSTBITS bits */
 				unsigned index2 = start + (reverse2 | (j << (l - FIRSTBITS)));
 				tree->table_len[index2] = l;
-				tree->table_value[index2] = i;
+				tree->table_value[index2] = static_cast<unsigned short>(i);
 			}
 		}
 	}
@@ -3727,7 +3727,7 @@ void lodepng_compute_color_stats(LodePNGColorStats* stats,
 	if (!numcolors_done) {
 		for (i = 0; i < stats->numcolors; i++) {
 			const unsigned char* color = &stats->palette[i * 4];
-			color_tree_add(&tree, color[0], color[1], color[2], color[3], i);
+			color_tree_add(&tree, color[0], color[1], color[2], color[3], static_cast<unsigned int>(i));
 		}
 	}
 
@@ -4701,8 +4701,8 @@ static unsigned readChunk_iCCP(LodePNGInfo* info, const LodePNGDecompressSetting
 		length, zlibsettings);
 	if (!error) {
 		if (decoded.size) {
-			info->iccp_profile_size = decoded.size;
-			info->iccp_profile = (unsigned char*)lodepng_malloc(decoded.size);
+			info->iccp_profile_size =static_cast<unsigned int>( decoded.size);
+			info->iccp_profile =static_cast<unsigned char*>(lodepng_malloc(decoded.size));
 			if (info->iccp_profile) {
 				lodepng_memcpy(info->iccp_profile, decoded.data, decoded.size);
 			}
