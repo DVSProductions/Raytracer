@@ -1,5 +1,6 @@
 #pragma once
 #include "Renderer.h"
+using namespace cgtools;
 class ColoredSquare : public Renderer {
 	double left, right, top, bottom;
 	Color color;

@@ -3,3 +3,4 @@
 #include "Renderer.h"
 #include "Image.h"
 #include "ImageWriter.h"
+using namespace cgtools;

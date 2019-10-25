@@ -1,4 +1,5 @@
 #include "vector.h"
+using namespace cgtools;
 vector vector::operator-()noexcept {
 	return vector(-x, -y, -z);
 }

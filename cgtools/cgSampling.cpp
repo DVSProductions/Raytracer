@@ -1,5 +1,6 @@
 #include "cgSampling.h"
 #include "DLLInfo.h"
+using namespace cgtools;
 cgSampling::cgSampling(uint16_t samples, Renderer* ActualRenderer) {
 	child = ActualRenderer;
 	this->samples = samples;

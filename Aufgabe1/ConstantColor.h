@@ -1,5 +1,6 @@
 #pragma once
 #include "Renderer.h"
+using namespace cgtools;
 class ConstantColor : public Renderer {
 	Color color;
 public:

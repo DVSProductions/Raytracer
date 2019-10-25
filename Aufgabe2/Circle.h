@@ -1,5 +1,6 @@
 #pragma once
 #include "Color.h"
+using cgtools::Color;
 /// <summary>
 /// This class describes a circle in 2d space
 /// </summary>

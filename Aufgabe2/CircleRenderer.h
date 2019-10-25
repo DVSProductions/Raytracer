@@ -2,6 +2,7 @@
 #include "Renderer.h"
 #include <vector>
 #include "Circle.h"
+using namespace cgtools;
 class CircleRenderer :public Renderer {
 	/// <summary>
 	/// <see cref="Circle"/> storage

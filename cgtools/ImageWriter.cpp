@@ -2,9 +2,7 @@
 #include "lodepng.h"
 #include <exception>
 #include <memory>
-
-
-
+using namespace cgtools;
 unsigned int ImageWriter::write(std::string filename, const std::unique_ptr<double[]> &data, size_t width, size_t height, bool linear) {
 	std::vector<uint8_t> parsed;
 	parsed.reserve(4ul * width * height);

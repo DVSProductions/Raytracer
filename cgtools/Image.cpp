@@ -1,11 +1,12 @@
 #include "Image.h"
 #include "ImageWriter.h"
-using namespace std;
+using namespace cgtools;
+using std::make_unique;
 Image::Image(size_t width, size_t height, double gamma) {
 	this->gamma = 1.0 / gamma;
 	sizeX = width;
 	sizeY = height;
-	buffer = std::make_unique< double[]>(height * width * 3ul);
+	buffer = make_unique< double[]>(height * width * 3ul);
 }
 
 void Image::setPixel(size_t x, size_t y, Color color) noexcept {

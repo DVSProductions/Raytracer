@@ -1,6 +1,7 @@
 #pragma once
 #include "Renderer.h"
 #include <random>
+using namespace cgtools;
 /// <summary>
 /// The Stratified Sampling class implements a very easy way to super sample any other renderer
 /// <para>

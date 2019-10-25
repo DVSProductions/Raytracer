@@ -6,7 +6,6 @@
 /// DEFINE THIS IN YOUR DLL
 /// </summary>
 bool workswitch(int Option);
-//#include "Renderer1.cpp"
 /// <summary>
 /// Converts a regular c-style string to a BSTR for usage in c#
 /// </summary>

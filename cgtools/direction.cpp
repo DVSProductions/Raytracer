@@ -1,6 +1,7 @@
 #include "direction.h"
 #include <math.h>
 
+using namespace cgtools;
 direction::direction(double x, double y, double z) noexcept :vector(x, y, z) {}
 
 direction direction::operator+(const direction& b) noexcept {
@@ -26,10 +27,10 @@ direction direction::operator~() noexcept {
 	return *this / !*this;
 }
 
-Color direction::shade(const Color &c) noexcept {
+cgtools::Color direction::shade(const cgtools::Color &c) noexcept {
 	direction lightDir = ~direction(1, 1, 0.5);
-	Color ambient = 0.1 * c;
-	const Color diffuse = (0.9 * fmax(0, lightDir[*this])) * c;
+	auto ambient = 0.1 * c;
+	const auto diffuse = (0.9 * fmax(0, lightDir[*this])) * c;
 	return ambient + diffuse;
 }
 

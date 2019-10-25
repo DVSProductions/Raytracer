@@ -1,5 +1,6 @@
 #include "Color.h"
 #include <cmath>
+using namespace cgtools;
 Color::Color()noexcept {
 	r = 0;
 	g = 0;
@@ -22,38 +23,38 @@ Color::Color(const Color* toCopy)noexcept {
 	g = toCopy->g;
 	b = toCopy->b;
 };
-Color::Color(Color * toCopy)noexcept {
+Color::Color(Color* toCopy)noexcept {
 	r = toCopy->r;
 	g = toCopy->g;
 	b = toCopy->b;
 }
 
 
-Color Color::operator+(const Color & a) noexcept{
+Color Color::operator+(const Color& a) noexcept {
 	return Color(a.r + r, a.g + g, a.b + b);
 }
 
-Color Color::operator-(const Color & a) noexcept {
+Color Color::operator-(const Color& a) noexcept {
 	return Color(r - a.r, g - a.g, b - a.g);
 }
 
-Color Color::operator*(const Color & c) noexcept {
+Color Color::operator*(const Color& c) noexcept {
 	return Color(c.r * r, c.g * g, c.b * b);
 }
 
-Color Color::operator*(const double &s) noexcept {
+Color Color::operator*(const double& s) noexcept {
 	return Color(s * r, s * g, s * b);
 }
 
-Color Color::operator/(const double &s) noexcept {
+Color Color::operator/(const double& s) noexcept {
 	return Color(r / s, g / s, b / s);
 }
 
-Color Color::clamp(const Color & v)  noexcept {
+Color Color::clamp(const Color& v)  noexcept {
 	return color(fmin(1, fmax(v.r, 0)), fmin(1, fmax(v.g, 0)), fmin(1, fmax(v.b, 0)));
 }
 
-Color Color::hsvToRgb(const Color & hsv) noexcept {
+Color Color::hsvToRgb(const Color& hsv) noexcept {
 	return hsv.b * (hsv.g * (hue(hsv.r) - c_white) + c_white);
 }
 
@@ -70,10 +71,14 @@ Color Color::RNG(std::mt19937 mt) {
 	return Color(rng(mt), rng(mt), rng(mt));
 }
 
-bool Color::operator==(const Color & v) noexcept{
+bool Color::operator==(const Color& v) noexcept {
 	return v.r == r && v.g == g && v.b == b;
 }
 
-Color operator*(const double &s, const Color& a)noexcept {
+Color operator*(const double& s, const Color& a)noexcept {
 	return Color(s * a.r, s * a.g, s * a.b);
+}
+
+Color cgtools::operator*(const double& s, const Color& a) noexcept {
+	return Color(a.r * s, a.g * s, a.b * s);
 }
