@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup Label="Globals">
+    <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <HasSharedItems>true</HasSharedItems>
+    <ItemsProjectGuid>{9bf4893b-6393-4894-bd45-843434d54cbf}</ItemsProjectGuid>
+  </PropertyGroup>
+  <ItemDefinitionGroup>
+    <ClCompile>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories);$(MSBuildThisFileDirectory)</AdditionalIncludeDirectories>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ProjectCapability Include="SourceItemsFromImports" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Hit.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Ray.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)renderable.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Scene.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Hit.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Ray.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)renderable.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Scene.h" />
+  </ItemGroup>
+</Project>

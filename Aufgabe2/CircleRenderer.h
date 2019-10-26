@@ -17,6 +17,6 @@ public:
 	/// <param name="width">height of the image</param>
 	/// <param name="height">width of the image</param>
 	CircleRenderer(int width, int height);
-	Color getColor(double x, double y)noexcept override;
+	Color getColor(double x, double y) override;
 };
 
