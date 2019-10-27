@@ -6,6 +6,6 @@ class ConstantColor : public Renderer {
 public:
 	ConstantColor(const Color* color)noexcept;
 	ConstantColor(Color* color)noexcept;
-	Color getColor(double x, double y)noexcept override;
+	Color getColor(double x, double y) override;
 };
 

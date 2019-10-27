@@ -20,6 +20,7 @@ namespace RayTracerInterface {
 			InitializeComponent();
 			foreach (var s in LibraryHandler.OutputFiles)
 				cbFiles.Items.Add(s);
+			if (cbFiles.Items.Count == 1) cbFiles.SelectedIndex = 0;
 			this.switchToRenderPage = switchToRenderPage;
 		}
 		/// <summary>

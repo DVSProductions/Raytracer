@@ -1,6 +1,7 @@
 #pragma once
 #include "Renderer.h"
 #include <random>
+#include<memory>
 using namespace cgtools;
 /// <summary>
 /// The Stratified Sampling class implements a very easy way to super sample any other renderer
@@ -17,7 +18,7 @@ class StratifiedSampling : public Renderer {
 	/// <summary>
 	/// Pointer to the renderer that provides us with an image to supersample
 	/// </summary>
-	Renderer* child;
+	std::unique_ptr<Renderer> child;
 	/// <summary>
 	/// Samples squared. Saves time.
 	/// </summary>
@@ -36,13 +37,13 @@ public:
 	/// </summary>
 	/// <param name="samples"></param>
 	/// <param name="ActualRenderer"></param>
-	StratifiedSampling(int samples, Renderer* ActualRenderer)noexcept;
+	StratifiedSampling(int samples, std::unique_ptr<Renderer> ActualRenderer);
 	/// <summary>
 	/// Super samples the contained renderer
 	/// </summary>
 	/// <param name="x">position to start sampling X</param>
 	/// <param name="y">position to start sampling Y</param>
 	/// <returns></returns>
-	Color getColor(double x, double y)noexcept override;
+	Color getColor(double x, double y) override;
 };
 

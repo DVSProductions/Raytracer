@@ -10,7 +10,7 @@ ConstantColor::ConstantColor(const Color* color)noexcept {
 	this->color = Color(color);
 }
 
-Color ConstantColor::getColor(double x, double y) noexcept{
+Color ConstantColor::getColor(double x, double y){
 	//return &color;
 	//return Color((sin(x * M_PI / 180.0) + 1) / 2.0, (cos(y * M_PI / 180.0) + 1) / 2, (sin(y * M_PI / 180.0) + 1)/2);
 	// new Color((cos(y * M_PI / 180.0) + 1) / 4 + (cos(x * M_PI / 180.0) + 1) / 4, (tan((x - M_PI / 2)) + 1) / 4 + (tan((y/10 - M_PI / 2)) + 1) / 4, (sin(y / 10 * M_PI / 180.0) + 1) / 4 + (sin(x * M_PI / 180.0) + 1) / 4);

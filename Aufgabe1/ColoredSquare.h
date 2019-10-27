@@ -16,10 +16,6 @@ public:
 	/// <summary>
 	/// Returns our color if the square is in that coordinate or black if is it not
 	/// </summary>
-	Color getColor(int x, int y) noexcept;
-	/// <summary>
-	/// We don't need double precision here
-	/// </summary>
-	inline Color getColor(double x, double y) noexcept override  { return getColor(static_cast<int>(x), static_cast<int>(y)); }
+	Color getColor(double x, double y) override;
 };
 

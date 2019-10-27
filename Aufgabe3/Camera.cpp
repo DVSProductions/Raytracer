@@ -4,4 +4,4 @@ Camera::Camera(const point& pos, const double& angle): position(pos.x,pos.y,pos.
 	this->angle = angle;
 }
 
-void Camera::setScene(DDD::Scene* s) { scene = s; }
+void Camera::setScene(std::shared_ptr<DDD::Scene> s) { scene=s; }

@@ -18,7 +18,7 @@ namespace cgtools {
 		/// <summary>
 		/// Creates a color with specified RGB values
 		/// </summary>
-		Color(double r, double g, double b) noexcept;
+		Color(double r, double g, double b)noexcept;
 		//Color(double r,double g, double b,bool deletable);
 		/// <summary>
 		/// Generates a copy of another Color object (for safe keeping)
@@ -30,18 +30,18 @@ namespace cgtools {
 		/// </summary>
 		/// <param name="toCopy">Color to clone</param>
 		Color(Color* toCopy) noexcept;
-		Color operator+(const Color& a) noexcept;
-		Color operator-(const Color& a) noexcept;
-		Color operator*(const Color& c) noexcept;
-		Color operator*(const double& s) noexcept;
-		friend Color operator*(const double& s, const Color& a) noexcept;
+		Color operator+(const Color& a) const  noexcept;
+		Color operator-(const Color& a) const  noexcept;
+		Color operator*(const Color& c) const  noexcept;
+		Color operator*(const double& s) const  noexcept;
+		friend Color operator*(const double& s, const Color& a)  noexcept;
 		Color operator/(const double& s)noexcept;
 		static Color clamp(const Color& v) noexcept;
 		static Color hsvToRgb(const Color& hsv) noexcept;
 		static Color hue(double h) noexcept;
 		static Color RNG(std::mt19937 mt);
 		std::string toString();
-		bool operator==(const Color& c) noexcept;
+		bool operator==(const Color& c) const noexcept;
 	};
 
 	static const Color c_black = Color(0, 0, 0);

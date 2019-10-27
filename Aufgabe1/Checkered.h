@@ -1,6 +1,7 @@
 #pragma once
 #include "Renderer.h"
 #include "ColoredSquare.h"
+#include <memory>
 class Checkered : public Renderer {
 	/// <summary>
 	/// Background colors
@@ -13,7 +14,7 @@ class Checkered : public Renderer {
 	/// <summary>
 	/// Generates the square for us
 	/// </summary>
-	ColoredSquare child;
+	std::unique_ptr<ColoredSquare> child;
 public:
 	/// <summary>
 	/// Creates a new Checkered Image Renderer<para>
@@ -33,6 +34,6 @@ public:
 	/// This GetColor method first calls the ColoredSquare renderer to find the square in the middle, and then calculates
 	/// the pattern using modulo if the ColoredSquare returns black
 	/// </summary>
-	Color getColor(double x, double y) noexcept override;
+	Color getColor(double x, double y) override;
 };
 

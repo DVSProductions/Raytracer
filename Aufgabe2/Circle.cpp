@@ -24,7 +24,7 @@ Circle::Circle(double x, double y, double radius, Color c) noexcept {
 /// <param name="x"></param>
 /// <param name="y"></param>
 /// <returns></returns>
-bool Circle::isPointInCircle(double x, double y)noexcept {
+bool Circle::isPointInCircle(double x, double y) noexcept {
 	//Avoid costly math if out of bounds
 	if (x > boundXP || x<boundXN || y > boundYP || y < boundYN)return false;
 	if (x < innerXP && x>innerXN&& y < innerYP && y > innerYN)return true;//saves 20%

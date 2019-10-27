@@ -1,6 +1,6 @@
 #include "ColoredSquare.h"
 #include "DLLInfo.h"
-ColoredSquare::ColoredSquare(const Color * color, int a, int screenX, int screenY) noexcept {
+ColoredSquare::ColoredSquare(const Color* color, int a, int screenX, int screenY) noexcept {
 #if DLL_DEBUG
 	cout << "->CSQ()";
 	Sleep(100);
@@ -21,6 +21,6 @@ ColoredSquare::ColoredSquare(const Color * color, int a, int screenX, int screen
 #endif
 }
 
-Color ColoredSquare::getColor(int x, int y) noexcept {
-	return (x > left&& x<right && y>top&& y < bottom ? &color :c_black);
+Color ColoredSquare::getColor(double x, double y) {
+	return (x > left&& x<right && y>top&& y < bottom ? &color : c_black);
 }

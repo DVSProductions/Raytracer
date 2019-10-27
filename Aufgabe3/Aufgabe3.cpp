@@ -1,3 +1,5 @@
+#define _USE_MATH_DEFINES
+#include <cmath>
 #include "DllInfo.h"
 #include "cgtools.h"
 #include "Image.h"
@@ -10,17 +12,18 @@
 #include "cgSampling.h"
 #include "Scene.h"
 #include "Sphere.h"
+
 const std::string files[] = { "a03-one-sphere.png","_" };
-DDD::Scene* Playground;
-Camera* cam;
+std::shared_ptr <DDD::Scene> Playground;
+std::shared_ptr <Camera> cam;
 /// <summary>
 /// targetimage
 /// </summary>
-Image* image;
+std::unique_ptr<Image> image;
 /// <summary>
 /// Renderer storage
 /// </summary>
-Renderer* renderer;// = ConstantColor(red);
+std::unique_ptr<Renderer> renderer;
 /// <summary>
 /// Generates the colors for every pixel and updates it's progress
 /// <para>
@@ -61,25 +64,23 @@ void rendercycle(std::string filename) {
 	cout << "->RC";
 	Sleep(1000);
 #endif
-	Image* i = new Image(width, height, 2.2);
-	image = i;
-	std::vector<std::thread*> workers;
+	image = std::make_unique<Image>(Image(width, height, 2.2));
+	std::vector<std::unique_ptr<std::thread>> workers;
 #if DLL_DEBUG
 	cout << "->LT";
 	Sleep(100);
 #endif
 	int th = std::thread::hardware_concurrency();
 	for (int n = 0; n < th; n++) {
-		workers.push_back(new std::thread(RenderLoop, n, th));
+		workers.push_back(std::make_unique<std::thread>(std::thread(RenderLoop, n, th)));
 	}
 #if DLL_DEBUG
 	std::cout << "->Wait";
 	Sleep(1000);
 #endif
 	for (int n = 0; n < workers.size(); n++) {
-		const auto t = workers[n];
-		while (!t->joinable())Sleep(100);
-		t->join();
+		while (!workers.at(n)->joinable())Sleep(100);
+		workers.at(n)->join();
 	}
 #if DLL_DEBUG
 	cout << "->SP";
@@ -92,6 +93,7 @@ void rendercycle(std::string filename) {
 	Sleep(2000);
 #endif
 	lodepngReturn = image->write(filename);
+	image.reset();
 }
 
 
@@ -114,19 +116,20 @@ void RenderWorker(std::string filename) {
 	worker.detach();
 }
 void setsampleQuality(int samples = 10) {
-	if(renderer!=nullptr)
-	delete[]renderer;
-	renderer = new cgSampling(samples, cam);
+	if (renderer != nullptr)
+		renderer.reset();
+	renderer = std::make_unique<cgSampling>(cgSampling(samples, cam));
 }
 bool prepared = false;
 void prepare() {
 	if (prepared)return;
 	prepared = true;
-	Playground = new DDD::Scene();
-	cam = new PinholeCamera(1, cgtools::point(0, 0, 0));
+	Playground = std::make_shared <DDD::Scene>();
+	//Playground->addObject(new Sphere(point(100, 100, 100), 50, c_red));
+	cam = std::make_shared < PinholeCamera>(PinholeCamera(M_PI/2, cgtools::point(0, 0, 0)));
 	cam->setScene(Playground);
-	Playground->addObject(new Sphere(point(10, 10, 10), 5, c_red));
-	renderer = new cgtools::cgSampling(10, cam);
+	Playground->objects->push_back(new Sphere(point(0, 0, -3), 1,  Color(1,0,0)));
+	setsampleQuality();
 }
 /// <summary>
 /// Decides which File to render and with what options

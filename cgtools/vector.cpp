@@ -36,3 +36,10 @@ double cgtools::vector::operator[](const int& b) const noexcept {
 double cgtools::vector::scalar(const vector& v) const noexcept {
 	return (x * v.x) + (y * v.y) + (z * v.z);
 }
+double dostaging(int pow, double input)noexcept {
+	return floor(input*pow) / pow;
+}
+vector cgtools::vector::reduceAccuracy(uint8_t power) const noexcept {
+	const long num = pow(10,power);
+	return vector(dostaging(num,x),dostaging(num,y),dostaging(num,z));
+}

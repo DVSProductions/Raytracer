@@ -37,6 +37,6 @@ public:
 	/// <summary>
 	/// Detects if Point is within circle
 	/// </summary>
-	bool isPointInCircle(double x, double y)noexcept;
+	bool isPointInCircle(double x, double y) noexcept;
 };
 

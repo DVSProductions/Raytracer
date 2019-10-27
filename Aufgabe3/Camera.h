@@ -3,14 +3,16 @@
 #include <Renderer.h>
 #include "Ray.h"
 #include "Scene.h"
+#include <memory>
 using namespace cgtools;
 class Camera :public  Renderer {
 protected:
-	DDD::Scene * scene=nullptr;
+	std::shared_ptr<DDD::Scene> scene;
 	point position;
 	double angle;
 	Camera(const point& pos, const double& angle);
 public:
-	void setScene(DDD::Scene* s);
+	void setScene(std::shared_ptr<DDD::Scene> s);
+	//void setScene(std::shared_ptr<DDD::Scene>& s);
 };
 

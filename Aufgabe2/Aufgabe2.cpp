@@ -12,15 +12,16 @@
 #include "Circle.h"
 #include "CircleRenderer.h"
 #include "StratifiedSampling.h"
+#define exterminate(x) delete[] x;x=nullptr;
 const std::string files[] = { "a02-discs.png","a02-supersampling.png","_" };
 /// <summary>
 /// targetimage
 /// </summary>
-Image* image;
+std::unique_ptr<Image> image;
 /// <summary>
 /// Renderer storage
 /// </summary>
-Renderer* renderer;// = ConstantColor(red);
+std::unique_ptr<Renderer> renderer;// = ConstantColor(red);
 /// <summary>
 /// Generates the colors for every pixel and updates it's progress
 /// <para>
@@ -61,25 +62,23 @@ void rendercycle(std::string filename) {
 	cout << "->RC";
 	Sleep(1000);
 #endif
-	Image* i = new Image(width, height, 2.2);
-	image = i;
-	std::vector<std::thread*> workers;
+	image = std::make_unique<Image>(Image(width, height, 2.2));
+	std::vector<std::unique_ptr<std::thread>> workers;
 #if DLL_DEBUG
 	cout << "->LT";
 	Sleep(100);
 #endif
 	int th = std::thread::hardware_concurrency();
 	for (int n = 0; n < th; n++) {
-		workers.push_back(new std::thread(RenderLoop, n, th));
+		workers.push_back(std::make_unique<std::thread>(std::thread(RenderLoop, n, th)));
 	}
 #if DLL_DEBUG
 	std::cout << "->Wait";
 	Sleep(1000);
 #endif
 	for (int n = 0; n < workers.size(); n++) {
-		const auto t = workers[n];
-		while (!t->joinable())Sleep(100);
-		t->join();
+		while (!workers.at(n)->joinable())Sleep(100);
+		workers.at(n)->join();
 	}
 #if DLL_DEBUG
 	cout << "->SP";
@@ -92,6 +91,8 @@ void rendercycle(std::string filename) {
 	Sleep(2000);
 #endif
 	lodepngReturn = image->write(filename);
+	image.reset();
+	renderer.reset();
 }
 
 
@@ -123,14 +124,14 @@ bool workswitch(int Option) {
 #endif
 	switch (Option) {
 	case(0):
-		renderer = new CircleRenderer(width, height);
+		renderer = std::make_unique<CircleRenderer>(CircleRenderer(width, height));
 		break;
 	case(1):
-		renderer = new StratifiedSampling(10, new CircleRenderer(width, height));
+		renderer = std::make_unique <StratifiedSampling>(StratifiedSampling(10, std::make_unique<CircleRenderer>(CircleRenderer(width, height))));
 		break;
 	default:
 		return false;
-	}
+}
 	RenderWorker(files[Option]);
 	return true;
 }

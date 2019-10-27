@@ -1,17 +1,27 @@
 #include "cgSampling.h"
 #include "DLLInfo.h"
 using namespace cgtools;
-cgSampling::cgSampling(uint16_t samples, Renderer* ActualRenderer) {
-	child = ActualRenderer;
+//cgtools::cgSampling::cgSampling(short samples, std::unique_ptr<Renderer> ActualRenderer) noexcept {
+//	this->child.swap(ActualRenderer);
+//	this->samples = samples;
+//	//std::random_device rd;
+//	//mt = std::mt19937(rd());
+//	mt = std::mt19937(10);
+//	dist = std::uniform_real_distribution<double>(0, 1);
+//	samsq = static_cast<short>(samples)* static_cast<short>(samples);
+//}
+
+cgtools::cgSampling::cgSampling(short samples, std::shared_ptr<Renderer> ActualRenderer) noexcept {
+	this->child=ActualRenderer;
 	this->samples = samples;
 	//std::random_device rd;
 	//mt = std::mt19937(rd());
 	mt = std::mt19937(10);
 	dist = std::uniform_real_distribution<double>(0, 1);
-	samsq = static_cast<double>(static_cast<uint64_t>(samples)* static_cast<uint64_t>(samples));
+	samsq = static_cast<short>(samples)* static_cast<short>(samples);
 }
 
-Color cgSampling::getColor(double x, double y) noexcept{
+Color cgSampling::getColor(double x, double y) {
 #if DLL_DEBUG
 	cout << "[GC";
 #endif

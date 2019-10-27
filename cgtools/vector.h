@@ -1,5 +1,6 @@
 #pragma once
 #include <math.h>
+#include <cstdint>
 namespace cgtools {
 	class vector {
 	protected:
@@ -27,5 +28,6 @@ namespace cgtools {
 		/// <returns></returns>
 		double operator[](const int& b) const noexcept;
 		double scalar(const vector& v) const noexcept;
+		vector reduceAccuracy(uint8_t power)const noexcept;
 	};
 }

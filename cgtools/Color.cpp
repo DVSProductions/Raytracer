@@ -30,19 +30,19 @@ Color::Color(Color* toCopy)noexcept {
 }
 
 
-Color Color::operator+(const Color& a) noexcept {
+Color Color::operator+(const Color& a) const  noexcept {
 	return Color(a.r + r, a.g + g, a.b + b);
 }
 
-Color Color::operator-(const Color& a) noexcept {
+Color Color::operator-(const Color& a) const  noexcept {
 	return Color(r - a.r, g - a.g, b - a.g);
 }
 
-Color Color::operator*(const Color& c) noexcept {
+Color Color::operator*(const Color& c) const  noexcept {
 	return Color(c.r * r, c.g * g, c.b * b);
 }
 
-Color Color::operator*(const double& s) noexcept {
+Color Color::operator*(const double& s) const  noexcept {
 	return Color(s * r, s * g, s * b);
 }
 
@@ -71,14 +71,14 @@ Color Color::RNG(std::mt19937 mt) {
 	return Color(rng(mt), rng(mt), rng(mt));
 }
 
-bool Color::operator==(const Color& v) noexcept {
+bool Color::operator==(const Color& v) const noexcept {
 	return v.r == r && v.g == g && v.b == b;
 }
 
-Color operator*(const double& s, const Color& a)noexcept {
+Color operator*(const double& s, const Color& a) noexcept {
 	return Color(s * a.r, s * a.g, s * a.b);
 }
 
-Color cgtools::operator*(const double& s, const Color& a) noexcept {
+Color cgtools::operator*(const double& s, const Color& a)  noexcept {
 	return Color(a.r * s, a.g * s, a.b * s);
 }
