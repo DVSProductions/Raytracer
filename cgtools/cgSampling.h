@@ -32,14 +32,13 @@ namespace cgtools {
 		/// <param name="samples">squareroot of sample count</param>
 		/// <param name="ActualRenderer"></param>
 		cgSampling(short samples, std::shared_ptr<Renderer> ActualRenderer) noexcept;
-		//cgSampling(short samples, std::shared_ptr<Renderer> &ActualRenderer) noexcept;
 		/// <summary>
 		/// Super samples the contained renderer
 		/// </summary>
 		/// <param name="x">position to start sampling X</param>
 		/// <param name="y">position to start sampling Y</param>
 		/// <returns></returns>
-		Color getColor(double x, double y) override ;
+		Color getColor(double x, double y) override;
 	};
 
 }

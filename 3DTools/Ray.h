@@ -9,7 +9,7 @@ namespace DDD {
 		const direction dir;
 		const double tmin;
 		const double tmax;
-		Ray(point p, direction d, double max, double min);
-		point pointAt(double t) noexcept;
+		Ray(point p, direction d, double max, double min) noexcept;
+		point pointAt(double t)const noexcept;
 	};
 }

@@ -11,7 +11,7 @@ namespace RayTracerInterface {
 		/// <summary>
 		/// Handler to <see cref="MainWindow"/> for switching to <see cref="CompilationSettings"/>
 		/// </summary>
-		Action openNext;
+		readonly Action openNext;
 		public DND(Action onComplete) {
 			InitializeComponent();
 			this.openNext = onComplete;

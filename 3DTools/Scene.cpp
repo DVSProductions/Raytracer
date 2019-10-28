@@ -1,13 +1,19 @@
 #include "Scene.h"
 
-DDD::Scene::Scene() :renderable(cgtools::point(0, 0, 0)) {
+DDD::Scene::Scene()noexcept :renderable(cgtools::point(0, 0, 0)) {
 	objects = std::make_unique <std::vector <DDD::renderable*>>();
 }
 
 void DDD::Scene::addObject(DDD::renderable* obj) {
-	//objects->push_back();
+	objects->push_back(obj);
 }
-DDD::Hit* DDD::Scene::intersect(DDD::Ray r) {
+void DDD::Scene::clear() {
+	const auto end = objects->size();
+	for (size_t n = 0; n != end; n++) 
+		delete[](objects->at(n));
+	objects->clear();
+}
+DDD::Hit* DDD::Scene::intersect(DDD::Ray r)const {
 	Hit* closest = nullptr;
 	const auto end = objects->end();
 	for (auto it = objects->begin(); it != end; it++) {
@@ -17,3 +23,13 @@ DDD::Hit* DDD::Scene::intersect(DDD::Ray r) {
 	}
 	return closest;
 }
+
+DDD::Scene::~Scene() {
+	try {
+		clear();
+	}
+	catch (...) {
+
+	}
+}
+

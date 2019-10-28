@@ -9,10 +9,10 @@ ColoredSquare::ColoredSquare(const Color* color, int a, int screenX, int screenY
 	screenX /= 2;
 	screenY /= 2;
 	a /= 2;
-	left = screenX - a;
-	right = screenX + a;
-	top = screenY - a;
-	bottom = screenY + a;
+	left =static_cast<double>(screenX) - a;
+	right = static_cast<double>(screenX) + a;
+	top = static_cast<double>(screenY) - a;
+	bottom = static_cast<double>(screenY) + a;
 	this->color = Color(color);
 	//blk = Color(black);
 #if DLL_DEBUG
@@ -21,6 +21,6 @@ ColoredSquare::ColoredSquare(const Color* color, int a, int screenX, int screenY
 #endif
 }
 
-Color ColoredSquare::getColor(double x, double y) {
+Color ColoredSquare::getColor(double x, double y)noexcept {
 	return (x > left&& x<right && y>top&& y < bottom ? &color : c_black);
 }

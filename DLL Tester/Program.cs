@@ -37,7 +37,7 @@ namespace DLL_Tester {
 			}
 			Console.WriteLine("Done");
 		}
-		static void Main(string[] args) {
+		static void Main() {
 			LibraryHandler.TryLoadLib(@"..\..\..\x64\Release\Aufgabe3.dll");
 			TestOnce();
 		}

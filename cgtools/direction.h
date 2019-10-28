@@ -5,7 +5,7 @@
 namespace cgtools {
 	class direction : public vector {
 	public:
-		operator std::string()const noexcept{
+		operator std::string()const{
 			return "(point[" + std::to_string(x) + ", " + std::to_string(y) + ", " + std::to_string(z) + "])";
 		}
 		direction operator+(const direction& b) const noexcept;

@@ -5,10 +5,9 @@
 namespace DDD {
 	class renderable {
 	protected:
-
-		renderable(cgtools::point position);
+		renderable(cgtools::point position) noexcept;
 	public:
 		const cgtools::point p;
-		virtual Hit* intersect(Ray r) = 0;
+		virtual Hit* intersect(Ray r)const = 0;
 	};
 }

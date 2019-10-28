@@ -14,6 +14,7 @@
 #include "Sphere.h"
 
 const std::string files[] = { "a03-one-sphere.png","_" };
+const std::string libVersion = "2.0";
 std::shared_ptr <DDD::Scene> Playground;
 std::shared_ptr <Camera> cam;
 /// <summary>
@@ -32,7 +33,7 @@ std::unique_ptr<Renderer> renderer;
 /// </summary>
 /// <param name="offset">my thread index</param>
 /// <param name="total">total number of threads</param>
-void RenderLoop(int offset, int total)noexcept {
+void RenderLoop(int offset, int total) {
 #if DLL_DEBUG
 	cout << "->RL";
 	Sleep(1000);
@@ -126,9 +127,11 @@ void prepare() {
 	prepared = true;
 	Playground = std::make_shared <DDD::Scene>();
 	//Playground->addObject(new Sphere(point(100, 100, 100), 50, c_red));
-	cam = std::make_shared < PinholeCamera>(PinholeCamera(M_PI/2, cgtools::point(0, 0, 0)));
+	const Color gray = Color::fromRGB(60, 60, 60).reverseGamma(2.2);
+	const Color red = Color::fromRGB(0x9B, 0x55, 0x55).reverseGamma(2.2);
+	cam = std::make_shared < PinholeCamera>(PinholeCamera(M_PI / 2, cgtools::point(0, 0, 0), gray));
 	cam->setScene(Playground);
-	Playground->objects->push_back(new Sphere(point(0, 0, -3), 1,  Color(1,0,0)));
+	Playground->addObject(new Sphere(point(0, 0, -3), 1, red));
 	setsampleQuality();
 }
 /// <summary>

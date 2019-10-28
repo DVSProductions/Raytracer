@@ -6,7 +6,7 @@ bool working = false;
 /// <summary>
 /// Main independent thread created by the dll. can do background tasks
 /// </summary>
-std::thread worker;
+std::thread worker{};
 /// <summary>
 /// Shows the amount of columns rendered
 /// </summary>

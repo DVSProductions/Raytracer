@@ -14,6 +14,7 @@
 #include "StratifiedSampling.h"
 #define exterminate(x) delete[] x;x=nullptr;
 const std::string files[] = { "a02-discs.png","a02-supersampling.png","_" };
+const std::string libVersion = "1.0";
 /// <summary>
 /// targetimage
 /// </summary>
@@ -30,7 +31,7 @@ std::unique_ptr<Renderer> renderer;// = ConstantColor(red);
 /// </summary>
 /// <param name="offset">my thread index</param>
 /// <param name="total">total number of threads</param>
-void RenderLoop(int offset, int total)noexcept {
+void RenderLoop(int offset, int total) {
 #if DLL_DEBUG
 	cout << "->RL";
 	Sleep(1000);

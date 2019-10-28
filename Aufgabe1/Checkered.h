@@ -29,11 +29,11 @@ public:
 	/// <param name="rectA">Rectangle height/width</param>
 	/// <param name="screenX">total width</param>
 	/// <param name="screenY">total height</param>
-	Checkered(const Color* bgA, const Color* bgB, const Color* rect, int bgMOD, int rectA, int screenX, int screenY) noexcept;
+	Checkered(const Color* bgA, const Color* bgB, const Color* rect, int bgMOD, int rectA, int screenX, int screenY);
 	/// <summary>
 	/// This GetColor method first calls the ColoredSquare renderer to find the square in the middle, and then calculates
 	/// the pattern using modulo if the ColoredSquare returns black
 	/// </summary>
-	Color getColor(double x, double y) override;
+	Color getColor(double x, double y) noexcept override;
 };
 

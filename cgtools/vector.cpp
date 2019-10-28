@@ -40,6 +40,6 @@ double dostaging(int pow, double input)noexcept {
 	return floor(input*pow) / pow;
 }
 vector cgtools::vector::reduceAccuracy(uint8_t power) const noexcept {
-	const long num = pow(10,power);
+	const long num = static_cast<long>(pow(10,power));
 	return vector(dostaging(num,x),dostaging(num,y),dostaging(num,z));
 }

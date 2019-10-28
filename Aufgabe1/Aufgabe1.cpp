@@ -9,13 +9,13 @@
 #include "Checkered.h"
 #include <Windows.h>
 const std::string files[] = { "a01-image.png","a01-square.png","a01-checkered-background.png","_" };
-
+const std::string libVersion = "1.0";
 Image* image;
 Renderer* renderer;// = ConstantColor(red);
 /// <summary>
 /// Generates the colors for every pixel and updates it's progress
 /// </summary>
-void RenderLoop() noexcept {
+void RenderLoop() {
 #if DLL_DEBUG
 	cout << "->RL";
 	Sleep(100);

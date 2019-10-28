@@ -17,9 +17,11 @@ class PinholeCamera :public Camera {
 	double w0_5, h0_5;
 	double a05tan;
 	double zpre;
+	Color background;
 public:
-	DDD::Ray generateRay(double x, double y);
-	PinholeCamera(double angle, const point& position);
+	PinholeCamera(double angle, const point& position, const Color& background) noexcept;
+	void precalculation(double angle) noexcept;
+	DDD::Ray generateRay(double x, double y) noexcept;
 	Color getColor(double x, double y) override;
 };
 

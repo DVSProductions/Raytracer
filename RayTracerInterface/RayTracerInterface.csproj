@@ -78,8 +78,12 @@
       <DependentUpon>Abgabe.xaml</DependentUpon>
     </Compile>
     <Compile Include="IRenderPage.cs" />
+    <Compile Include="Renderer.cs" />
     <Compile Include="RenderPage.xaml.cs">
       <DependentUpon>RenderPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="SceneBuilder.xaml.cs">
+      <DependentUpon>SceneBuilder.xaml</DependentUpon>
     </Compile>
     <Page Include="Abgabe.xaml">
       <SubType>Designer</SubType>
@@ -113,6 +117,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="RenderPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="SceneBuilder.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

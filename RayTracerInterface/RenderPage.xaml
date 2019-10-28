@@ -9,8 +9,8 @@
       Title="RenderPage">
 
 	<Grid Background="Black">
-		<Button x:Name="btExport" Content="Open location" Margin="5" Height="30" Width="100" VerticalAlignment="Bottom" HorizontalAlignment="Right" Style="{DynamicResource BTStyle}" Click="btExport_Click"/>
-		<Label HorizontalAlignment="Center" x:Name="lbTime" Height="30" FontSize="20" Padding="0" VerticalAlignment="Bottom" HorizontalContentAlignment="Center" Foreground="White" Content="5000"/>
+		<Button x:Name="btExport" Visibility="Collapsed" Content="Open location" Margin="5" Height="30" Width="100" VerticalAlignment="Bottom" HorizontalAlignment="Right" Style="{DynamicResource BTStyle}" Click="btExport_Click"/>
+		<Label HorizontalAlignment="Center" Visibility="Collapsed" x:Name="lbTime" Height="30" FontSize="20" Padding="0" VerticalAlignment="Bottom" HorizontalContentAlignment="Center" Foreground="White" Content="5000"/>
 		<ProgressBar Margin="-25" x:Name="pbStatus" Background="{DynamicResource BGColor}" Foreground="{DynamicResource LightRed}" Value="11">
 			<ProgressBar.Effect>
 				<BlurEffect Radius="50"/>

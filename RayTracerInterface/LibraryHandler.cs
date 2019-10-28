@@ -11,7 +11,7 @@ namespace RayTracerInterface {
 	/// <summary>
 	/// This class contains the basic interface with a renderer DLL
 	/// </summary>
-	internal class LibraryHandler {
+	internal partial class LibraryHandler {
 		/// <summary>
 		/// Indicates whether we have already tried to load a dll, because if we have
 		/// we are forced to restart the application
@@ -35,11 +35,7 @@ namespace RayTracerInterface {
 		/// <returns></returns>
 		[DllImport(dll, CallingConvention = CallingConvention.Cdecl)]
 		[return: MarshalAs(UnmanagedType.BStr)]
-		public static extern string LodeReturnDecode(int errorCode);
-		/// <summary>
-		/// gets the library info
-		/// </summary>
-		public static string LibraryInfo => LibInfo();
+		private static extern string LodeReturnDecode(int errorCode);		
 		/// <summary>
 		/// Restarts the application in order to unload the old dll and then load in the new version
 		/// </summary>
@@ -53,7 +49,7 @@ namespace RayTracerInterface {
 		/// </summary>
 		/// <param name="path">Full path to DLL</param>
 		/// <returns></returns>
-		public static bool TryLoadLib(string path) {
+		public static Renderer TryLoadLib(string path) {
 			if (isLoaded) Reboot(path);
 			try {
 				if (File.Exists(dll)) {
@@ -71,7 +67,7 @@ namespace RayTracerInterface {
 				while (!File.Exists(dll)) Thread.Sleep(50);
 				isLoaded = true;
 				//Console.WriteLine(LibraryInfo);
-				return true;
+				return new Renderer();
 			}
 			catch (Exception ex) {
 #if TRACE  //Exploiting TRACE constant in project to switch between UI and Console errors
@@ -79,7 +75,7 @@ namespace RayTracerInterface {
 #else
 				MessageBox.Show(ex.Message);
 #endif
-				return false;
+				return null;
 			}
 		}
 		/// <summary>
@@ -122,18 +118,18 @@ namespace RayTracerInterface {
 		/// <returns></returns>
 		[DllImport(dll, CallingConvention = CallingConvention.Cdecl)]
 		[return: MarshalAs(UnmanagedType.U1)]
-		public static extern bool render(int Option, int x, int y);
+		private static extern bool render(int Option, int x, int y);
 		/// <summary>
 		/// Returns the number of rendered columns
 		/// </summary>
 		/// <returns></returns>
 		[DllImport(dll, CallingConvention = CallingConvention.Cdecl)]
-		public static extern int status();
+		private static extern int status();
 		/// <summary>
 		/// gets the lodePNG return code
 		/// </summary>
 		/// <returns></returns>
 		[DllImport(dll, CallingConvention = CallingConvention.Cdecl)]
-		public static extern int returnValue();
+		private static extern int returnValue();
 	}
 }

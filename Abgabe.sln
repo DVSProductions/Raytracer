@@ -21,8 +21,11 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "3DTools", "3DTools\3DTools.
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "A3 Validator", "A3 Validator\A3 Validator.vcxproj", "{DCD05BDA-741C-41E7-9B38-3E5035AA252B}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DLL3D", "3DDLL\3DDLL.vcxitems", "{01B9F5D2-0DE1-4F3F-B989-2A47E727BF11}"
+EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		3DDLL\3DDLL.vcxitems*{01b9f5d2-0de1-4f3f-b989-2a47e727bf11}*SharedItemsImports = 9
 		cgtools\cgtools.vcxitems*{4990afe0-d3c0-4fde-a55c-fb1f6ef47c0e}*SharedItemsImports = 4
 		DLLFiles\DLLFiles.vcxitems*{4990afe0-d3c0-4fde-a55c-fb1f6ef47c0e}*SharedItemsImports = 4
 		cgtools\cgtools.vcxitems*{9b9d2a86-4bad-4afb-97d0-b8bea0486e1d}*SharedItemsImports = 9

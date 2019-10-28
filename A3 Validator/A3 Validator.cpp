@@ -32,29 +32,29 @@ public:
 	TEST_METHOD(A3_2_1) {
 		width = 10;
 		height = 10;
-		auto c = PinholeCamera(M_PI / 2.0, cgtools::point(0, 0, 0));
+		auto c = PinholeCamera(M_PI / 2.0, cgtools::point(0, 0, 0),cgtools::c_black);
 		auto r = c.generateRay(0, 0);
 		Assert::IsTrue(r.x0 == point(0, 0, 0));
 	}
 	TEST_METHOD(A3_2_2) {
-		auto c = PinholeCamera(M_PI / 2.0, cgtools::point(0, 0, 0));
+		auto c = PinholeCamera(M_PI / 2.0, cgtools::point(0, 0, 0), cgtools::c_black);
 		auto r = c.generateRay(0, 0);
 		Assert::IsTrue(r.dir.reduceAccuracy(4) == direction(-1 / sqrt(3), 1 / sqrt(3), -1 / sqrt(3)).reduceAccuracy(4), StringToWString("Richtung falsch: " + str(r.dir)).c_str());
 	}
 	TEST_METHOD(A3_2_3) {
-		auto c = PinholeCamera(M_PI / 2.0, cgtools::point(0, 0, 0));
+		auto c = PinholeCamera(M_PI / 2.0, cgtools::point(0, 0, 0), cgtools::c_black);
 		auto r = c.generateRay(5, 5);
 		Assert::IsTrue(r.dir == direction(0, 0, -1), StringToWString("Richtung falsch: " + str(r.dir)).c_str());
 	}
 	TEST_METHOD(A3_2_4) {
-		auto c = PinholeCamera(M_PI / 2.0, cgtools::point(0, 0, 0));
+		auto c = PinholeCamera(M_PI / 2.0, cgtools::point(0, 0, 0), cgtools::c_black);
 		auto r = c.generateRay(10, 10);
 		Assert::IsTrue(r.dir.reduceAccuracy(4) == point(1 / sqrt(3), -1 / sqrt(3), -1 / sqrt(3)).reduceAccuracy(4), StringToWString("Richtung falsch: " + str(r.dir)).c_str());
 	}
 	TEST_METHOD(TestCase1) {
 		auto result = testHit(point(0, 0, -2), point(0, 0, 0), direction(0, 0, -1), INFINITY);
 		Assert::IsNotNull(result);
-		Assert::IsTrue(result->pos == point(0, 0, -1), StringToWString("Falscher punkt " + str(result->pos)).c_str());
+		Assert::IsTrue(result->pos == point(0, 0, -1), StringToWString("Falscher Punkt " + str(result->pos)).c_str());
 		Assert::IsTrue(result->n == direction(0, 0, 1), StringToWString("Normalenvektor falsch: " + str(result->n)).c_str());
 	}
 	TEST_METHOD(TestCase2) {
@@ -64,7 +64,7 @@ public:
 	TEST_METHOD(TestCase3) {
 		auto result = testHit(point(0, -1, -2), point(0, 0, 0), direction(0, 0, -1), INFINITY);
 		Assert::IsNotNull(result, L"Ergebnis sollte nicht null sein");
-		Assert::IsTrue(result->pos == point(0, 0, -2), StringToWString("Falscher punkt " + str(result->pos)).c_str());
+		Assert::IsTrue(result->pos == point(0, 0, -2), StringToWString("Falscher Punkt " + str(result->pos)).c_str());
 		Assert::IsTrue(result->n == direction(0, 1, 0), StringToWString("Normalenvektor falsch: " + str(result->n)).c_str());
 	}
 	TEST_METHOD(TestCase4) {
@@ -81,9 +81,9 @@ public:
 	}
 	TEST_METHOD(TestPush) {
 		Playground = std::make_shared<DDD::Scene>();
-		Playground->objects->push_back(new Sphere(point(100, 100, 100), 50, Color(1, 0, 0)));
+		Playground->addObject(new Sphere(point(100, 100, 100), 50, Color(1, 0, 0)));
 	}
-	TEST_METHOD(TestMain) {
+	/*TEST_METHOD(TestMain) {
 		width = 100;
 		height = 100;
 		workswitch(0);
@@ -94,17 +94,17 @@ public:
 		workswitch(0);
 		Sleep(5000);
 		workswitch(0);
+	}*/
+	TEST_METHOD(Rendering) {
+		width = 200;
+		height = 200;
+		prepare();
+		image = std::make_unique<Image>(Image(width, height, 2.2));
+		RenderLoop(0, 1);
+		lodepngReturn = image->write("..\\test.png");
+		//system("..\\test.png");
+		image.reset();
+		renderer.reset();
 	}
-	//TEST_METHOD(Rendering) {
-	//	width = 100;
-	//	height = 100;
-	//	prepare();
-	//	image = std::make_unique<Image>(Image(width, height, 2.2));
-	//	RenderLoop(0, 1);
-	//	lodepngReturn = image->write("..\\test.png");
-	//	//system("..\\test.png");
-	//	image.reset();
-	//	renderer.reset();
-	//}
 	};
 }

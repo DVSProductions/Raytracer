@@ -20,8 +20,6 @@ direction cgtools::direction::operator*(const vector& s) const noexcept {
 	return direction(s.x*x,s.y*y,s.z*z);
 }
 
-
-
 direction direction::operator/(const double &s) const noexcept {
 	return direction(x / s, y / s, z / s);
 }

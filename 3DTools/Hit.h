@@ -9,7 +9,7 @@ namespace DDD {
 		point pos;
 		direction n;
 		Color c;
-		Hit(double t, point pos, direction n, Color c);
+		Hit(double t, point pos, direction n, Color c)noexcept;
 		Color shade() const noexcept;
 	};
 }

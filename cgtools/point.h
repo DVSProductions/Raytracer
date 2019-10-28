@@ -8,9 +8,10 @@ namespace cgtools {
 	class point :
 		public vector {
 	public:
-		operator std::string()const noexcept {
+		operator std::string()const {
 			return "(point[" + std::to_string(x) + ", " + std::to_string(y) + ", " + std::to_string(z) + "])";
 		}
+		point(vector v)noexcept :vector(v.x, v.y, v.z) {}
 		point(double x, double y, double z) noexcept :vector(x, y, z) {}
 		point operator-()noexcept;
 		point operator-(const point& p) const noexcept;

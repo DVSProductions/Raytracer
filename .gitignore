@@ -90,6 +90,10 @@ StyleCopReport.xml
 *.config
 *.tlog
 *.FileListAbsolute.txt
+*.nativecodeanalysis.*
+desktop.ini
+*.lastcodeanalysissucceeded
+*.bsc
 # Chutzpah Test files
 _Chutzpah*
 

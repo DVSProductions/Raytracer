@@ -21,14 +21,14 @@ BSTR ANSItoBSTR(const char* input)noexcept {
 	}
 	return result;
 }
-
+extern const std::string libVersion;
 extern "C" {
 	/// <summary>
 	/// Returns the current version of the DLL spec
 	/// </summary>
 	/// <returns></returns>
 	__declspec(dllexport) BSTR __cdecl LibInfo(void) {
-		return ::SysAllocString(L"Library Version 1.0");
+		return ::SysAllocString(ANSItoBSTR(libVersion.c_str()));
 	}
 	/// <summary>
 	/// Sends A list of files that will be created by this program

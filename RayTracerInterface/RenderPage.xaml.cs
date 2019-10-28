@@ -47,6 +47,8 @@ namespace RayTracerInterface {
 			if(LibraryHandler.returnValue() == 0) {
 				iResults.Source = (BitmapSource)new ImageSourceConverter().ConvertFrom(File.ReadAllBytes(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + "\\" + LibraryHandler.OutputFiles[idx]));
 				lbStatus.Visibility = Visibility.Hidden;
+				btExport.Visibility = Visibility.Visible;
+				lbTime.Visibility = Visibility.Visible;
 			}
 			else {
 				btExport.Visibility = Visibility.Hidden;

@@ -11,10 +11,10 @@ Image::Image(size_t width, size_t height, double gamma) {
 
 void Image::setPixel(size_t x, size_t y, Color color) noexcept {
 	if (x >= sizeX || y >= sizeY)return;
-	size_t idx = (y * sizeX + x) * 3ul;
-	buffer[idx++] = pow(color.r, this->gamma);
-	buffer[idx++] = pow(color.g, this->gamma);
-	buffer[idx] = pow(color.b, this->gamma);
+	const size_t idx = (y * sizeX + x) * 3ul;
+	buffer[idx] = pow(color.r, this->gamma);
+	buffer[idx + 1] = pow(color.g, this->gamma);
+	buffer[idx + 2] = pow(color.b, this->gamma);
 }
 
 unsigned int Image::write(std::string filename) {

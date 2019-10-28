@@ -1,4 +1,4 @@
 #include "renderable.h"
 namespace DDD {
-	renderable::renderable(cgtools::point position) :p(position) {}
+	renderable::renderable(cgtools::point position)noexcept :p(position) {}
 }

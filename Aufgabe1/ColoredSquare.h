@@ -16,6 +16,6 @@ public:
 	/// <summary>
 	/// Returns our color if the square is in that coordinate or black if is it not
 	/// </summary>
-	Color getColor(double x, double y) override;
+	Color getColor(double x, double y)noexcept override;
 };
 

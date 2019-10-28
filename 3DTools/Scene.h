@@ -4,11 +4,13 @@
 #include <memory>
 namespace DDD {
 	class Scene : public renderable {
+		std::unique_ptr<std::vector<DDD::renderable*>> objects;
 	public:
-		std::unique_ptr<std::vector <DDD::renderable*>> objects;
-		Scene();
+		Scene() noexcept;
 		void addObject(DDD::renderable* obj);
-		Hit* intersect(Ray r) override;
+		void clear();
+		Hit* intersect(Ray r)const override;
+		~Scene();
 	};
 }
 
