@@ -21,7 +21,6 @@ BSTR ANSItoBSTR(const char* input)noexcept {
 	}
 	return result;
 }
-extern const std::string libVersion;
 extern "C" {
 	/// <summary>
 	/// Returns the current version of the DLL spec
@@ -78,7 +77,7 @@ extern "C" {
 	/// <param name="option">error code</param>
 	/// <returns></returns>
 	__declspec(dllexport) BSTR LodeReturnDecode(int errorCode) {
-		return ANSItoBSTR(lodepng_error_text(errorCode));
+		return ANSItoBSTR(lodepng::lodepng_error_text(errorCode));
 	}
 }
 

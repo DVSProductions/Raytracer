@@ -29,6 +29,13 @@ Color::Color(Color* toCopy)noexcept {
 	b = toCopy->b;
 }
 
+Color cgtools::Color::operator=(const Color& a) noexcept {
+	r = a.r;
+	g = a.g;
+	b = a.b;
+	return *this;
+}
+
 
 Color Color::operator+(const Color& a) const  noexcept {
 	return Color(a.r + r, a.g + g, a.b + b);
@@ -153,6 +160,17 @@ Color cgtools::Color::fromRGB(const uint8_t& r, const uint8_t& g, const uint8_t&
 
 bool Color::operator==(const Color& v) const noexcept {
 	return v.r == r && v.g == g && v.b == b;
+}
+
+std::string cgtools::Color::serialize() const {
+	return  std::to_string(r) + "|" + std::to_string(g) + "|" + std::to_string(b);
+}
+
+void cgtools::Color::load(std::string serialized) {
+	auto ret = Serializable::split(serialized);
+	f_chars(ret[0], r);
+	f_chars(ret[1], g); 
+	f_chars(ret[2], b);
 }
 
 Color operator*(const double& s, const Color& a) noexcept {

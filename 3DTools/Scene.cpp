@@ -13,12 +13,12 @@ void DDD::Scene::clear() {
 		delete[](objects->at(n));
 	objects->clear();
 }
-DDD::Hit* DDD::Scene::intersect(DDD::Ray r)const {
-	Hit* closest = nullptr;
+DDD::Hit DDD::Scene::intersect(DDD::Ray r)const {
+	Hit closest = Hit(false);
 	const auto end = objects->end();
 	for (auto it = objects->begin(); it != end; it++) {
 		const auto h = (*it)->intersect(r);
-		if (h != nullptr && (closest == nullptr || h->t < closest->t))
+		if (h.hit && (!closest.hit || h.t < closest.t))
 			closest = h;
 	}
 	return closest;
@@ -30,6 +30,24 @@ DDD::Scene::~Scene() {
 	}
 	catch (...) {
 
+	}
+}
+
+std::string DDD::Scene::serialize() const {
+	const size_t siz = this->objects->size();
+	std::string ret = "";
+	for (size_t n = 0; n < siz; n++) {
+		if (n != 0)ret += "$";
+		ret += objects->at(n)->serialize();
+	}
+	return ret;
+}
+
+void DDD::Scene::load(std::string serialized) {
+	auto ch = Serializable::split(serialized,"$");
+	const size_t siz = ch.size();
+	for (size_t n = 0; n < siz; n++) {
+		//ret += ;
 	}
 }
 

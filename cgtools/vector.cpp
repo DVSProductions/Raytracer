@@ -14,7 +14,12 @@ double vector::operator!() const  noexcept {
 double vector::squaredLength() const noexcept {
 	return x * x + y * y + z * z;
 }
-
+vector vector::operator=(const vector& d)noexcept {
+	x = d.x;
+	y = d.y;
+	z = d.z;
+	return *this;
+}
 bool vector::operator==(const vector& a) const noexcept {
 	return x == a.x && y == a.y && z == a.z;
 }
@@ -37,9 +42,20 @@ double cgtools::vector::scalar(const vector& v) const noexcept {
 	return (x * v.x) + (y * v.y) + (z * v.z);
 }
 double dostaging(int pow, double input)noexcept {
-	return floor(input*pow) / pow;
+	return floor(input * pow) / pow;
 }
 vector cgtools::vector::reduceAccuracy(uint8_t power) const noexcept {
-	const long num = static_cast<long>(pow(10,power));
-	return vector(dostaging(num,x),dostaging(num,y),dostaging(num,z));
+	const long num = static_cast<long>(pow(10, power));
+	return vector(dostaging(num, x), dostaging(num, y), dostaging(num, z));
+}
+
+std::string cgtools::vector::serialize() const {
+	return  std::to_string(x) + "|" + std::to_string(y) + "|" + std::to_string(z);
+}
+
+void cgtools::vector::load(std::string serialized)noexcept {
+	auto ret = Serializable::split(serialized);
+	f_chars(ret[0], x);
+	f_chars(ret[1], y);
+	f_chars(ret[2], z);
 }

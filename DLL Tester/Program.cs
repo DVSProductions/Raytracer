@@ -8,38 +8,38 @@ using System.Threading.Tasks;
 using RayTracerInterface;
 namespace DLL_Tester {
 	class Program {
-		static void TestOnce() {
+		static void TestOnce(LibraryHandler.Renderer rend ) {
 			int scaling = 1;
-			LibraryHandler.render(0, 16*scaling, 9 * scaling);
+			rend.Render(0, 16*scaling, 9 * scaling);
 			Console.WriteLine("Rendering");
 			while(true) {
 				//Console.WriteLine("\r" + LibraryHandler.status());
 				Thread.Sleep(200);
 			}
 		}
-		static void TestTwice() {
+		static void TestTwice(LibraryHandler.Renderer rend) {
 			int x = 16, y = 9;
-			LibraryHandler.render(1, x, y);
+			rend.Render(1, x, y);
 			Console.WriteLine("Rendering");
-			while(LibraryHandler.status() != x) {
-				Console.WriteLine("\r" + LibraryHandler.status());
+			while(rend.Status != x) {
+				Console.WriteLine("\r" + rend.Status);
 				Thread.Sleep(200);
 			}
 			Thread.Sleep(200);
 			Console.WriteLine("Redoing...");
 			Thread.Sleep(200);
-			LibraryHandler.render(1, x, y);
+			rend.Render(1, x, y);
 			Console.WriteLine("Rendering");
 			Thread.Sleep(200);
-			while(LibraryHandler.status() != x) {
-				Console.WriteLine("\r" + LibraryHandler.status());
+			while(rend.Status != x) {
+				Console.WriteLine("\r" + rend.Status);
 				Thread.Sleep(200);
 			}
 			Console.WriteLine("Done");
 		}
 		static void Main() {
-			LibraryHandler.TryLoadLib(@"..\..\..\x64\Release\Aufgabe3.dll");
-			TestOnce();
+			var rend=LibraryHandler.TryLoadLib(@"..\..\..\x64\Release\Aufgabe3.dll");
+			TestOnce(rend);
 		}
 	}
 }

@@ -9,8 +9,10 @@ namespace DDD {
 		Scene() noexcept;
 		void addObject(DDD::renderable* obj);
 		void clear();
-		Hit* intersect(Ray r)const override;
+		Hit intersect(Ray r)const override;
 		~Scene();
+		std::string serialize()const override;
+		void load(std::string serialized) override;
 	};
 }
 

@@ -9,7 +9,7 @@ direction direction::operator+(const direction& b) const noexcept {
 	return direction(this->x + b.x, this->y + b.y, this->z + b.z);
 }
 
-direction direction::operator-(const direction &b) const noexcept {
+direction direction::operator-(const direction &b) const  noexcept {
 	return direction(x - b.x, y - b.y, z - b.z);
 }
 direction direction::operator*(const double& s) const noexcept {
@@ -31,6 +31,15 @@ direction direction::operator|(const direction &b) const noexcept {
 direction direction::operator~() noexcept {
 	return *this / !*this;
 }
+//std::string cgtools::direction::serialize() const {
+//	return  std::to_string(x) + "|" + std::to_string(y) + "|" + std::to_string(z);
+//}
+//void cgtools::direction::load(std::string serialized) {
+//	auto ret = Serializable::split(serialized);
+//	std::from_chars(ret[0].data(), ret[0].data() + ret[0].size(), x);
+//	std::from_chars(ret[1].data(), ret[1].data() + ret[1].size(), y);
+//	std::from_chars(ret[2].data(), ret[2].data() + ret[2].size(), z);
+//}
 direction operator*(double s, direction a) noexcept {
 	return direction(a.x * s, a.y * s, a.z * s);
 }

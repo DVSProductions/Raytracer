@@ -11,16 +11,19 @@ namespace RayTracerInterface {
 		/// Handler to <see cref="MainWindow"/> for opening a render page
 		/// </summary>
 		readonly Action<IRenderPage> switchToRenderPage;
+		readonly LibraryHandler.Renderer renderer;
 		/// <summary>
 		/// Aspect ratio to keep while the box is checked
 		/// </summary>
 		double ratio = 16.0 / 9.0;
 
-		public CompilationSettings(Action<IRenderPage> switchToRenderPage) {
+		public CompilationSettings(Action<IRenderPage> switchToRenderPage, LibraryHandler.Renderer renderer) {
+			this.renderer = renderer;
 			InitializeComponent();
-			foreach (var s in LibraryHandler.OutputFiles)
+			foreach (var s in renderer.OutputFiles)
 				cbFiles.Items.Add(s);
 			if (cbFiles.Items.Count == 1) cbFiles.SelectedIndex = 0;
+			gbScene.Visibility = renderer is LibraryHandler.SceneBasedRenderer ? Visibility.Visible : Visibility.Collapsed;
 			this.switchToRenderPage = switchToRenderPage;
 		}
 		/// <summary>
@@ -61,8 +64,8 @@ namespace RayTracerInterface {
 			}
 			try {
 				int w = int.Parse(tbW.Text), h = int.Parse(tbH.Text);
-				if (LibraryHandler.render(idx, w, h))
-					switchToRenderPage(new RenderPage(idx, w));
+				if (renderer.Render(idx, w, h))
+					switchToRenderPage(new RenderPage(renderer, idx, w));
 			}
 			catch (Exception ex) {
 				MessageBox.Show(ex.Message);
@@ -73,7 +76,7 @@ namespace RayTracerInterface {
 		/// </summary>
 		private void Button_Click_1(object sender, RoutedEventArgs e) {
 			try {
-				switchToRenderPage(new Abgabe(int.Parse(tbW.Text), int.Parse(tbH.Text)));
+				switchToRenderPage(new Abgabe(renderer, int.Parse(tbW.Text), int.Parse(tbH.Text)));
 			}
 			catch (Exception ex) {
 				MessageBox.Show(ex.Message);

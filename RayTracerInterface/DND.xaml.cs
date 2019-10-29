@@ -11,8 +11,8 @@ namespace RayTracerInterface {
 		/// <summary>
 		/// Handler to <see cref="MainWindow"/> for switching to <see cref="CompilationSettings"/>
 		/// </summary>
-		readonly Action openNext;
-		public DND(Action onComplete) {
+		readonly Action<LibraryHandler.Renderer> openNext;
+		public DND(Action<LibraryHandler.Renderer> onComplete) {
 			InitializeComponent();
 			this.openNext = onComplete;
 		}
@@ -43,8 +43,9 @@ namespace RayTracerInterface {
 				MessageBox.Show("Please Drag&Drop the Renderer dll", "Error");
 				return;
 			}
-			if (LibraryHandler.TryLoadLib(path))
-				openNext();
+			var rend = LibraryHandler.TryLoadLib(path);
+			if (rend!=null)
+				openNext(rend);
 		}
 		/// <summary>
 		/// Shows filepicker Modal Dialog and opens library
@@ -61,8 +62,9 @@ namespace RayTracerInterface {
 				Filter = "Renderer *.dll|*.dll"
 			};
 			if (dlg.ShowDialog() == true) {
-				if (LibraryHandler.TryLoadLib(dlg.FileName))
-					openNext();
+				var rend = LibraryHandler.TryLoadLib(dlg.FileName);
+				if (rend != null)
+					openNext(rend);
 			}
 		}
 	}

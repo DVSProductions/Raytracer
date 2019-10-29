@@ -30,7 +30,8 @@ namespace RayTracerInterface {
 		/// <summary>
 		/// Allows the drag&drop page <see cref="DND"/> to open the next page
 		/// </summary>
-		void OpenPage2() => pageViewer.Content = new CompilationSettings(OpenPage3);
+		void OpenPage2(LibraryHandler.Renderer rend) => pageViewer.Content = new CompilationSettings(OpenPage3, rend);
+		LibraryHandler.Renderer prefetchRenderer;
 		/// <summary>
 		/// Detects if this should immediatly open the <see cref="CompilationSettings"/> page based on the command line parameters
 		/// <para>
@@ -51,10 +52,10 @@ namespace RayTracerInterface {
 			}
 			if(para.Length == 1) {
 				if(para[0] == Assembly.GetExecutingAssembly().Location) return;
-				LibraryHandler.TryLoadLib(para[0]);
+				prefetchRenderer=LibraryHandler.TryLoadLib(para[0]);
 			}
 			else if(para.Length > 1 && para[0] == Assembly.GetExecutingAssembly().Location)
-				LibraryHandler.TryLoadLib(para[1]);
+				prefetchRenderer=LibraryHandler.TryLoadLib(para[1]);
 		}
 		/// <summary>
 		/// Creates the window and switches to the correct page
@@ -62,7 +63,7 @@ namespace RayTracerInterface {
 		public MainWindow() {
 			Preexecution();
 			InitializeComponent();
-			if(LibraryHandler.isLoaded) OpenPage2();
+			if(LibraryHandler.IsLoaded) OpenPage2(prefetchRenderer);
 			else
 				pageViewer.Content = new DND(OpenPage2);
 		}

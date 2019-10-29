@@ -18,6 +18,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)cgtools.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Color.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)direction.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)ISerializable.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)point.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Renderer.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Image.h" />
@@ -31,6 +32,7 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)direction.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Image.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)ImageWriter.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)ISerializable.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)lodepng.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)point.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)vector.cpp" />

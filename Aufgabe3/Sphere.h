@@ -11,5 +11,7 @@ class Sphere :
 public:
 	direction getNormal(point at) const noexcept;
 	Sphere(cgtools::point position, double radius, cgtools::Color color) noexcept;
-	Hit* intersect(Ray r)const override;
+	Hit intersect(Ray r)const override;
+	std::string serialize()const override;
+	void load(std::string serialized) override;
 };

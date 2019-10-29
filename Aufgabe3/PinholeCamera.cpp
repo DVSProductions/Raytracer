@@ -17,11 +17,7 @@ DDD::Ray PinholeCamera::generateRay(double x, double y)noexcept {
 }
 Color PinholeCamera::getColor(double x, double y) {
 	const auto c = scene->intersect(generateRay(x, y));
-	if (c == nullptr)
-		return background;
-	else {
-		const auto ret = c->shade();
-		delete[]c;
-		return ret;
-	}
+	return c.hit ? c.shade() : background;
+	
 }
+

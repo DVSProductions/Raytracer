@@ -29,6 +29,17 @@ direction point::sub(const point& b) noexcept {
 point cgtools::point::operator*(const vector& s) const noexcept {
 	return point(x * s.x, y * s.y, z * s.z);
 }
+//
+//std::string cgtools::point::serialize() const {
+//	return  std::to_string(x) + "|" + std::to_string(y) + "|" + std::to_string(z);
+//}
+//
+//void cgtools::point::load(std::string serialized) {
+//	auto ret = Serializable::split(serialized);
+//	f_chars(ret[0], x);
+//	f_chars(ret[1], y);
+//	f_chars(ret[2], z);
+//}
 
 point operator+(const direction& d, const point& b)  noexcept {
 	return point(d.x + b.x, d.y + b.y, d.z + b.z);

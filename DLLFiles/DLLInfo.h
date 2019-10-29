@@ -13,6 +13,7 @@ using namespace std;
 /// Define this in your DLL</para>
 /// </summary>
 extern const std::string files[];// = { "a01-image.png","a01-square.png","a01-checkered-background.png","_" };
+extern const std::string libVersion;
 /// <summary>
 /// Indicates whethers the dll is doing stuff (not really required at this point)
 /// </summary>

@@ -1,22 +1,21 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Threading;
-using System.Windows;
 
 namespace RayTracerInterface {
 	/// <summary>
 	/// This class contains the basic interface with a renderer DLL
 	/// </summary>
-	internal partial class LibraryHandler {
+	public static partial  class LibraryHandler {
 		/// <summary>
 		/// Indicates whether we have already tried to load a dll, because if we have
 		/// we are forced to restart the application
 		/// </summary>
-		public static bool isLoaded = false;
+		private static bool isLoaded = false;
+		public static bool IsLoaded => isLoaded;
 		/// <summary>
 		/// Location of the local dll copy
 		/// </summary>
@@ -25,7 +24,7 @@ namespace RayTracerInterface {
 		/// get library info string
 		/// </summary>
 		/// <returns></returns>
-		[DllImport(dll, CallingConvention = CallingConvention.Cdecl)]
+		[DllImport(dll, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
 		[return: MarshalAs(UnmanagedType.BStr)]
 		private static extern string LibInfo();
 		/// <summary>
@@ -33,9 +32,43 @@ namespace RayTracerInterface {
 		/// </summary>
 		/// <param name="errorCode">lodePNG error</param>
 		/// <returns></returns>
-		[DllImport(dll, CallingConvention = CallingConvention.Cdecl)]
+		[DllImport(dll, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
 		[return: MarshalAs(UnmanagedType.BStr)]
-		private static extern string LodeReturnDecode(int errorCode);		
+		private static extern string LodeReturnDecode(int errorCode);
+		/// <summary>
+		/// Calls the DLL to receive a output DLL filename
+		/// <para>
+		///		Returns "_" when the given index is out of range
+		/// </para>
+		/// </summary>
+		/// <param name="file">index in filename array</param>
+		/// <returns>filename or "_" on error</returns>
+		[DllImport(dll, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
+		[return: MarshalAs(UnmanagedType.BStr)]
+		private static extern string OutputFile(int file);
+
+		/// <summary>
+		/// Launches a render Job
+		/// </summary>
+		/// <param name="Option">File to render</param>
+		/// <param name="x">width</param>
+		/// <param name="y">height</param>
+		/// <returns></returns>
+		[DllImport(dll, CallingConvention = CallingConvention.Cdecl)]
+		[return: MarshalAs(UnmanagedType.U1)]
+		private static extern bool render(int Option, int x, int y);
+		/// <summary>
+		/// Returns the number of rendered columns
+		/// </summary>
+		/// <returns></returns>
+		[DllImport(dll, CallingConvention = CallingConvention.Cdecl)]
+		private static extern int status();
+		/// <summary>
+		/// gets the lodePNG return code
+		/// </summary>
+		/// <returns></returns>
+		[DllImport(dll, CallingConvention = CallingConvention.Cdecl)]
+		private static extern int returnValue();
 		/// <summary>
 		/// Restarts the application in order to unload the old dll and then load in the new version
 		/// </summary>
@@ -66,8 +99,19 @@ namespace RayTracerInterface {
 				File.Copy(path, dll);
 				while (!File.Exists(dll)) Thread.Sleep(50);
 				isLoaded = true;
-				//Console.WriteLine(LibraryInfo);
-				return new Renderer();
+				if (LibInfo() == "1.0"||LibInfo().Contains("1.0"))
+					return new Renderer();
+				else if (LibInfo() == "2.0")
+					return new SceneBasedRenderer();
+				else {
+#if TRACE  //Exploiting TRACE constant in project to switch between UI and Console errors
+					Console.Error.WriteLine($"Unknown Library Version \"{LibInfo()}\"");
+#else
+					MessageBox.Show($"Unknown Library Version \"{LibInfo()}\"");
+#endif
+					return null;
+				}
+
 			}
 			catch (Exception ex) {
 #if TRACE  //Exploiting TRACE constant in project to switch between UI and Console errors
@@ -78,58 +122,5 @@ namespace RayTracerInterface {
 				return null;
 			}
 		}
-		/// <summary>
-		/// Calls the DLL to receive a output DLL filename
-		/// <para>
-		///		Returns "_" when the given index is out of range
-		/// </para>
-		/// </summary>
-		/// <param name="file">index in filename array</param>
-		/// <returns>filename or "_" on error</returns>
-		[DllImport(dll, CallingConvention = CallingConvention.Cdecl)]
-		[return: MarshalAs(UnmanagedType.BStr)]
-		private static extern string OutputFile(int file);
-		/// <summary>
-		/// Internal storage for dynamically created output-file list
-		/// </summary>
-		private static List<string> outfiles;
-		/// <summary>
-		/// Dynamically created list containing all the Files that our current DLL supports
-		/// </summary>
-		public static List<string> OutputFiles {
-			get {
-				if (outfiles != null) return outfiles;
-				var n = 0;
-				outfiles = new List<string>();
-				while (true) {
-					var s = OutputFile(n++);
-					if (s == "_") break;
-					outfiles.Add(s);
-				}
-				return outfiles;
-			}
-		}
-		/// <summary>
-		/// Launches a render Job
-		/// </summary>
-		/// <param name="Option">File to render</param>
-		/// <param name="x">width</param>
-		/// <param name="y">height</param>
-		/// <returns></returns>
-		[DllImport(dll, CallingConvention = CallingConvention.Cdecl)]
-		[return: MarshalAs(UnmanagedType.U1)]
-		private static extern bool render(int Option, int x, int y);
-		/// <summary>
-		/// Returns the number of rendered columns
-		/// </summary>
-		/// <returns></returns>
-		[DllImport(dll, CallingConvention = CallingConvention.Cdecl)]
-		private static extern int status();
-		/// <summary>
-		/// gets the lodePNG return code
-		/// </summary>
-		/// <returns></returns>
-		[DllImport(dll, CallingConvention = CallingConvention.Cdecl)]
-		private static extern int returnValue();
 	}
 }

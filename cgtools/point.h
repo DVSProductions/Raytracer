@@ -22,5 +22,7 @@ namespace cgtools {
 		direction todirection()noexcept;
 		direction sub(const point& b)noexcept;
 		point operator*(const vector& s)const noexcept;
+		/*std::string serialize()const override;
+		void load(std::string serialized) override;*/
 	};
 }

@@ -13,3 +13,13 @@ void Camera::move(const point& newPos)noexcept {
 void Camera::setAngle(const double& newAngle)noexcept {
 	angle = newAngle;
 }
+
+std::string Camera::serialize()const {
+	return std::to_string(this->angle) + "&" + position.serialize();
+}
+
+void Camera::load(std::string serialized) {
+	auto ret=Serializable::split(serialized, "&");
+	std::from_chars(ret[0].data(), ret[0].data() + ret[0].size(), angle);
+	position.load(ret[1]);
+}

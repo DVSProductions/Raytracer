@@ -1,5 +1,6 @@
 #define _USE_MATH_DEFINES
 #include <cmath>
+#include <utility>
 #include "DllInfo.h"
 #include "cgtools.h"
 #include "Image.h"
@@ -127,11 +128,14 @@ void prepare() {
 	prepared = true;
 	Playground = std::make_shared <DDD::Scene>();
 	//Playground->addObject(new Sphere(point(100, 100, 100), 50, c_red));
-	const Color gray = Color::fromRGB(60, 60, 60).reverseGamma(2.2);
-	const Color red = Color::fromRGB(0x9B, 0x55, 0x55).reverseGamma(2.2);
+	const Color gray = Color::fromRGB(60, 60, 60).reverseGamma(2.2);//application background color
+	const Color red = Color::fromRGB(0x9B, 0x55, 0x55).reverseGamma(2.2);//application default red color
+	const Color b = Color(0, 0, 1);
 	cam = std::make_shared < PinholeCamera>(PinholeCamera(M_PI / 2, cgtools::point(0, 0, 0), gray));
 	cam->setScene(Playground);
 	Playground->addObject(new Sphere(point(0, 0, -3), 1, red));
+	Playground->addObject(new Sphere(point(1, 0, -3), 0.5, b));
+	Playground->addObject(new Sphere(point(-1, 0, -3), 0.5, b));
 	setsampleQuality();
 }
 /// <summary>

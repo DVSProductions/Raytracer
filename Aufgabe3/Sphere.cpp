@@ -34,7 +34,7 @@ constexpr uint8_t findPoint(double a, double b, double c, double* results1, doub
 }
 
 
-Hit* Sphere::intersect(Ray r) const {
+Hit Sphere::intersect(Ray r) const {
 	const auto x0 = r.x0 - p;
 	const double a = r.dir[r.dir];
 	const double b = 2 * x0[r.dir];
@@ -42,10 +42,21 @@ Hit* Sphere::intersect(Ray r) const {
 	double results1 = 0, results2 = 0;
 	double t = 0;
 	const auto solutions = findPoint(a, b, c, &results1, &results2);//Pointers save 5% vs passing array
-	if (solutions == 0)return nullptr;
+	if (solutions == 0)return Hit(false);
 	else if (solutions == 1)t = results1;
 	else t = results1 < results2 ? results1>r.tmin ? results1 : results1 : results2;
-	if (t < r.tmin || t > r.tmax)return nullptr;
+	if (t < r.tmin || t > r.tmax)return Hit(false);
 	const auto intersection = point(t * r.dir);
-	return new Hit(t, intersection, getNormal(intersection), this->c);
+	return Hit(t, intersection, getNormal(intersection), this->c);
+}
+
+std::string Sphere::serialize() const {
+	return  std::to_string(radius) + "&" + c.serialize() + "&" + p.serialize();
+}
+
+void Sphere::load(std::string serialized) {
+	auto ret = Serializable::split(serialized, "&");
+	f_chars(ret[0], radius);
+	c.load(ret[1]);
+	p.load(ret[2]);
 }

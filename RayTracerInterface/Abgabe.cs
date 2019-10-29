@@ -11,7 +11,9 @@ namespace RayTracerInterface {
 	/// Interaction logic for Abgabe.xaml
 	/// </summary>
 	public partial class Abgabe : Page, IRenderPage {
-		public Abgabe(int width, int height) {
+		readonly LibraryHandler.Renderer lib;
+		public Abgabe(LibraryHandler.Renderer rend,int width, int height) {
+			lib = rend;
 			InitializeComponent();
 			render(width, height);
 		}
@@ -23,20 +25,17 @@ namespace RayTracerInterface {
 		async void render(int w, int h) {
 			var target = System.IO.Path.GetFullPath("..\\..\\..\\doc\\");
 			if(!Directory.Exists(target)) Directory.CreateDirectory(target);
-			for(int n = 0; n < LibraryHandler.OutputFiles.Count; n++) {
-				LibraryHandler.render(n, w, h);
-				tbConsole.Text += $"Rendering {LibraryHandler.OutputFiles[n]}...\n";
-				int s = 0;
-				while(w != s) {
-					s = LibraryHandler.status();
+			for(int n = 0; n < lib.OutputFiles.Count; n++) {
+				lib.Render(n, w, h);
+				tbConsole.Text += $"Rendering {lib.OutputFiles[n]}...\n";
+				while(w != lib.Status) 
 					await Task.Delay(33);
-				}
 				tbConsole.Text += "Exporting png\n";
-				while(LibraryHandler.returnValue() == -1) await Task.Delay(100);
+				while(lib.ReturnCode == -1) await Task.Delay(100);
 				tbConsole.Text += "Moving to Output\n";
-				var tfile = target + LibraryHandler.OutputFiles[n];
+				var tfile = target + lib.OutputFiles[n];
 				if(File.Exists(tfile)) File.Delete(tfile);
-				File.Move(LibraryHandler.OutputFiles[n], target + LibraryHandler.OutputFiles[n]);
+				File.Move(lib.OutputFiles[n], target + lib.OutputFiles[n]);
 			}
 			tbConsole.Text += $"Abgabe complete.\nResults in {System.IO.Path.GetFullPath(target)}\n";
 		}

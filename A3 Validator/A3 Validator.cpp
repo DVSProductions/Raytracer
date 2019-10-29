@@ -23,7 +23,7 @@ namespace A3Validator {
 		inline std::string str(std::string s) {
 			return s;
 		}
-		Hit* testHit(point c, point x0, direction d, double tmax) {
+		Hit testHit(point c, point x0, direction d, double tmax) {
 			Sphere s(c, 1, c_red);
 			Ray r(x0, d, tmax, 0);
 			return s.intersect(r);
@@ -53,27 +53,27 @@ public:
 	}
 	TEST_METHOD(TestCase1) {
 		auto result = testHit(point(0, 0, -2), point(0, 0, 0), direction(0, 0, -1), INFINITY);
-		Assert::IsNotNull(result);
-		Assert::IsTrue(result->pos == point(0, 0, -1), StringToWString("Falscher Punkt " + str(result->pos)).c_str());
-		Assert::IsTrue(result->n == direction(0, 0, 1), StringToWString("Normalenvektor falsch: " + str(result->n)).c_str());
+		Assert::IsTrue(result.hit);
+		Assert::IsTrue(result.pos == point(0, 0, -1), StringToWString("Falscher Punkt " + str(result.pos)).c_str());
+		Assert::IsTrue(result.n == direction(0, 0, 1), StringToWString("Normalenvektor falsch: " + str(result.n)).c_str());
 	}
 	TEST_METHOD(TestCase2) {
 		auto result = testHit(point(0, 0, -2), point(0, 0, 0), direction(0, 1, -1), INFINITY);
-		Assert::IsNull(result);
+		Assert::IsTrue(!result.hit);
 	}
 	TEST_METHOD(TestCase3) {
 		auto result = testHit(point(0, -1, -2), point(0, 0, 0), direction(0, 0, -1), INFINITY);
-		Assert::IsNotNull(result, L"Ergebnis sollte nicht null sein");
-		Assert::IsTrue(result->pos == point(0, 0, -2), StringToWString("Falscher Punkt " + str(result->pos)).c_str());
-		Assert::IsTrue(result->n == direction(0, 1, 0), StringToWString("Normalenvektor falsch: " + str(result->n)).c_str());
+		Assert::IsTrue(result.hit, L"Ergebnis sollte nicht null sein");
+		Assert::IsTrue(result.pos == point(0, 0, -2), StringToWString("Falscher Punkt " + str(result.pos)).c_str());
+		Assert::IsTrue(result.n == direction(0, 1, 0), StringToWString("Normalenvektor falsch: " + str(result.n)).c_str());
 	}
 	TEST_METHOD(TestCase4) {
 		auto result = testHit(point(0, 0, -2), point(0, 0, -4), direction(0, 0, -1), INFINITY);
-		Assert::IsNull(result, L"Ergebnis sollte null sein");
+		Assert::IsTrue(result.hit, L"Ergebnis sollte null sein");
 	}
 	TEST_METHOD(TestCase5) {
 		auto result = testHit(point(0, 0, -4), point(0, 0, 0), direction(0, 0, -1), 2);
-		Assert::IsNull(result, L"Ergebnis sollte null sein");
+		Assert::IsTrue(result.hit, L"Ergebnis sollte null sein");
 	}
 	TEST_METHOD(TestVec) {
 		std::vector <DDD::renderable*> objects;

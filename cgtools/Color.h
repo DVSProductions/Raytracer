@@ -1,4 +1,5 @@
 #pragma once
+#include "ISerializable.h"
 #include <string>
 #include <initializer_list>
 #include <random>
@@ -7,7 +8,7 @@ namespace cgtools {
 	/// <summary>
 	/// Class to do all sorts of color-y stuff
 	/// </summary>
-	class Color {
+	class Color :public ISerializable {
 	public:
 		/// <summary>
 		/// I trust you on this one. DO NOT SET ABOVE 1 NOR BELOW 0
@@ -30,6 +31,7 @@ namespace cgtools {
 		/// </summary>
 		/// <param name="toCopy">Color to clone</param>
 		Color(Color* toCopy) noexcept;
+		Color operator=(const Color& a)noexcept;
 		Color operator+(const Color& a) const  noexcept;
 		Color operator-(const Color& a) const  noexcept;
 		Color operator*(const Color& c) const  noexcept;
@@ -56,6 +58,8 @@ namespace cgtools {
 		static Color getRandom(std::mt19937 mt);
 		static Color fromRGB(const uint8_t& r, const uint8_t& g, const uint8_t& b)noexcept;
 		bool operator==(const Color& c) const noexcept;
+		std::string serialize()const override;
+		void load(std::string serialized) override;
 	};
 
 	static const Color c_black = Color(0, 0, 0);
