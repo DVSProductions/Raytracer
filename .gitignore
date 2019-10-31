@@ -95,7 +95,8 @@ StyleCopReport.xml
 *.nativecodeanalysis.*
 desktop.ini
 *.lastcodeanalysissucceeded
-*.bsc
+.bsc
+bsc
 # Chutzpah Test files
 _Chutzpah*
 
