@@ -21,13 +21,13 @@
   <ItemGroup>
     <ClCompile Include="Aufgabe3.cpp" />
     <ClCompile Include="Camera.cpp" />
-    <ClCompile Include="PinholeCamera.cpp" />
-    <ClCompile Include="Sphere.cpp" />
+    <ClCompile Include="A3PinholeCamera.cpp" />
+    <ClCompile Include="A3Sphere.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Camera.h" />
-    <ClInclude Include="PinholeCamera.h" />
-    <ClInclude Include="Sphere.h" />
+    <ClInclude Include="A3PinholeCamera.h" />
+    <ClInclude Include="A3Sphere.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
@@ -70,7 +70,6 @@
     <Import Project="..\cgtools\cgtools.vcxitems" Label="Shared" />
     <Import Project="..\DLLFiles\DLLFiles.vcxitems" Label="Shared" />
     <Import Project="..\3DTools\3DTools.vcxitems" Label="Shared" />
-    <Import Project="..\3DDLL\3DDLL.vcxitems" Label="Shared" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />

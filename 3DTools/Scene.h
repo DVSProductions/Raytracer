@@ -7,10 +7,10 @@ namespace DDD {
 		std::unique_ptr<std::vector<DDD::renderable*>> objects;
 	public:
 		Scene() noexcept;
+		~Scene();
 		void addObject(DDD::renderable* obj);
 		void clear();
 		Hit intersect(Ray r)const override;
-		~Scene();
 		std::string serialize()const override;
 		void load(std::string serialized) override;
 	};

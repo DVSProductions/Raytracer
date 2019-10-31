@@ -1,12 +1,14 @@
 #include "Camera.h"
 
-Camera::Camera(const point& pos, const double& angle)noexcept : position(pos.x,pos.y,pos.z) {
+Camera::Camera(const cgtools::point& pos, const double& angle)noexcept : position(pos.x,pos.y,pos.z) {
 	this->angle = angle;
 }
 
-void Camera::setScene(std::shared_ptr<DDD::Scene> s)noexcept { scene=s; }
+void Camera::setScene(std::shared_ptr<DDD::Scene> s)noexcept { 
+	scene=s;
+}
 
-void Camera::move(const point& newPos)noexcept {
+void Camera::move(const cgtools::point& newPos)noexcept {
 	position = newPos;
 }
 
@@ -20,6 +22,6 @@ std::string Camera::serialize()const {
 
 void Camera::load(std::string serialized) {
 	auto ret=Serializable::split(serialized, "&");
-	std::from_chars(ret[0].data(), ret[0].data() + ret[0].size(), angle);
+	f_chars(ret[0], angle);
 	position.load(ret[1]);
 }

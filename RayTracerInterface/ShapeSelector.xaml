@@ -1,0 +1,49 @@
+﻿<Window x:Class="RayTracerInterface.ShapeSelector"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:RayTracerInterface"
+        mc:Ignorable="d"
+        Title="ShapeSelector" Height="300" Width="200" Background="{DynamicResource BGColor}" WindowStartupLocation="CenterOwner" Topmost="True" ShowInTaskbar="False" WindowStyle="ToolWindow">
+
+	<Grid>
+		<ListBox BorderThickness="0" BorderBrush="{x:Null}" HorizontalContentAlignment="Stretch"  Background="{x:Null}" x:Name="lbshapes" Margin="0,0,0,42">
+			<ListBox.ItemContainerStyle>
+				<Style TargetType="{x:Type ListBoxItem}">
+					<Setter Property="Background" Value="Transparent" />
+					<Setter Property="Template">
+						<Setter.Value>
+							<ControlTemplate TargetType="{x:Type ListBoxItem}">
+								<ContentPresenter />
+							</ControlTemplate>
+						</Setter.Value>
+					</Setter>
+				</Style>
+			</ListBox.ItemContainerStyle>
+			<ListBox.ItemTemplate>
+				<DataTemplate>
+					<Border Margin="5,5,5,0" x:Name="Border" BorderBrush="{DynamicResource LightRed}" BorderThickness="3" HorizontalAlignment="Stretch" CornerRadius="10">
+						<Label Content="{Binding}" HorizontalContentAlignment="Center" Foreground="White" FontSize="15" Padding="5">							
+						</Label>
+					</Border>
+					<DataTemplate.Triggers>
+						<DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ListBoxItem}}, Path=IsSelected}" Value="True">
+							<Setter TargetName="Border" Property="BorderBrush" Value="Red"/>
+							<Setter TargetName="Border" Property="Background">
+								<Setter.Value>
+									<SolidColorBrush Color="Black" Opacity="0.2"/>
+								</Setter.Value>
+							</Setter>
+						</DataTrigger>
+						<DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ListBoxItem}}, Path=IsMouseOver}" Value="True">
+							<Setter TargetName="Border" Property="BorderBrush" Value="#993D3D"/>
+						</DataTrigger>
+					</DataTemplate.Triggers>
+				</DataTemplate>
+				
+			</ListBox.ItemTemplate>
+		</ListBox>
+		<Button Content="Add" Style="{DynamicResource BTStyle}" Padding="5" VerticalAlignment="Bottom" Click="Button_Click"/>
+	</Grid>
+</Window>

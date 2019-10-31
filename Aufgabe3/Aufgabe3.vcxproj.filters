@@ -21,10 +21,10 @@
     <ClCompile Include="Camera.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
-    <ClCompile Include="PinholeCamera.cpp">
+    <ClCompile Include="A3Sphere.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
-    <ClCompile Include="Sphere.cpp">
+    <ClCompile Include="A3PinholeCamera.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
   </ItemGroup>
@@ -32,10 +32,10 @@
     <ClInclude Include="Camera.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
-    <ClInclude Include="PinholeCamera.h">
+    <ClInclude Include="A3Sphere.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
-    <ClInclude Include="Sphere.h">
+    <ClInclude Include="A3PinholeCamera.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
   </ItemGroup>

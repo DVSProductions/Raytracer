@@ -12,10 +12,6 @@ namespace RayTracerInterface {
 		/// </summary>
 		readonly Action<IRenderPage> switchToRenderPage;
 		readonly LibraryHandler.Renderer renderer;
-		/// <summary>
-		/// Aspect ratio to keep while the box is checked
-		/// </summary>
-		double ratio = 16.0 / 9.0;
 
 		public CompilationSettings(Action<IRenderPage> switchToRenderPage, LibraryHandler.Renderer renderer) {
 			this.renderer = renderer;
@@ -26,6 +22,10 @@ namespace RayTracerInterface {
 			gbScene.Visibility = renderer is LibraryHandler.SceneBasedRenderer ? Visibility.Visible : Visibility.Collapsed;
 			this.switchToRenderPage = switchToRenderPage;
 		}
+		/// <summary>
+		/// Aspect ratio to keep while the box is checked
+		/// </summary>
+		double ratio = 16.0 / 9.0;
 		/// <summary>
 		/// Stores aspect ratio or unchecks itself if one of the given values is invalid
 		/// </summary>
@@ -81,6 +81,14 @@ namespace RayTracerInterface {
 			catch (Exception ex) {
 				MessageBox.Show(ex.Message);
 			}
+		}
+
+		private void Button_Click_2(object sender, RoutedEventArgs e) {
+			if (renderer is LibraryHandler.SceneBasedRenderer sbr)
+				switchToRenderPage(new SceneBuilder(sbr, switchToRenderPage));
+			else
+				MessageBox.Show("ERROR THIS IS NOT A SCENE BASED RENDERER");
+
 		}
 	}
 }

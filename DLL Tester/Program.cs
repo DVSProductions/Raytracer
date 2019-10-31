@@ -1,13 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using RayTracerInterface;
 namespace DLL_Tester {
 	class Program {
+		[DllImport("WPFDarkMode.dll")]
+		static extern void init();
+		[DllImport("WPFDarkMode.dll")]
+		private static extern void apply(IntPtr hwnd);
 		static void TestOnce(LibraryHandler.Renderer rend ) {
 			int scaling = 1;
 			rend.Render(0, 16*scaling, 9 * scaling);
@@ -37,9 +43,13 @@ namespace DLL_Tester {
 			}
 			Console.WriteLine("Done");
 		}
+		
 		static void Main() {
-			var rend=LibraryHandler.TryLoadLib(@"..\..\..\x64\Release\Aufgabe3.dll");
-			TestOnce(rend);
+			//var rend=LibraryHandler.TryLoadLib(@"..\..\..\x64\Release\Aufgabe3.dll");
+			//TestOnce(rend);
+			init();
+			apply(Process.GetCurrentProcess().MainWindowHandle);
+			while (true) Thread.Sleep(999);
 		}
 	}
 }

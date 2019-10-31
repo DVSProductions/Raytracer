@@ -1,20 +1,20 @@
 #pragma once
 #include <point.h>
+#include "Color.h"
 #include <Renderer.h>
 #include "Ray.h"
 #include "Scene.h"
 #include "ISerializable.h"
 #include <memory>
-using namespace cgtools;
-class Camera :public  Renderer,public ISerializable{
+class Camera :public  cgtools::Renderer, public ISerializable {
 protected:
 	std::shared_ptr<DDD::Scene> scene;
-	point position;
+	cgtools::point position;
 	double angle;
-	Camera(const point& pos, const double& angle) noexcept;
+	Camera(const cgtools::point& pos, const double& angle) noexcept;
 public:
 	void setScene(std::shared_ptr<DDD::Scene> s)noexcept;
-	void move(const point& newPos) noexcept;
+	void move(const cgtools::point& newPos) noexcept;
 	void setAngle(const double& newAngle) noexcept;
 
 	// Geerbt über ISerializable

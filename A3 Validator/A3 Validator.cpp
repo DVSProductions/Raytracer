@@ -13,7 +13,6 @@
 #include <cmath>
 #include "Aufgabe3.cpp"
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
-using namespace DDD;
 using namespace cgtools;
 namespace A3Validator {
 	TEST_CLASS(A3Validator) {

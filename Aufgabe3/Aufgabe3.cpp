@@ -1,31 +1,32 @@
 #define _USE_MATH_DEFINES
 #include <cmath>
 #include <utility>
+#include <direct.h>
+#include <Windows.h>
+#include <vector>
+#include <functional>
+
+
 #include "DllInfo.h"
 #include "cgtools.h"
 #include "Image.h"
-#include "lodepng.h"
-#include <direct.h>
-#include <Windows.h>
-#include<vector>
-#include <functional>
-#include "PinholeCamera.h"
+#include "A3PinholeCamera.h"
 #include "cgSampling.h"
 #include "Scene.h"
-#include "Sphere.h"
+#include "A3Sphere.h"
 
 const std::string files[] = { "a03-one-sphere.png","_" };
-const std::string libVersion = "2.0";
+const std::string libVersion = "2.0";//A3 is actually 1.0 but we have to fake it for testing //"1.0";
 std::shared_ptr <DDD::Scene> Playground;
 std::shared_ptr <Camera> cam;
 /// <summary>
 /// targetimage
 /// </summary>
-std::unique_ptr<Image> image;
+std::unique_ptr<cgtools::Image> image;
 /// <summary>
 /// Renderer storage
 /// </summary>
-std::unique_ptr<Renderer> renderer;
+std::unique_ptr<cgtools::Renderer> renderer;
 /// <summary>
 /// Generates the colors for every pixel and updates it's progress
 /// <para>
@@ -131,11 +132,11 @@ void prepare() {
 	const Color gray = Color::fromRGB(60, 60, 60).reverseGamma(2.2);//application background color
 	const Color red = Color::fromRGB(0x9B, 0x55, 0x55).reverseGamma(2.2);//application default red color
 	const Color b = Color(0, 0, 1);
-	cam = std::make_shared < PinholeCamera>(PinholeCamera(M_PI / 2, cgtools::point(0, 0, 0), gray));
+	cam = std::make_shared < A3PinholeCamera>(A3PinholeCamera(M_PI / 2, cgtools::point(0, 0, 0), gray));
 	cam->setScene(Playground);
-	Playground->addObject(new Sphere(point(0, 0, -3), 1, red));
-	Playground->addObject(new Sphere(point(1, 0, -3), 0.5, b));
-	Playground->addObject(new Sphere(point(-1, 0, -3), 0.5, b));
+	Playground->addObject(new A3Sphere(point(0, 0, -3), 1, red));
+	Playground->addObject(new A3Sphere(point(1, 0, -3), 0.5, b));
+	Playground->addObject(new A3Sphere(point(-1, 0, -3), 0.5, b));
 	setsampleQuality();
 }
 /// <summary>

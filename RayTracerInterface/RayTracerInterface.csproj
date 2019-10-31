@@ -78,6 +78,7 @@
       <DependentUpon>Abgabe.xaml</DependentUpon>
     </Compile>
     <Compile Include="IRenderPage.cs" />
+    <Compile Include="Renderable.cs" />
     <Compile Include="Renderer.cs" />
     <Compile Include="RenderPage.xaml.cs">
       <DependentUpon>RenderPage.xaml</DependentUpon>
@@ -85,6 +86,9 @@
     <Compile Include="SceneBasedRenderer.cs" />
     <Compile Include="SceneBuilder.xaml.cs">
       <DependentUpon>SceneBuilder.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ShapeSelector.xaml.cs">
+      <DependentUpon>ShapeSelector.xaml</DependentUpon>
     </Compile>
     <Page Include="Abgabe.xaml">
       <SubType>Designer</SubType>
@@ -122,6 +126,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="SceneBuilder.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ShapeSelector.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -165,6 +173,11 @@
     <Analyzer Include="..\packages\Microsoft.NetCore.Analyzers.2.9.6\analyzers\dotnet\cs\Microsoft.NetCore.CSharp.Analyzers.dll" />
     <Analyzer Include="..\packages\Microsoft.NetFramework.Analyzers.2.9.6\analyzers\dotnet\cs\Microsoft.NetFramework.Analyzers.dll" />
     <Analyzer Include="..\packages\Microsoft.NetFramework.Analyzers.2.9.6\analyzers\dotnet\cs\Microsoft.NetFramework.CSharp.Analyzers.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="..\x64\Release\WPFDarkMode.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

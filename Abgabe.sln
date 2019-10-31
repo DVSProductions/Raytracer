@@ -25,15 +25,20 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DLL3D", "3DDLL\3DDLL.vcxite
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Aufgabe4", "Aufgabe4\Aufgabe4.vcxproj", "{6B4DBC8C-7192-4E18-A999-3EE6F8D304AF}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "WPFDarkMode", "WPFDarkMode\WPFDarkMode.vcxproj", "{A295DF02-722B-4234-A354-BCA28D933912}"
+EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		3DDLL\3DDLL.vcxitems*{01b9f5d2-0de1-4f3f-b989-2a47e727bf11}*SharedItemsImports = 9
 		cgtools\cgtools.vcxitems*{4990afe0-d3c0-4fde-a55c-fb1f6ef47c0e}*SharedItemsImports = 4
 		DLLFiles\DLLFiles.vcxitems*{4990afe0-d3c0-4fde-a55c-fb1f6ef47c0e}*SharedItemsImports = 4
+		3DDLL\3DDLL.vcxitems*{6b4dbc8c-7192-4e18-a999-3ee6f8d304af}*SharedItemsImports = 4
+		3DTools\3DTools.vcxitems*{6b4dbc8c-7192-4e18-a999-3ee6f8d304af}*SharedItemsImports = 4
+		cgtools\cgtools.vcxitems*{6b4dbc8c-7192-4e18-a999-3ee6f8d304af}*SharedItemsImports = 4
+		DLLFiles\DLLFiles.vcxitems*{6b4dbc8c-7192-4e18-a999-3ee6f8d304af}*SharedItemsImports = 4
 		cgtools\cgtools.vcxitems*{9b9d2a86-4bad-4afb-97d0-b8bea0486e1d}*SharedItemsImports = 9
 		3DTools\3DTools.vcxitems*{9bf4893b-6393-4894-bd45-843434d54cbf}*SharedItemsImports = 9
 		DLLFiles\DLLFiles.vcxitems*{bfc32bdc-d89c-41ee-8321-2daff3325352}*SharedItemsImports = 9
-		3DDLL\3DDLL.vcxitems*{db4550fb-b9aa-485c-b006-cbe2ab116148}*SharedItemsImports = 4
 		3DTools\3DTools.vcxitems*{db4550fb-b9aa-485c-b006-cbe2ab116148}*SharedItemsImports = 4
 		cgtools\cgtools.vcxitems*{db4550fb-b9aa-485c-b006-cbe2ab116148}*SharedItemsImports = 4
 		DLLFiles\DLLFiles.vcxitems*{db4550fb-b9aa-485c-b006-cbe2ab116148}*SharedItemsImports = 4
@@ -126,6 +131,16 @@ Global
 		{6B4DBC8C-7192-4E18-A999-3EE6F8D304AF}.Release|x64.Build.0 = Release|x64
 		{6B4DBC8C-7192-4E18-A999-3EE6F8D304AF}.Release|x86.ActiveCfg = Release|Win32
 		{6B4DBC8C-7192-4E18-A999-3EE6F8D304AF}.Release|x86.Build.0 = Release|Win32
+		{A295DF02-722B-4234-A354-BCA28D933912}.Debug|Any CPU.ActiveCfg = Debug|Win32
+		{A295DF02-722B-4234-A354-BCA28D933912}.Debug|x64.ActiveCfg = Debug|x64
+		{A295DF02-722B-4234-A354-BCA28D933912}.Debug|x64.Build.0 = Debug|x64
+		{A295DF02-722B-4234-A354-BCA28D933912}.Debug|x86.ActiveCfg = Debug|Win32
+		{A295DF02-722B-4234-A354-BCA28D933912}.Debug|x86.Build.0 = Debug|Win32
+		{A295DF02-722B-4234-A354-BCA28D933912}.Release|Any CPU.ActiveCfg = Release|Win32
+		{A295DF02-722B-4234-A354-BCA28D933912}.Release|x64.ActiveCfg = Release|x64
+		{A295DF02-722B-4234-A354-BCA28D933912}.Release|x64.Build.0 = Release|x64
+		{A295DF02-722B-4234-A354-BCA28D933912}.Release|x86.ActiveCfg = Release|Win32
+		{A295DF02-722B-4234-A354-BCA28D933912}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,18 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace RayTracerInterface {
 	/// <summary>
@@ -44,18 +32,18 @@ namespace RayTracerInterface {
 		/// </summary>
 		void Preexecution() {
 			var para = Environment.GetCommandLineArgs();
-			if(para[0] != Assembly.GetExecutingAssembly().Location) {
+			if (para[0] != Assembly.GetExecutingAssembly().Location) {
 				////For debugging purposes: List all command line parameters
 				//var s = "";
 				//foreach(var p in para) s += p + "\n";
 				//MessageBox.Show(s);
 			}
-			if(para.Length == 1) {
-				if(para[0] == Assembly.GetExecutingAssembly().Location) return;
-				prefetchRenderer=LibraryHandler.TryLoadLib(para[0]);
+			if (para.Length == 1) {
+				if (para[0] == Assembly.GetExecutingAssembly().Location) return;
+				prefetchRenderer = LibraryHandler.TryLoadLib(para[0]);
 			}
-			else if(para.Length > 1 && para[0] == Assembly.GetExecutingAssembly().Location)
-				prefetchRenderer=LibraryHandler.TryLoadLib(para[1]);
+			else if (para.Length > 1 && para[0] == Assembly.GetExecutingAssembly().Location)
+				prefetchRenderer = LibraryHandler.TryLoadLib(para[1]);
 		}
 		/// <summary>
 		/// Creates the window and switches to the correct page
@@ -63,9 +51,12 @@ namespace RayTracerInterface {
 		public MainWindow() {
 			Preexecution();
 			InitializeComponent();
-			if(LibraryHandler.IsLoaded) OpenPage2(prefetchRenderer);
+			if (LibraryHandler.IsLoaded) OpenPage2(prefetchRenderer);
 			else
 				pageViewer.Content = new DND(OpenPage2);
+			App.makeMeDark(this);
+
 		}
+		
 	}
 }
