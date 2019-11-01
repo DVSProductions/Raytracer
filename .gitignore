@@ -11,6 +11,7 @@
 *.sln.docstates
 *.bsc
 Aufgabe[1234].bsc
+internalLib.dll
 
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
