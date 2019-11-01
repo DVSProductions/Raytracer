@@ -2,6 +2,7 @@
 #include <comutil.h>
 #include "lodepng.h"
 #include "cgtools.h"
+#define dll(x) __declspec(dllexport) x __cdecl
 /// <summary>
 /// DEFINE THIS IN YOUR DLL
 /// </summary>
@@ -21,63 +22,62 @@ BSTR ANSItoBSTR(const char* input)noexcept {
 	}
 	return result;
 }
-extern "C" {
-	/// <summary>
-	/// Returns the current version of the DLL spec
-	/// </summary>
-	/// <returns></returns>
-	__declspec(dllexport) BSTR __cdecl LibInfo(void) {
-		return ::SysAllocString(ANSItoBSTR(libVersion.c_str()));
+EXTERN_C_START
+/// <summary>
+/// Returns the current version of the DLL spec
+/// </summary>
+/// <returns></returns>
+dll(BSTR) LibInfo(void) {
+	return ::SysAllocString(ANSItoBSTR(libVersion.c_str()));
+}
+/// <summary>
+/// Sends A list of files that will be created by this program
+/// </summary>
+/// <param name="idx">index in the array</param>
+/// <returns></returns>
+dll(BSTR) OutputFile(int idx) {
+	return ANSItoBSTR(files[idx].c_str());
+}
+/// <summary>
+/// Default Render Handler. Do Specific tasks in your workswitch
+/// </summary>
+/// <param name="Option">file index</param>
+/// <param name="x">width</param>
+/// <param name="y">height</param>
+/// <returns></returns>
+dll(bool) render(int Option, int x, int y) {
+	width = x;
+	height = y;
+	scaling = max(width, height) / 160;
+	try {
+		return workswitch(Option);
 	}
-	/// <summary>
-	/// Sends A list of files that will be created by this program
-	/// </summary>
-	/// <param name="idx">index in the array</param>
-	/// <returns></returns>
-	__declspec(dllexport) BSTR __cdecl OutputFile(int idx) {
-		return ANSItoBSTR(files[idx].c_str());
-	}
-	/// <summary>
-	/// Default Render Handler. Do Specific tasks in your workswitch
-	/// </summary>
-	/// <param name="Option">file index</param>
-	/// <param name="x">width</param>
-	/// <param name="y">height</param>
-	/// <returns></returns>
-	__declspec(dllexport) bool render(int Option, int x, int y) {
-		width = x;
-		height = y;
-		scaling = max(width, height) / 160;
-		try {
-			return workswitch(Option);
-		}
-		catch (...) {
-			return false;
-		}
-	}
-	/// <summary>
-	/// returns result from 0-width
-	/// </summary>
-	__declspec(dllexport) int status() {
-		//if (progress == width&&!joined) {
-		//	joined = true;
-		//	worker.join();
-		//}
-		return progress;
-	}
-	/// <summary>
-	/// returns the lodepng return value
-	/// </summary>
-	__declspec(dllexport) int returnValue() {
-		return lodepngReturn;
-	}
-	/// <summary>
-	/// Turns a LodedPNG Error code to a Error message for displaying
-	/// </summary>
-	/// <param name="option">error code</param>
-	/// <returns></returns>
-	__declspec(dllexport) BSTR LodeReturnDecode(int errorCode) {
-		return ANSItoBSTR(lodepng::lodepng_error_text(errorCode));
+	catch (...) {
+		return false;
 	}
 }
-
+/// <summary>
+/// returns result from 0-width
+/// </summary>
+dll(int) status() {
+	//if (progress == width&&!joined) {
+	//	joined = true;
+	//	worker.join();
+	//}
+	return progress;
+}
+/// <summary>
+/// returns the lodepng return value
+/// </summary>
+dll(int) returnValue() {
+	return lodepngReturn;
+}
+/// <summary>
+/// Turns a LodedPNG Error code to a Error message for displaying
+/// </summary>
+/// <param name="option">error code</param>
+/// <returns></returns>
+dll(BSTR) LodeReturnDecode(int errorCode) {
+	return ANSItoBSTR(lodepng::lodepng_error_text(errorCode));
+}
+EXTERN_C_END

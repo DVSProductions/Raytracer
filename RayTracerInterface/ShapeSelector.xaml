@@ -8,7 +8,7 @@
         Title="ShapeSelector" Height="300" Width="200" Background="{DynamicResource BGColor}" WindowStartupLocation="CenterOwner" Topmost="True" ShowInTaskbar="False" WindowStyle="ToolWindow">
 
 	<Grid>
-		<ListBox BorderThickness="0" BorderBrush="{x:Null}" HorizontalContentAlignment="Stretch"  Background="{x:Null}" x:Name="lbshapes" Margin="0,0,0,42">
+		<ListBox BorderThickness="0" BorderBrush="{x:Null}" HorizontalContentAlignment="Stretch"  Background="{x:Null}" x:Name="lbshapes" Margin="0,0,0,42" IsTextSearchEnabled="False">
 			<ListBox.ItemContainerStyle>
 				<Style TargetType="{x:Type ListBoxItem}">
 					<Setter Property="Background" Value="Transparent" />
@@ -44,6 +44,6 @@
 				
 			</ListBox.ItemTemplate>
 		</ListBox>
-		<Button Content="Add" Style="{DynamicResource BTStyle}" Padding="5" VerticalAlignment="Bottom" Click="Button_Click"/>
+		<Button TabIndex="0" Content="Add" Style="{DynamicResource BTStyle}" Padding="5" VerticalAlignment="Bottom" Click="Button_Click" IsDefault="True"/>
 	</Grid>
 </Window>

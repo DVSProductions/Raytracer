@@ -14,14 +14,55 @@
 			<ColumnDefinition Width="*"/>
 			<ColumnDefinition Width="200"/>
 		</Grid.ColumnDefinitions>
-		<StackPanel Grid.Column="0" VerticalAlignment="Bottom">
-			<Button Content="Add Shape" Margin="5" Style="{DynamicResource BTStyle}" Click="Button_Click"/>
-		</StackPanel>
+		<Grid Grid.Column="0">
+			<Grid Margin="10,0,0,33.286" Background="{DynamicResource BGColor}">
+				<Border Padding="0,6.5,0,0" Margin="0,10,0,0" BorderBrush="{DynamicResource LightRed}" BorderThickness="2" CornerRadius="6">
+					<ListBox x:Name="lbshapes" BorderThickness="0" BorderBrush="{x:Null}" HorizontalContentAlignment="Stretch"  Background="{x:Null}"  IsTextSearchEnabled="False">
+						<ListBox.ItemContainerStyle>
+							<Style TargetType="{x:Type ListBoxItem}">
+								<Setter Property="Background" Value="Transparent" />
+								<Setter Property="Template">
+									<Setter.Value>
+										<ControlTemplate TargetType="{x:Type ListBoxItem}">
+											<ContentPresenter />
+										</ControlTemplate>
+									</Setter.Value>
+								</Setter>
+							</Style>
+						</ListBox.ItemContainerStyle>
+						<ListBox.ItemTemplate>
+							<DataTemplate>
+								<Border Margin="5" x:Name="Border" BorderBrush="{DynamicResource LightRed}" BorderThickness="1" HorizontalAlignment="Stretch" CornerRadius="10">
+									<Label Content="{Binding}" HorizontalContentAlignment="Center" Foreground="White" Padding="3">
+									</Label>
+								</Border>
+								<DataTemplate.Triggers>
+									<DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ListBoxItem}}, Path=IsSelected}" Value="True">
+										<Setter TargetName="Border" Property="BorderBrush" Value="Red"/>
+										<Setter TargetName="Border" Property="Background">
+											<Setter.Value>
+												<SolidColorBrush Color="Black" Opacity="0.2"/>
+											</Setter.Value>
+										</Setter>
+									</DataTrigger>
+									<DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ListBoxItem}}, Path=IsMouseOver}" Value="True">
+										<Setter TargetName="Border" Property="BorderBrush" Value="#993D3D"/>
+									</DataTrigger>
+								</DataTemplate.Triggers>
+							</DataTemplate>
+
+						</ListBox.ItemTemplate>
+					</ListBox>
+				</Border>
+				<Label Content="Formen" VerticalAlignment="Top" HorizontalAlignment="Left" Foreground="White" Padding="5,1" Margin="10,0,20,0"  Background="{DynamicResource BGColor}"/>
+			</Grid>
+			<Button VerticalAlignment="Bottom" Content="Add Shape" Margin="10,0,0,5" Style="{DynamicResource BTStyle}" Click="Button_Click"/>
+		</Grid>
 		<Grid Grid.Column="1" Margin="10,0" Background="#33000000">
 			<Image Margin="0" />
 		</Grid>
-		<GridSplitter Width="2" Margin="9,0" Grid.Column="1" HorizontalAlignment="Left"  Background="Red"/>
-		<GridSplitter Width="2" Margin="9,0" Grid.Column="1" HorizontalAlignment="Right" Background="Red"/>
+		<GridSplitter Width="1" Margin="10,0" Grid.Column="1" HorizontalAlignment="Left"  Background="#FF850000"/>
+		<GridSplitter Width="1" Margin="10,0" Grid.Column="1" HorizontalAlignment="Right" Background="#FF850000"/>
 		<StackPanel Grid.Column="2" >
 			<Grid Background="{DynamicResource BGColor}">
 				<Border Padding="0,6.5,0,0" Margin="0,10,0,0" BorderBrush="{DynamicResource LightRed}" BorderThickness="2" CornerRadius="6">
@@ -45,7 +86,7 @@
 							<TextBox x:Name="tbSX" Grid.Row="2" Grid.Column="1" Margin="3,3,0,3" MaxLines="1" Text="10" VerticalContentAlignment="Center" HorizontalContentAlignment="Right" Style="{DynamicResource TBStyle}" KeyUp="TbH_KeyUp" />
 							<Border Grid.Column="2" Grid.ColumnSpan="2" Margin="0,0,10,0" Grid.RowSpan="2" CornerRadius="4" Width="20" Height="30" BorderBrush="Red" BorderThickness="3" HorizontalAlignment="Right"></Border>
 							<CheckBox x:Name="cbLink" Grid.Column="2" Grid.RowSpan="2" VerticalAlignment="Center" HorizontalAlignment="Center" Click="CheckBox_Click" IsChecked="True"/>
-							
+
 						</Grid>
 					</StackPanel>
 				</Border>
@@ -53,7 +94,7 @@
 			</Grid>
 			<Grid Background="{DynamicResource BGColor}">
 				<Border Padding="0,6.5,0,0" Margin="0,10,0,0" BorderBrush="{DynamicResource LightRed}" BorderThickness="2" CornerRadius="6">
-					<StackPanel  Margin="5,0,5,5">
+					<StackPanel Margin="5,0,5,5">
 						<TextBlock Foreground="White" TextWrapping="Wrap">Keine Kamera vorhanden</TextBlock>
 					</StackPanel>
 				</Border>
@@ -61,7 +102,7 @@
 			</Grid>
 			<Grid Background="{DynamicResource BGColor}">
 				<Border Padding="0,6.5,0,0" Margin="0,10,0,0" BorderBrush="{DynamicResource LightRed}" BorderThickness="2" CornerRadius="6">
-					<StackPanel x:Name="sbProperties" Margin="5,0,5,5">
+					<StackPanel x:Name="spProperties" Margin="5,0,5,5">
 						<TextBlock Foreground="White" TextWrapping="Wrap">Kein Element ausgewählt</TextBlock>
 					</StackPanel>
 				</Border>

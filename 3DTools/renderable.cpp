@@ -20,5 +20,6 @@ namespace DDD {
 			ret = DDD_CLASS_SPHERE_DESERIALIZE(s[1]);
 			break;
 		}
+		return ret;
 	}
 }

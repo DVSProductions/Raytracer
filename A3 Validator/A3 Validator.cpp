@@ -1,11 +1,11 @@
 #define _USE_MATH_DEFINES 
 #include "CppUnitTest.h"
 #include "Ray.h"
-#include "Sphere.h"
-#include "Sphere.cpp"
+#include "A3Sphere.h"
+#include "A3Sphere.cpp"
 #include "DLLInfo.h"
-#include "PinholeCamera.h"
-#include "PinholeCamera.cpp"
+#include "A3PinholeCamera.h"
+#include "A3PinholeCamera.cpp"
 #include "Camera.h"
 #include "Camera.cpp"
 #include "point.h"
@@ -22,31 +22,31 @@ namespace A3Validator {
 		inline std::string str(std::string s) {
 			return s;
 		}
-		Hit testHit(point c, point x0, direction d, double tmax) {
-			Sphere s(c, 1, c_red);
-			Ray r(x0, d, tmax, 0);
+		DDD::Hit testHit(point c, point x0, direction d, double tmax) {
+			A3Sphere s(c, 1, c_red);
+			DDD::Ray r(x0, d, tmax, 0);
 			return s.intersect(r);
 		}
 public:
 	TEST_METHOD(A3_2_1) {
 		width = 10;
 		height = 10;
-		auto c = PinholeCamera(M_PI / 2.0, cgtools::point(0, 0, 0),cgtools::c_black);
+		auto c = A3PinholeCamera(M_PI / 2.0, cgtools::point(0, 0, 0),cgtools::c_black);
 		auto r = c.generateRay(0, 0);
 		Assert::IsTrue(r.x0 == point(0, 0, 0));
 	}
 	TEST_METHOD(A3_2_2) {
-		auto c = PinholeCamera(M_PI / 2.0, cgtools::point(0, 0, 0), cgtools::c_black);
+		auto c = A3PinholeCamera(M_PI / 2.0, cgtools::point(0, 0, 0), cgtools::c_black);
 		auto r = c.generateRay(0, 0);
 		Assert::IsTrue(r.dir.reduceAccuracy(4) == direction(-1 / sqrt(3), 1 / sqrt(3), -1 / sqrt(3)).reduceAccuracy(4), StringToWString("Richtung falsch: " + str(r.dir)).c_str());
 	}
 	TEST_METHOD(A3_2_3) {
-		auto c = PinholeCamera(M_PI / 2.0, cgtools::point(0, 0, 0), cgtools::c_black);
+		auto c = A3PinholeCamera(M_PI / 2.0, cgtools::point(0, 0, 0), cgtools::c_black);
 		auto r = c.generateRay(5, 5);
 		Assert::IsTrue(r.dir == direction(0, 0, -1), StringToWString("Richtung falsch: " + str(r.dir)).c_str());
 	}
 	TEST_METHOD(A3_2_4) {
-		auto c = PinholeCamera(M_PI / 2.0, cgtools::point(0, 0, 0), cgtools::c_black);
+		auto c = A3PinholeCamera(M_PI / 2.0, cgtools::point(0, 0, 0), cgtools::c_black);
 		auto r = c.generateRay(10, 10);
 		Assert::IsTrue(r.dir.reduceAccuracy(4) == point(1 / sqrt(3), -1 / sqrt(3), -1 / sqrt(3)).reduceAccuracy(4), StringToWString("Richtung falsch: " + str(r.dir)).c_str());
 	}
@@ -76,11 +76,11 @@ public:
 	}
 	TEST_METHOD(TestVec) {
 		std::vector <DDD::renderable*> objects;
-		objects.push_back(new Sphere(point(100, 100, 100), 50, Color(1, 0, 0)));
+		objects.push_back(new A3Sphere(point(100, 100, 100), 50, Color(1, 0, 0)));
 	}
 	TEST_METHOD(TestPush) {
 		Playground = std::make_shared<DDD::Scene>();
-		Playground->addObject(new Sphere(point(100, 100, 100), 50, Color(1, 0, 0)));
+		Playground->addObject(new A3Sphere(point(100, 100, 100), 50, Color(1, 0, 0)));
 	}
 	/*TEST_METHOD(TestMain) {
 		width = 100;

@@ -1,22 +1,33 @@
 #define _USE_MATH_DEFINES
 #include <cmath>
 #include <utility>
+#include <direct.h>
+#include <Windows.h>
+#include <vector>
+#include <functional>
+#include <memory>
+
+#include "3DInfo.h"
+#include "Scene.h"
+#include "ACamera.h"
 #include "DllInfo.h"
 #include "cgtools.h"
 #include "Image.h"
 #include "lodepng.h"
-#include <direct.h>
-#include <Windows.h>
-#include<vector>
-#include <functional>
 #include "cgSampling.h"
-#include "Scene.h"
-#include "ACamera.h"
-
+#include "PinholeCamera.h"
+#include "Sphere.h"
+/// <summary>
+/// -1 terminated array of Supported Element classes
+/// </summary>
+const int supportedClasses[] = { 0,-1 };
 const std::string files[] = { "a03-one-sphere.png","_" };
 const std::string libVersion = "2.0";
-std::shared_ptr <DDD::Scene> Playground;
-std::shared_ptr <DDD::ACamera> cam;
+std::shared_ptr <DDD::Scene> playground;//=std::shared_ptr<DDD::Scene>();
+std::shared_ptr <DDD::ACamera> cam; //= std::shared_ptr<DDD::ACamera>();
+void prepare3d() {
+	return;
+}
 /// <summary>
 /// targetimage
 /// </summary>
@@ -125,16 +136,16 @@ bool prepared = false;
 void prepare() {
 	if (prepared)return;
 	prepared = true;
-	Playground = std::make_shared <DDD::Scene>();
+	playground = std::make_shared <DDD::Scene>();
 	//Playground->addObject(new Sphere(point(100, 100, 100), 50, c_red));
 	const Color gray = Color::fromRGB(60, 60, 60).reverseGamma(2.2);//application background color
 	const Color red = Color::fromRGB(0x9B, 0x55, 0x55).reverseGamma(2.2);//application default red color
 	const Color b = Color(0, 0, 1);
-	cam = std::make_shared < PinholeCamera>(PinholeCamera(M_PI / 2, cgtools::point(0, 0, 0), gray));
-	cam->setScene(Playground);
-	Playground->addObject(new Sphere(point(0, 0, -3), 1, red));
-	Playground->addObject(new Sphere(point(1, 0, -3), 0.5, b));
-	Playground->addObject(new Sphere(point(-1, 0, -3), 0.5, b));
+	cam = std::make_shared < DDD::PinholeCamera>(DDD::PinholeCamera(M_PI / 2, cgtools::point(0, 0, 0), gray));
+	cam->setScene(playground);
+	playground->addObject(new DDD::Sphere(point(00, 0, -3), 1.0, red));
+	playground->addObject(new DDD::Sphere(point(01, 0, -3), 0.5, b));
+	playground->addObject(new DDD::Sphere(point(-1, 0, -3), 0.5, b));
 	setsampleQuality();
 }
 /// <summary>

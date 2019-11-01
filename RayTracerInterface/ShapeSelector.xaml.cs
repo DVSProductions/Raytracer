@@ -17,16 +17,18 @@ namespace RayTracerInterface {
 	/// Interaction logic for ShapeSelector.xaml
 	/// </summary>
 	public partial class ShapeSelector : Window {
-		Renderable result=null;
-		List<string> shapes = new List<string>{ "Sphere", "Yo mama", "Test" };
+		public Renderable result = null;
+		List<string> shapes = new List<string>();
 		public ShapeSelector(LibraryHandler.SceneBasedRenderer sbr) {
 			App.makeMeDarkModal(this);
 			InitializeComponent();
 			this.lbshapes.ItemsSource = shapes;
+			foreach (var c in sbr.SuppportedClasses)
+				shapes.Add(Renderable.convertIDToObject(c).GetType().Name);
 		}
 
 		private void Button_Click(object sender, RoutedEventArgs e) {
-			
+			result = Renderable.convertIDToObject(lbshapes.SelectedIndex);
 			DialogResult = true;
 		}
 	}

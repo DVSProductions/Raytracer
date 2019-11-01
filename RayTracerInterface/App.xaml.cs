@@ -13,7 +13,7 @@ namespace RayTracerInterface {
 		static extern void init();
 		[DllImport("WPFDarkMode.dll")]
 		private static extern void apply(IntPtr hwnd);
-  [DllImport("WPFDarkMode.dll")]
+		[DllImport("WPFDarkMode.dll")]
 		private static extern void halfApply(IntPtr hwnd);
 		public static async void makeMeDark(Window w) {
 			if (w == null) return;
@@ -24,8 +24,11 @@ namespace RayTracerInterface {
 			if (w == null) return;
 			while (w.Visibility != Visibility.Visible) await Task.Delay(10);
 			halfApply(new WindowInteropHelper(w).Handle);
-			w.Visibility = Visibility.Hidden;
-			w.Visibility = Visibility.Visible;
+			var orig = w.WindowStyle;
+			w.WindowStyle = WindowStyle.None;
+			if (orig == WindowStyle.None)
+				w.WindowStyle = WindowStyle.SingleBorderWindow;
+			w.WindowStyle = orig;
 		}
 		public App() {
 			init();
