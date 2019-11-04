@@ -10,14 +10,24 @@
 
 	<Grid>
 		<Grid.ColumnDefinitions>
-			<ColumnDefinition Width="100"/>
+			<ColumnDefinition Width="150"/>
 			<ColumnDefinition Width="*"/>
-			<ColumnDefinition Width="200"/>
+			<ColumnDefinition Width="250"/>
 		</Grid.ColumnDefinitions>
 		<Grid Grid.Column="0">
-			<Grid Margin="10,0,0,33.286" Background="{DynamicResource BGColor}">
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="10"/>
+				<ColumnDefinition/>
+				<ColumnDefinition/>
+			</Grid.ColumnDefinitions>
+			<Grid.RowDefinitions>
+				<RowDefinition/>
+				<RowDefinition Height="30"/>
+				<RowDefinition Height="30"/>
+			</Grid.RowDefinitions>
+			<Grid Margin="10,0,0,0" Background="{DynamicResource BGColor}" Grid.ColumnSpan="3">
 				<Border Padding="0,6.5,0,0" Margin="0,10,0,0" BorderBrush="{DynamicResource LightRed}" BorderThickness="2" CornerRadius="6">
-					<ListBox x:Name="lbshapes" BorderThickness="0" BorderBrush="{x:Null}" HorizontalContentAlignment="Stretch"  Background="{x:Null}"  IsTextSearchEnabled="False">
+					<ListBox x:Name="lbshapes" BorderThickness="0" BorderBrush="{x:Null}" HorizontalContentAlignment="Stretch"  Background="{x:Null}"  IsTextSearchEnabled="False" Margin="0.714,0.429,-0.571,-0.429">
 						<ListBox.ItemContainerStyle>
 							<Style TargetType="{x:Type ListBoxItem}">
 								<Setter Property="Background" Value="Transparent" />
@@ -32,13 +42,27 @@
 						</ListBox.ItemContainerStyle>
 						<ListBox.ItemTemplate>
 							<DataTemplate>
-								<Border Margin="5" x:Name="Border" BorderBrush="{DynamicResource LightRed}" BorderThickness="1" HorizontalAlignment="Stretch" CornerRadius="10">
-									<Label Content="{Binding}" HorizontalContentAlignment="Center" Foreground="White" Padding="3">
-									</Label>
+								<Border Height="24px" Margin="5" x:Name="Border" BorderBrush="{DynamicResource LightRed}" BorderThickness="1" HorizontalAlignment="Stretch" CornerRadius="10">
+									<Grid>
+										<Grid.ColumnDefinitions>
+											<ColumnDefinition/>
+											<ColumnDefinition Width="24px"/>
+										</Grid.ColumnDefinitions>
+										<Label Content="{Binding}" HorizontalContentAlignment="Left" Foreground="White" Padding="5,3,2,3"/>
+										<Button x:Name="clx" Click="DeleteShape" Grid.Column="1" Height="24px" VerticalAlignment="Center" Margin="0,-1,-1,-1" Padding="0" Style="{DynamicResource BTStyle}" Content="" FontFamily="Segoe UI Symbol"  BorderBrush="{DynamicResource LightRed}">
+											<Button.Resources>
+												<Style TargetType="Border">
+													<Setter Property="CornerRadius" Value="10"/>
+												</Style>
+											</Button.Resources>
+										</Button>
+
+									</Grid>
 								</Border>
 								<DataTemplate.Triggers>
 									<DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ListBoxItem}}, Path=IsSelected}" Value="True">
 										<Setter TargetName="Border" Property="BorderBrush" Value="Red"/>
+										<Setter TargetName="clx" Property="BorderBrush" Value="Red"/>
 										<Setter TargetName="Border" Property="Background">
 											<Setter.Value>
 												<SolidColorBrush Color="Black" Opacity="0.2"/>
@@ -47,67 +71,80 @@
 									</DataTrigger>
 									<DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ListBoxItem}}, Path=IsMouseOver}" Value="True">
 										<Setter TargetName="Border" Property="BorderBrush" Value="#993D3D"/>
+										<Setter TargetName="clx" Property="BorderBrush" Value="#993D3D"/>
 									</DataTrigger>
 								</DataTemplate.Triggers>
 							</DataTemplate>
-
 						</ListBox.ItemTemplate>
 					</ListBox>
 				</Border>
 				<Label Content="Formen" VerticalAlignment="Top" HorizontalAlignment="Left" Foreground="White" Padding="5,1" Margin="10,0,20,0"  Background="{DynamicResource BGColor}"/>
 			</Grid>
-			<Button VerticalAlignment="Bottom" Content="Add Shape" Margin="10,0,0,5" Style="{DynamicResource BTStyle}" Click="Button_Click"/>
+			<Button VerticalAlignment="Center" Grid.Row="1" Grid.Column="1" Style="{DynamicResource BTStyle}" Click="Button_Click"  Content="Add Shape" Grid.ColumnSpan="2" />
+			<Button VerticalAlignment="Center" Grid.Row="2" Grid.Column="1" Style="{DynamicResource BTStyle}" Margin="0,0,5,0" Content="Import"/>
+			<Button VerticalAlignment="Center" Grid.Row="2" Grid.Column="2" Style="{DynamicResource BTStyle}" Margin="5,0,0,0" Content="Export" />
+
 		</Grid>
 		<Grid Grid.Column="1" Margin="10,0" Background="#33000000">
-			<Image Margin="0" />
+			<Grid.RowDefinitions>
+				<RowDefinition Height="25px"/>
+				<RowDefinition/>
+				<RowDefinition Height="25px"/>
+			</Grid.RowDefinitions>
+			<Image x:Name="iResults" Grid.Row="1" Grid.RowSpan="1" />
+			<ProgressBar x:Name="pbrendering" Grid.Row="2" Background="{x:Null}" BorderBrush="{x:Null}" BorderThickness="0" Foreground="{DynamicResource LightRed}"/>
+			<Label Name="lbScale" FontSize="20" Padding="4,0" Content="0.01x" HorizontalAlignment="Right" Grid.Row="2" Foreground="White"/>
 		</Grid>
 		<GridSplitter Width="1" Margin="10,0" Grid.Column="1" HorizontalAlignment="Left"  Background="#FF850000"/>
 		<GridSplitter Width="1" Margin="10,0" Grid.Column="1" HorizontalAlignment="Right" Background="#FF850000"/>
-		<StackPanel Grid.Column="2" >
-			<Grid Background="{DynamicResource BGColor}">
-				<Border Padding="0,6.5,0,0" Margin="0,10,0,0" BorderBrush="{DynamicResource LightRed}" BorderThickness="2" CornerRadius="6">
-					<StackPanel  Margin="5,0,5,5">
-						<Grid>
-							<Grid.RowDefinitions>
-								<RowDefinition/>
-								<RowDefinition/>
-								<RowDefinition/>
-							</Grid.RowDefinitions>
-							<Grid.ColumnDefinitions>
-								<ColumnDefinition/>
-								<ColumnDefinition/>
-								<ColumnDefinition Width="20px"/>
-							</Grid.ColumnDefinitions>
-							<Label Grid.Row="0" Grid.Column="0" Content="Width" Foreground="White"/>
-							<Label Grid.Row="1" Grid.Column="0" Content="Height" Foreground="White"/>
-							<Label Grid.Row="2" Grid.Column="0" Content="SuperSample" Foreground="White"/>
-							<TextBox x:Name="tbW" Grid.Row="0" Grid.Column="1" Margin="3,3,0,3" MaxLines="1" Text="1600" VerticalContentAlignment="Center" HorizontalContentAlignment="Right" Style="{DynamicResource TBStyle}" KeyUp="TbW_KeyUp"/>
-							<TextBox x:Name="tbH" Grid.Row="1" Grid.Column="1" Margin="3,3,0,3" MaxLines="1" Text="900" VerticalContentAlignment="Center" HorizontalContentAlignment="Right" Style="{DynamicResource TBStyle}" KeyUp="TbH_KeyUp" />
-							<TextBox x:Name="tbSX" Grid.Row="2" Grid.Column="1" Margin="3,3,0,3" MaxLines="1" Text="10" VerticalContentAlignment="Center" HorizontalContentAlignment="Right" Style="{DynamicResource TBStyle}" KeyUp="TbH_KeyUp" />
-							<Border Grid.Column="2" Grid.ColumnSpan="2" Margin="0,0,10,0" Grid.RowSpan="2" CornerRadius="4" Width="20" Height="30" BorderBrush="Red" BorderThickness="3" HorizontalAlignment="Right"></Border>
-							<CheckBox x:Name="cbLink" Grid.Column="2" Grid.RowSpan="2" VerticalAlignment="Center" HorizontalAlignment="Center" Click="CheckBox_Click" IsChecked="True"/>
+		<ScrollViewer Grid.Column="2" VerticalScrollBarVisibility="Auto">
+			<StackPanel>
+				<Grid Background="{DynamicResource BGColor}">
+					<Border Padding="0,6.5,0,0" Margin="0,10,0,0" BorderBrush="{DynamicResource LightRed}" BorderThickness="2" CornerRadius="6">
+						<StackPanel  Margin="5,0,5,5">
+							<Grid>
+								<Grid.RowDefinitions>
+									<RowDefinition/>
+									<RowDefinition/>
+									<RowDefinition/>
+								</Grid.RowDefinitions>
+								<Grid.ColumnDefinitions>
+									<ColumnDefinition/>
+									<ColumnDefinition/>
+									<ColumnDefinition Width="20px"/>
+								</Grid.ColumnDefinitions>
+								<Label Grid.Row="0" Grid.Column="0" Content="Width" Foreground="White"/>
+								<Label Grid.Row="1" Grid.Column="0" Content="Height" Foreground="White"/>
+								<Label Grid.Row="2" Grid.Column="0" Content="SuperSample" Foreground="White"/>
+								<TextBox x:Name="tbW" Grid.Row="0" Grid.Column="1" Margin="3,3,0,3" MaxLines="1" Text="1600" VerticalContentAlignment="Center" HorizontalContentAlignment="Right" Style="{DynamicResource TBStyle}" KeyUp="TbW_KeyUp"/>
+								<TextBox x:Name="tbH" Grid.Row="1" Grid.Column="1" Margin="3,3,0,3" MaxLines="1" Text="900" VerticalContentAlignment="Center" HorizontalContentAlignment="Right" Style="{DynamicResource TBStyle}" KeyUp="TbH_KeyUp" />
+								<TextBox x:Name="tbSX" Grid.Row="2" Grid.Column="1" Margin="3,3,0,3" MaxLines="1" Text="10" VerticalContentAlignment="Center" HorizontalContentAlignment="Right" Style="{DynamicResource TBStyle}" KeyUp="TbH_KeyUp" />
+								<Border Grid.Column="2" Grid.ColumnSpan="2" Margin="0,0,10,0" Grid.RowSpan="2" CornerRadius="4" Width="20" Height="30" BorderBrush="Red" BorderThickness="3" HorizontalAlignment="Right"></Border>
+								<CheckBox x:Name="cbLink" Grid.Column="2" Grid.RowSpan="2" VerticalAlignment="Center" HorizontalAlignment="Center" Click="CheckBox_Click" IsChecked="True"/>
 
-						</Grid>
-					</StackPanel>
-				</Border>
-				<Label Content="Ausgabe" VerticalAlignment="Top" HorizontalAlignment="Left" Foreground="White" Padding="5,1" Margin="10,0,20,0"  Background="{DynamicResource BGColor}"/>
-			</Grid>
-			<Grid Background="{DynamicResource BGColor}">
-				<Border Padding="0,6.5,0,0" Margin="0,10,0,0" BorderBrush="{DynamicResource LightRed}" BorderThickness="2" CornerRadius="6">
-					<StackPanel Margin="5,0,5,5">
-						<TextBlock Foreground="White" TextWrapping="Wrap">Keine Kamera vorhanden</TextBlock>
-					</StackPanel>
-				</Border>
-				<Label Content="Kamera" VerticalAlignment="Top" HorizontalAlignment="Left" Foreground="White" Padding="5,1" Margin="10,0,20,0"  Background="{DynamicResource BGColor}"/>
-			</Grid>
-			<Grid Background="{DynamicResource BGColor}">
-				<Border Padding="0,6.5,0,0" Margin="0,10,0,0" BorderBrush="{DynamicResource LightRed}" BorderThickness="2" CornerRadius="6">
-					<StackPanel x:Name="spProperties" Margin="5,0,5,5">
-						<TextBlock Foreground="White" TextWrapping="Wrap">Kein Element ausgewählt</TextBlock>
-					</StackPanel>
-				</Border>
-				<Label VerticalAlignment="Top" HorizontalAlignment="Left" Foreground="White" Padding="5,1" Margin="10,0,20,0"  Background="{DynamicResource BGColor}">Aktuelle Auswahl</Label>
-			</Grid>
-		</StackPanel>
+							</Grid>
+						</StackPanel>
+					</Border>
+					<Label Content="Ausgabe" VerticalAlignment="Top" HorizontalAlignment="Left" Foreground="White" Padding="5,1" Margin="10,0,20,0"  Background="{DynamicResource BGColor}"/>
+				</Grid>
+				<Grid Background="{DynamicResource BGColor}">
+					<Border Padding="0,6.5,0,0" Margin="0,10,0,0" BorderBrush="{DynamicResource LightRed}" BorderThickness="2" CornerRadius="6">
+						<StackPanel x:Name="spCam" Margin="5,0,5,5">
+							<TextBlock Foreground="White" TextWrapping="Wrap">Keine Kamera vorhanden</TextBlock>
+							<Button Content="Auswählen" Style="{DynamicResource BTStyle}" Click="SelectCameraClick"/>
+						</StackPanel>
+					</Border>
+					<Label Content="Kamera" VerticalAlignment="Top" HorizontalAlignment="Left" Foreground="White" Padding="5,1" Margin="10,0,20,0"  Background="{DynamicResource BGColor}"/>
+				</Grid>
+				<Grid Background="{DynamicResource BGColor}">
+					<Border Padding="0,6.5,0,0" Margin="0,10,0,0" BorderBrush="{DynamicResource LightRed}" BorderThickness="2" CornerRadius="6">
+						<StackPanel x:Name="spProperties" Margin="5,0,5,5">
+							<TextBlock Foreground="White" TextWrapping="Wrap">Kein Element ausgewählt</TextBlock>
+						</StackPanel>
+					</Border>
+					<Label VerticalAlignment="Top" HorizontalAlignment="Left" Foreground="White" Padding="5,1" Margin="10,0,20,0"  Background="{DynamicResource BGColor}">Aktuelle Auswahl</Label>
+				</Grid>
+			</StackPanel>
+		</ScrollViewer>
 	</Grid>
 </Page>

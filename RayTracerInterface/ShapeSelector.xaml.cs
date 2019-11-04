@@ -17,18 +17,25 @@ namespace RayTracerInterface {
 	/// Interaction logic for ShapeSelector.xaml
 	/// </summary>
 	public partial class ShapeSelector : Window {
+#pragma warning disable CA1051 // Sichtbare Instanzfelder nicht deklarieren
 		public Renderable result = null;
-		List<string> shapes = new List<string>();
-		public ShapeSelector(LibraryHandler.SceneBasedRenderer sbr) {
+		protected readonly List<string> shapes = new List<string>();
+		protected LibraryHandler.SceneBasedRenderer sbr;
+#pragma warning restore CA1051 // Sichtbare Instanzfelder nicht deklarieren
+		public ShapeSelector(LibraryHandler.SceneBasedRenderer sbr) {			
 			App.makeMeDarkModal(this);
+			this.sbr = sbr;
 			InitializeComponent();
-			this.lbshapes.ItemsSource = shapes;
-			foreach (var c in sbr.SuppportedClasses)
-				shapes.Add(Renderable.convertIDToObject(c).GetType().Name);
 		}
-
+		public void Init() {
+			foreach (var cl in sbr.SuppportedClass)
+				shapes.Add(cl.GetType().Name);
+			btAdd.Click += Button_Click;
+			this.lbshapes.ItemsSource = shapes;
+		}
 		private void Button_Click(object sender, RoutedEventArgs e) {
-			result = Renderable.convertIDToObject(lbshapes.SelectedIndex);
+			if (lbshapes.SelectedIndex == -1) return;
+			result = Renderable.convertIDToObject(sbr.SuppportedClass[lbshapes.SelectedIndex].TYPEID());
 			DialogResult = true;
 		}
 	}

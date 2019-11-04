@@ -42,12 +42,12 @@ std::string DDD::Scene::serialize() const {
 	}
 	return ret;
 }
-
 void DDD::Scene::load(std::string serialized) {
 	auto ch = Serializable::split(serialized,"$");
 	const size_t siz = ch.size();
+	this->clear();
 	for (size_t n = 0; n < siz; n++) {
-		//ret += ;
+		objects->push_back(renderable::createFromSerialization(ch.at(n)));
 	}
 }
 

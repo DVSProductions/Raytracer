@@ -73,6 +73,8 @@ void rendercycle(std::string filename) {
 	cout << "->LT";
 	Sleep(100);
 #endif
+	printf("%s\n", Playground->serialize().c_str());
+	printf("%s\n", cam->serialize().c_str());
 	int th = std::thread::hardware_concurrency();
 	for (int n = 0; n < th; n++) {
 		workers.push_back(std::make_unique<std::thread>(std::thread(RenderLoop, n, th)));
@@ -132,11 +134,11 @@ void prepare() {
 	const Color gray = Color::fromRGB(60, 60, 60).reverseGamma(2.2);//application background color
 	const Color red = Color::fromRGB(0x9B, 0x55, 0x55).reverseGamma(2.2);//application default red color
 	const Color b = Color(0, 0, 1);
-	cam = std::make_shared < A3PinholeCamera>(A3PinholeCamera(M_PI / 10, cgtools::point(0, 0, 0), gray));
+	cam = std::make_shared < A3PinholeCamera>(A3PinholeCamera(M_PI / 2, cgtools::point(0, 0, 0), Color(0.5,0.5,0.5)));
 	cam->setScene(Playground);
-	Playground->addObject(new A3Sphere(point(0, 0, -30), 1, red));
-	Playground->addObject(new A3Sphere(point(1, 0, -30), 1, b));
-	Playground->addObject(new A3Sphere(point(-1, 0, -30), 1, b));
+	Playground->addObject(new A3Sphere(point(0, 0, -3), 1, Color(1,0,0)));
+	Playground->addObject(new A3Sphere(point(1, 0, -3), 0.5, Color(0,0,1)));/*
+	Playground->addObject(new A3Sphere(point(-1, 0, -30), 1, b));*/
 	setsampleQuality();
 }
 /// <summary>

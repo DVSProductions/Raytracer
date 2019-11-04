@@ -11,6 +11,7 @@ namespace RayTracerInterface {
 		/// Handler to <see cref="MainWindow"/> for opening a render page
 		/// </summary>
 		readonly Action<IRenderPage> switchToRenderPage;
+		public Action GoBack;
 		readonly LibraryHandler.Renderer renderer;
 
 		public CompilationSettings(Action<IRenderPage> switchToRenderPage, LibraryHandler.Renderer renderer) {
@@ -89,6 +90,10 @@ namespace RayTracerInterface {
 			else
 				MessageBox.Show("ERROR THIS IS NOT A SCENE BASED RENDERER");
 
+		}
+
+		private void Button_Click_3(object sender, RoutedEventArgs e) {
+			GoBack();
 		}
 	}
 }

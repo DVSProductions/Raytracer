@@ -53,12 +53,13 @@ namespace DDD {
 	}
 
 	std::string Sphere::serialize() const {
-		return renderable::includeClassID(std::to_string(radius) + "&" + c.serialize() + "&" + p.serialize(), DDD_CLASS_SPHERE);
+		return renderable::includeClassID(std::to_string(radius) + "&" + c.serialize() + "&" + p.serialize(), Sphere::CLASSID);
 	}
 
 	void Sphere::load(std::string serialized) {
 		auto ret = Serializable::split(serialized, "&");
 		f_chars(ret[0], radius);
+		rsq = radius * radius;
 		c.load(ret[1]);
 		p.load(ret[2]);
 	}

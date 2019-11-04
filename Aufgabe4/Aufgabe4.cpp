@@ -20,14 +20,11 @@
 /// <summary>
 /// -1 terminated array of Supported Element classes
 /// </summary>
-const int supportedClasses[] = { 0,-1 };
 const std::string files[] = { "a03-one-sphere.png","_" };
 const std::string libVersion = "2.0";
 std::shared_ptr <DDD::Scene> playground;//=std::shared_ptr<DDD::Scene>();
 std::shared_ptr <DDD::ACamera> cam; //= std::shared_ptr<DDD::ACamera>();
-void prepare3d() {
-	return;
-}
+
 /// <summary>
 /// targetimage
 /// </summary>
@@ -35,7 +32,7 @@ std::unique_ptr<Image> image;
 /// <summary>
 /// Renderer storage
 /// </summary>
-std::unique_ptr<Renderer> renderer;
+std::shared_ptr<Renderer> renderer;
 /// <summary>
 /// Generates the colors for every pixel and updates it's progress
 /// <para>
@@ -53,17 +50,17 @@ void RenderLoop(int offset, int total) {
 		for (int y = 0; y != height; y++)
 #if DLL_DEBUG
 		{
-			cout << "->GC";
+			printf("->GC");
 			//Sleep(10);
 			auto c = renderer->getColor(x, y);
-			cout << "->" << c.toString();
-			//Sleep(10);
+			printf("->%s\nn", c.toString().c_str());
+			Sleep(10);
 			image->setPixel(x, y, c);
 			//cout << "->W" << endl;
 			//Sleep(10);
 		}
 #else
-			image->setPixel(x, y, renderer->getColor(x, y));
+		image->setPixel(x, y, renderer->getColor(x, y));
 #endif
 
 }
@@ -82,7 +79,7 @@ void rendercycle(std::string filename) {
 	cout << "->LT";
 	Sleep(100);
 #endif
-	int th = std::thread::hardware_concurrency();
+	int th = 1+ std::thread::hardware_concurrency()/2;
 	for (int n = 0; n < th; n++) {
 		workers.push_back(std::make_unique<std::thread>(std::thread(RenderLoop, n, th)));
 	}
@@ -93,7 +90,7 @@ void rendercycle(std::string filename) {
 	for (int n = 0; n < workers.size(); n++) {
 		while (!workers.at(n)->joinable())Sleep(100);
 		workers.at(n)->join();
-	}
+}
 #if DLL_DEBUG
 	cout << "->SP";
 	Sleep(2000);
@@ -106,7 +103,7 @@ void rendercycle(std::string filename) {
 #endif
 	lodepngReturn = image->write(filename);
 	image.reset();
-}
+	}
 
 
 /// <summary>
@@ -130,7 +127,7 @@ void RenderWorker(std::string filename) {
 void setsampleQuality(int samples = 10) {
 	if (renderer != nullptr)
 		renderer.reset();
-	renderer = std::make_unique<cgSampling>(cgSampling(samples, cam));
+	renderer = std::make_shared<cgSampling>(cgSampling(samples, cam));
 }
 bool prepared = false;
 void prepare() {
@@ -141,11 +138,10 @@ void prepare() {
 	const Color gray = Color::fromRGB(60, 60, 60).reverseGamma(2.2);//application background color
 	const Color red = Color::fromRGB(0x9B, 0x55, 0x55).reverseGamma(2.2);//application default red color
 	const Color b = Color(0, 0, 1);
-	cam = std::make_shared < DDD::PinholeCamera>(DDD::PinholeCamera(M_PI / 2, cgtools::point(0, 0, 0), gray));
+	cam = std::make_shared < DDD::PinholeCamera>(DDD::PinholeCamera(M_PI / 2, cgtools::point(0, 0, 0), Color(0.5, 0.5, 0.5)));
 	cam->setScene(playground);
-	playground->addObject(new DDD::Sphere(point(00, 0, -3), 1.0, red));
-	playground->addObject(new DDD::Sphere(point(01, 0, -3), 0.5, b));
-	playground->addObject(new DDD::Sphere(point(-1, 0, -3), 0.5, b));
+	playground->addObject(new DDD::Sphere(point(0, 0, -1.5), 1, Color(1, 0, 0)));
+	playground->addObject(new DDD::Sphere(point(1, 0, -1.5), 0.5, Color(0, 0, 1)));
 	setsampleQuality();
 }
 /// <summary>
@@ -161,4 +157,28 @@ bool workswitch(int Option) {
 	prepare();
 	RenderWorker(files[Option]);
 	return true;
+}
+
+
+
+//-----------------------------------------------------------------------------
+//3D scene Functions
+const int supportedClasses[] = { 0,-1 };
+const int supportedCams[] = { 0,-1 };
+const std::string sceneOutputFile = "sof.png";
+
+void prepare3d() {
+	if (playground != nullptr)playground.reset();
+	playground = std::make_shared<DDD::Scene>();
+}
+
+void renderScene(int x, int y) {
+	width = x;
+	height = y;
+	cam->init();
+	cam->setScene(playground);
+	if (renderer != nullptr)renderer.reset();
+	renderer = cam;
+
+	RenderWorker(sceneOutputFile);
 }

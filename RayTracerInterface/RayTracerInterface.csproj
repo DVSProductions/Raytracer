@@ -79,13 +79,16 @@
     <Compile Include="Abgabe.cs">
       <DependentUpon>Abgabe.xaml</DependentUpon>
     </Compile>
+    <Compile Include="CameraSelector.cs" />
     <Compile Include="IRenderPage.cs" />
+    <Compile Include="InterfacingClasses.cs" />
     <Compile Include="Renderable.cs" />
     <Compile Include="Renderer.cs" />
     <Compile Include="RenderPage.xaml.cs">
       <DependentUpon>RenderPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="SceneBasedRenderer.cs" />
+    <Compile Include="SceneBuilder.ElementHelpers.cs" />
     <Compile Include="SceneBuilder.xaml.cs">
       <DependentUpon>SceneBuilder.xaml</DependentUpon>
     </Compile>

@@ -43,8 +43,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\RayTracerInterface\InterfacingClasses.cs">
+      <Link>InterfacingClasses.cs</Link>
+    </Compile>
     <Compile Include="..\RayTracerInterface\LibraryHandler.cs">
       <Link>LibraryHandler.cs</Link>
+    </Compile>
+    <Compile Include="..\RayTracerInterface\Renderable.cs">
+      <Link>Renderable.cs</Link>
     </Compile>
     <Compile Include="..\RayTracerInterface\Renderer.cs">
       <Link>Renderer.cs</Link>

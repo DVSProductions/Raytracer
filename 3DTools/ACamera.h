@@ -17,10 +17,11 @@ namespace DDD {
 		void setScene(std::shared_ptr<DDD::Scene> s)noexcept;
 		void move(const cgtools::point& newPos) noexcept;
 		void setAngle(const double& newAngle) noexcept;
-
+		virtual void init()noexcept=0;
 		// Geerbt über ISerializable
 		std::string serialize() const override;
 		void load(std::string serialized)override;
+		static std::shared_ptr<DDD::ACamera> createFromSerialization(std::string data);
 		//void setScene(std::shared_ptr<DDD::Scene>& s);
 	};
 }

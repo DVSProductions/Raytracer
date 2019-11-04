@@ -138,7 +138,7 @@ Color cgtools::Color::reverseGamma(const double& gamma) const noexcept {
 }
 
 Color Color::hsvToRgb(const Color& hsv) noexcept {
-	return hsv.b * (hsv.g * (hue(hsv.r) - c_white) + c_white);
+	return (((hue(hsv.r) - c_white) * hsv.g) + c_white) * hsv.b;
 }
 
 std::string Color::toString()const {
@@ -169,7 +169,7 @@ std::string cgtools::Color::serialize() const {
 void cgtools::Color::load(std::string serialized) {
 	auto ret = Serializable::split(serialized);
 	f_chars(ret[0], r);
-	f_chars(ret[1], g); 
+	f_chars(ret[1], g);
 	f_chars(ret[2], b);
 }
 

@@ -6,7 +6,6 @@
         xmlns:local="clr-namespace:RayTracerInterface"
         mc:Ignorable="d"
         Title="ShapeSelector" Height="300" Width="200" Background="{DynamicResource BGColor}" WindowStartupLocation="CenterOwner" Topmost="True" ShowInTaskbar="False" WindowStyle="ToolWindow">
-
 	<Grid>
 		<ListBox BorderThickness="0" BorderBrush="{x:Null}" HorizontalContentAlignment="Stretch"  Background="{x:Null}" x:Name="lbshapes" Margin="0,0,0,42" IsTextSearchEnabled="False">
 			<ListBox.ItemContainerStyle>
@@ -44,6 +43,6 @@
 				
 			</ListBox.ItemTemplate>
 		</ListBox>
-		<Button TabIndex="0" Content="Add" Style="{DynamicResource BTStyle}" Padding="5" VerticalAlignment="Bottom" Click="Button_Click" IsDefault="True"/>
+		<Button x:Name="btAdd" TabIndex="0" Content="Add" Style="{DynamicResource BTStyle}" Padding="5" VerticalAlignment="Bottom" IsDefault="True"/>
 	</Grid>
 </Window>

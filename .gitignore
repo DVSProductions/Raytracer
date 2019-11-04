@@ -348,3 +348,12 @@ ASALocalRun/
 
 # BeatPulse healthcheck temp database
 healthchecksdb
+
+/WPFDarkMode/x64
+/packages/
+/Aufgabe4/x64
+/Aufgabe3/x64
+/Aufgabe2/x64
+/Aufgabe1/x64
+/A3 Validator/x64
+/RayTracerInterface/bin/Release/intenalLib.dll

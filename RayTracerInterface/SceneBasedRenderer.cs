@@ -1,4 +1,5 @@
-﻿using System;
+﻿#pragma warning disable CA1822 // Member als statisch markieren
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices;
@@ -13,23 +14,90 @@ namespace RayTracerInterface {
 			/// <summary>
 			/// Internal storage for dynamically created supportedClasses list
 			/// </summary>
-			private List<int> suppclasses;
+			private List<int> suppclassIDs;
 			/// <summary>
 			/// Dynamically created list containing all the Object Types that our current DLL supports
 			/// </summary>
-			public List<int> SuppportedClasses {
+			public List<int> SuppportedClassIDs {
 				get {
-					if (suppclasses != null) return suppclasses;
+					if (suppclassIDs != null) return suppclassIDs;
 					var n = 0;
-					suppclasses = new List<int>();
+					suppclassIDs = new List<int>();
 					while (true) {
 						var s = getSupportedClassesAt(n++);
 						if (s == -1) break;
-						suppclasses.Add(s);
+						suppclassIDs.Add(s);
 					}
-					return suppclasses;
+					return suppclassIDs;
 				}
 			}
+			private List<Renderable> suppclass;
+			public List<Renderable> SuppportedClass {
+				get {
+					if (suppclass != null) return suppclass;
+					suppclass = new List<Renderable>();
+					foreach (var id in SuppportedClassIDs)
+						suppclass.Add(Renderable.convertIDToObject(id));
+					return suppclass;
+				}
+			}
+			//-----------------Cameras-----------------
+			[DllImport(dll, CallingConvention = CallingConvention.Cdecl)]
+			static extern int getSupportedCamsAt(int idx);
+			private List<int> suppcamIDs;
+			/// <summary>
+			/// Dynamically created list containing all the Object Types that our current DLL supports
+			/// </summary>
+			public List<int> SuppportedCamIDs {
+				get {
+					if (suppcamIDs != null) return suppcamIDs;
+					var n = 0;
+					suppcamIDs = new List<int>();
+					while (true) {
+						var s = getSupportedCamsAt(n++);
+						if (s == -1) break;
+						suppcamIDs.Add(s);
+					}
+					return suppcamIDs;
+				}
+			}
+			private List<Camera> suppcam;
+			public List<Camera> SuppportedCams {
+				get {
+					if (suppcam != null) return suppcam;
+					suppcam = new List<Camera>();
+					foreach (var id in SuppportedCamIDs)
+						suppcam.Add(Camera.ConvertIDToObject(id));
+					return suppcam;
+				}
+			}
+
+			[DllImport(dll, CallingConvention = CallingConvention.Cdecl)]
+			static extern void setScene(string serializedData);
+			public void SetScene(string serializedData) => setScene(serializedData.Replace(",", "."));
+			[DllImport(dll, CallingConvention = CallingConvention.Cdecl)]
+			static extern void setCamera(string serializedData);
+			public void SetCamera(string serializedData) => setCamera(serializedData.Replace(",","."));
+			[DllImport(dll, CallingConvention = CallingConvention.Cdecl)]
+			static extern void initialize3d();
+			public void Initialize3d() => initialize3d();
+			[DllImport(dll, CallingConvention = CallingConvention.Cdecl)]
+			static extern void startPreviewRender(int x, int y);
+			public void StartPreviewRender(int x, int y) => startPreviewRender(x, y);
+			[DllImport(dll, CallingConvention = CallingConvention.Cdecl)]
+			[return: MarshalAs(UnmanagedType.BStr)]
+			static extern string sceneFile();
+			private string scf;
+			public string SceneFile {
+				get {
+					if (scf == null)
+						scf = sceneFile();
+					return scf;
+				}
+			}
+
 		}
 	}
 }
+
+#pragma warning restore CA1822 // Member als statisch markieren

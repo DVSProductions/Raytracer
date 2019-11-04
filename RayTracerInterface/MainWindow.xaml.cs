@@ -1,24 +1,40 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Reflection;
 using System.Windows;
+using System.Windows.Controls;
 
 namespace RayTracerInterface {
 	/// <summary>
 	/// Interaktionslogik für MainWindow.xaml
 	/// </summary>
 	public partial class MainWindow : Window {
+		double startingWidth = 0;
 		/// <summary>
 		/// Allows the <see cref="CompilationSettings"/> page to open <see cref="IRenderPage"/> pages
 		/// </summary>
 		/// <param name="p">The page to open</param>
 		void OpenPage3(IRenderPage p) {
+			if (p is SceneBuilder) {
+				startingWidth = this.Width;
+				this.Width = this.Height * (16.0 / 9.0) + 300;
+			}
+			else if (startingWidth != 0)
+				this.Width = startingWidth;
+
 			pageViewer.Content = p;
 			p.OnBack = () => pageViewer.GoBack();
 		}
 		/// <summary>
 		/// Allows the drag&drop page <see cref="DND"/> to open the next page
 		/// </summary>
-		void OpenPage2(LibraryHandler.Renderer rend) => pageViewer.Content = new CompilationSettings(OpenPage3, rend);
+		void OpenPage2(LibraryHandler.Renderer rend) => pageViewer.Content = new CompilationSettings(OpenPage3, rend) {
+			GoBack = () => {
+				pageViewer.GoBack();
+				pageViewer.Content = new DND(OpenPage2);
+				//else pageViewer.GoBack();
+			}
+		};
 		LibraryHandler.Renderer prefetchRenderer;
 		/// <summary>
 		/// Detects if this should immediatly open the <see cref="CompilationSettings"/> page based on the command line parameters
@@ -55,8 +71,7 @@ namespace RayTracerInterface {
 			else
 				pageViewer.Content = new DND(OpenPage2);
 			App.makeMeDark(this);
-
 		}
-		
+
 	}
 }

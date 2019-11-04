@@ -57,5 +57,6 @@
 			<Button Style="{DynamicResource BTStyle}" FontSize="20" Padding="10,5" Margin="0"  Click="Button_Click">Render</Button>
 		</StackPanel>
 		<Button Style="{DynamicResource BTStyle}" FontSize="20" Padding="10,5" Margin="10,10" VerticalAlignment="Bottom" HorizontalAlignment="Center" Click="Button_Click_1">Abgabe Modus</Button>
+		<Button Style="{DynamicResource BTStyle}" FontSize="20" Padding="10,5" Margin="10,10" VerticalAlignment="Bottom" HorizontalAlignment="Left" Click="Button_Click_3" >Zurück</Button>
 	</Grid>
 </Page>

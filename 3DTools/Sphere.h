@@ -3,7 +3,6 @@
 #include "ISerializable.h"
 #include "point.h"
 #include "Scene.h"
-#define DDD_CLASS_SPHERE 0
 #define DDD_CLASS_SPHERE_DESERIALIZE(x) new Sphere(x)
 namespace DDD {
 	class Sphere :
@@ -14,6 +13,7 @@ namespace DDD {
 		friend class renderable;
 		Sphere(std::string serialized);
 	public:
+		static const int CLASSID = 0;
 		direction getNormal(point at) const noexcept;
 		Sphere(cgtools::point position, double radius, cgtools::Color color) noexcept;
 		Hit intersect(Ray r)const override;
