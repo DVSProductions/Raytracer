@@ -13,17 +13,18 @@ namespace RayTracerInterface {
 		/// <summary>
 		/// index of the outputFile
 		/// </summary>
-		readonly int idx;
+		public string ofile;
 
 		public Action OnBack { get; set; }
 
 		readonly LibraryHandler.Renderer renderer;
 		public RenderPage(LibraryHandler.Renderer rend, int outputIdx, int width) {
 			renderer = rend;
-			idx = outputIdx;
 			InitializeComponent();
 			pbStatus.Maximum = width;
 			pbStatus.Value = 0;
+			if (outputIdx != -1) 
+				ofile = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + "\\" + renderer.OutputFiles[outputIdx];
 			Wait();
 			ShowEstimation();
 		}
@@ -46,7 +47,7 @@ namespace RayTracerInterface {
 		/// After the image has been rendered successfully it will read the image from disk and show it in <see cref="iResults"/></para>
 		/// </summary>
 		async void Wait() {
-			sw = System.Diagnostics.Stopwatch.StartNew();
+			sw = Stopwatch.StartNew();
 			while (pbStatus.Maximum != pbStatus.Value) {
 				s = renderer.Status;
 				pbStatus.Value = s;
@@ -62,7 +63,7 @@ namespace RayTracerInterface {
 			pbStatus.Visibility = Visibility.Hidden;
 			btBack.Visibility = Visibility.Visible;
 			if (renderer.ReturnCode == 0) {
-				iResults.Source = (BitmapSource)new ImageSourceConverter().ConvertFrom(File.ReadAllBytes(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + "\\" + renderer.OutputFiles[idx]));
+				iResults.Source = (BitmapSource)new ImageSourceConverter().ConvertFrom(File.ReadAllBytes(ofile));
 				lbStatus.Visibility = Visibility.Hidden;
 				btExport.Visibility = Visibility.Visible;
 				lbTime.Visibility = Visibility.Visible;
@@ -79,6 +80,6 @@ namespace RayTracerInterface {
 		/// <summary>
 		/// Opens a explorer instance highlighting the rendered file
 		/// </summary>
-		private void btExport_Click(object sender, RoutedEventArgs e) => _ = System.Diagnostics.Process.Start("explorer", $"/select,\"{Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + "\\" + renderer.OutputFiles[idx]}\"");
+		private void btExport_Click(object sender, RoutedEventArgs e) => _ = Process.Start("explorer", $"/select,\"{ofile}\"");
 	}
 }

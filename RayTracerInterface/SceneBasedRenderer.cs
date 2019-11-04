@@ -77,13 +77,16 @@ namespace RayTracerInterface {
 			public void SetScene(string serializedData) => setScene(serializedData.Replace(",", "."));
 			[DllImport(dll, CallingConvention = CallingConvention.Cdecl)]
 			static extern void setCamera(string serializedData);
-			public void SetCamera(string serializedData) => setCamera(serializedData.Replace(",","."));
+			public void SetCamera(string serializedData) => setCamera(serializedData.Replace(",", "."));
 			[DllImport(dll, CallingConvention = CallingConvention.Cdecl)]
 			static extern void initialize3d();
 			public void Initialize3d() => initialize3d();
 			[DllImport(dll, CallingConvention = CallingConvention.Cdecl)]
 			static extern void startPreviewRender(int x, int y);
 			public void StartPreviewRender(int x, int y) => startPreviewRender(x, y);
+			[DllImport(dll, CallingConvention = CallingConvention.Cdecl)]
+			static extern void startSuperRender(int x, int y, int FSAA, string outputFilePath);
+			public void StartSuperRender(int x, int y,int FSAA, string outputFilePath) => startSuperRender(x, y, FSAA, outputFilePath);
 			[DllImport(dll, CallingConvention = CallingConvention.Cdecl)]
 			[return: MarshalAs(UnmanagedType.BStr)]
 			static extern string sceneFile();

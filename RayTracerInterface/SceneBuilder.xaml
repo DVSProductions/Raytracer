@@ -81,8 +81,8 @@
 				<Label Content="Formen" VerticalAlignment="Top" HorizontalAlignment="Left" Foreground="White" Padding="5,1" Margin="10,0,20,0"  Background="{DynamicResource BGColor}"/>
 			</Grid>
 			<Button VerticalAlignment="Center" Grid.Row="1" Grid.Column="1" Style="{DynamicResource BTStyle}" Click="Button_Click"  Content="Add Shape" Grid.ColumnSpan="2" />
-			<Button VerticalAlignment="Center" Grid.Row="2" Grid.Column="1" Style="{DynamicResource BTStyle}" Margin="0,0,5,0" Content="Import"/>
-			<Button VerticalAlignment="Center" Grid.Row="2" Grid.Column="2" Style="{DynamicResource BTStyle}" Margin="5,0,0,0" Content="Export" />
+			<Button Name="btImport" VerticalAlignment="Center" Grid.Row="2" Grid.Column="1" Style="{DynamicResource BTStyle}" Margin="0,0,5,0" Content="Import" Click="btImport_Click" />
+			<Button Name="btExport" VerticalAlignment="Center" Grid.Row="2" Grid.Column="2" Style="{DynamicResource BTStyle}" Margin="5,0,0,0" Content="Export" Click="btExport_Click" />
 
 		</Grid>
 		<Grid Grid.Column="1" Margin="10,0" Background="#33000000">
@@ -97,7 +97,7 @@
 		</Grid>
 		<GridSplitter Width="1" Margin="10,0" Grid.Column="1" HorizontalAlignment="Left"  Background="#FF850000"/>
 		<GridSplitter Width="1" Margin="10,0" Grid.Column="1" HorizontalAlignment="Right" Background="#FF850000"/>
-		<ScrollViewer Grid.Column="2" VerticalScrollBarVisibility="Auto">
+		<ScrollViewer Grid.Column="2" VerticalScrollBarVisibility="Auto" Margin="0,0,0,40">
 			<StackPanel>
 				<Grid Background="{DynamicResource BGColor}">
 					<Border Padding="0,6.5,0,0" Margin="0,10,0,0" BorderBrush="{DynamicResource LightRed}" BorderThickness="2" CornerRadius="6">
@@ -146,5 +146,6 @@
 				</Grid>
 			</StackPanel>
 		</ScrollViewer>
+		<Button x:Name="btFullRender" Content="Full Render" Margin="10,5" Height="30" VerticalAlignment="Bottom" Grid.Column="2" Style="{DynamicResource BTStyle}" Click="btFullRender_Click"/>
 	</Grid>
 </Page>

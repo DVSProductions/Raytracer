@@ -30,7 +30,10 @@ dll(int) getSupportedCamsAt(int idx) {
 	return supportedCams[idx];
 }
 dll(void) startPreviewRender(int x, int y) {
-	renderScene(x, y);
+	renderPreview(x, y);
+}
+dll(void) startSuperRender(int x, int y, int FSAA, const char* outputFilePath) {
+	renderScene(x, y, FSAA,std::string(outputFilePath));
 }
 
 dll(BSTR) sceneFile() {

@@ -14,12 +14,21 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Xml;
+using System.Xml.Serialization;
 
 namespace RayTracerInterface {
 	/// <summary>
 	/// Interaktionslogik für SceneBuilder.xaml
 	/// </summary>
 	public partial class SceneBuilder : Page, IRenderPage {
+		public class SaveContainer {
+			[XmlArray("shapes")]
+			[XmlArrayItem("Sphere", typeof(Sphere))]
+			public Renderable[] shapes;
+			public Camera camera;
+
+		}
 		public Action OnBack { get; set; }
 		/// <summary>
 		/// Aspect ratio to keep while the box is checked
@@ -29,7 +38,43 @@ namespace RayTracerInterface {
 		LibraryHandler.SceneBasedRenderer sbr;
 		Camera cam;
 		static readonly SolidColorBrush white = new SolidColorBrush(Colors.White);
-		//List<Renderable> RenderObjects=new List<Renderable>();
+		//List<Renderable> RenderObjects=new List<Renderable>();		
+		public void Save(string filename) {
+			//try {
+			using (var fs = new FileStream(filename, FileMode.Create))
+				Save(fs);
+			//}
+			//catch (Exception ex) {
+			//	MessageBox.Show($"ERROR WRITING CONFIG FILE: {ex.ToString()}", ex.GetType().Name);
+			//}
+		}
+		public void Save(Stream target) {
+			using (var writer = new StreamWriter(target, new UTF8Encoding())) {
+				var tmp = new Renderable[lbshapes.Items.Count];
+				lbshapes.Items.CopyTo(tmp, 0);
+				new XmlSerializer(typeof(SaveContainer)).Serialize(writer, new SaveContainer() { camera = cam, shapes = tmp });
+				writer.Close();
+			}
+		}
+		public void Load(string path) {
+			using (var fs = new FileStream(path, FileMode.Open))
+				Load(fs);
+		}
+		public void Load(Stream from) {
+			using (var reader = XmlReader.Create(from))
+				Load(reader);
+		}
+		public void Load(XmlReader reader) {
+			var dat = new XmlSerializer(typeof(SaveContainer)).Deserialize(reader) as SaveContainer;
+			this.cam = dat.camera;
+			visualizeCamera();
+			lbshapes.Items.Clear();
+			foreach (var e in dat.shapes) {
+				lbshapes.Items.Add(e);
+			}
+			lbshapes.SelectedIndex = 0;
+			alertChanges();
+		}
 		public SceneBuilder(LibraryHandler.SceneBasedRenderer renderer, Action<IRenderPage> moveToRenderer) {
 			this.sbr = renderer;
 			RenderAction = moveToRenderer;
@@ -54,11 +99,10 @@ namespace RayTracerInterface {
 			sbr.StartPreviewRender(w, h);
 			while (pbrendering.Value != w) {
 				pbrendering.Value = sbr.Status;
-				await Task.Delay(100);
+				await Task.Delay(1000 / 60);
 			}
-			while (sbr.ReturnCode == -1) await Task.Delay(100);
+			while (sbr.ReturnCode == -1) await Task.Delay(1000 / 60);
 			iResults.Source = (BitmapSource)new ImageSourceConverter().ConvertFrom(File.ReadAllBytes(System.IO.Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + "\\" + sbr.SceneFile));
-
 		}
 		static readonly double[] scales = { 0.01, 0.02, 0.04, 0.08, 0.25, 0.40, 0.5, 1 };
 		//static readonly int[] WaitTime = {   100,  100,  200,  500, 1000, 3000, 20000, 0 };
@@ -66,11 +110,11 @@ namespace RayTracerInterface {
 			var start = lastChange;
 			if (lbshapes.Items.Count == 0) return start;
 			for (int n = 0; n < scales.Length && lastChange == start; n++) {
-				var s = System.Diagnostics.Stopwatch.StartNew();
+				//var s = System.Diagnostics.Stopwatch.StartNew();
 				await DoRender(scales[n]);
-				s.Stop();
-				var t = DateTime.Now+s.Elapsed;
-				while (t > DateTime.Now && lastChange == start) await Task.Delay(100);
+				//s.Stop();
+				//var t = DateTime.Now + s.Elapsed;
+				//while (t > DateTime.Now && lastChange == start) await Task.Delay(100);
 			}
 			return start;
 		}
@@ -152,27 +196,79 @@ namespace RayTracerInterface {
 			lbshapes.Items.Remove((((sender as Button).Parent as Grid).Children[0] as Label).Content);
 			alertChanges();
 		}
+		void visualizeCamera() {
+			spCam.Children.Clear();
+			spCam.Children.Add(new Label() {
+				Content = cam.GetType().Name,
+				HorizontalAlignment = HorizontalAlignment.Center,
+				Foreground = white
+			});
+			foreach (var e in VisualizeObject(cam)) {
+				spCam.Children.Add(e);
+				spCam.Children.Add(new Separator() { Height = 1.5, Background = new SolidColorBrush(Colors.Black), Margin = new Thickness(0, 5, 0, 5) });
+			}
+			var bt = new Button() {
+				Content = "Ändern",
+				Style = FindResource("BTStyle") as Style
+			};
+			bt.Click += SelectCameraClick;
+			spCam.Children.Add(bt);
+		}
 		private void SelectCameraClick(object _, RoutedEventArgs __) {
 			var Selector = new CameraSelector(sbr);
 			Selector.Init();
 			if (Selector.ShowDialog() == true) {
-				spCam.Children.Clear();
-				spCam.Children.Add(new Label() {
-					Content = Selector.result.GetType().Name,
-					HorizontalAlignment = HorizontalAlignment.Center,
-					Foreground = white
-				});
-				foreach (var e in VisualizeObject(cam = Selector.result)) {
-					spCam.Children.Add(e);
-					spCam.Children.Add(new Separator() { Height = 1.5, Background = new SolidColorBrush(Colors.Black), Margin = new Thickness(0, 5, 0, 5) });
-				}
-				var bt = new Button() {
-					Content = "Ändern",
-					Style = FindResource("BTStyle") as Style
-				};
-				bt.Click += SelectCameraClick;
-				spCam.Children.Add(bt);
+				cam = Selector.result;
+				visualizeCamera();
 				alertChanges();
+			}
+		}
+
+		private void btExport_Click(object _, RoutedEventArgs __) {
+			var dlg = new Microsoft.Win32.SaveFileDialog {
+				DefaultExt = "*.xml;",
+				CheckPathExists = true,
+				RestoreDirectory = true,
+				DereferenceLinks = true,
+				Title = "Please select the Scene file",
+				Filter = "Scene XML *.xml|*.xml"
+			};
+			if (dlg.ShowDialog() == true)
+				Save(dlg.FileName);
+		}
+
+		private void btImport_Click(object _, RoutedEventArgs __) {
+			var dlg = new Microsoft.Win32.OpenFileDialog {
+				DefaultExt = "*.xml;",
+				CheckFileExists = true,
+				CheckPathExists = true,
+				Multiselect = false,
+				RestoreDirectory = true,
+				DereferenceLinks = true,
+				Title = "Please select the Scene file",
+				Filter = "Scene XML *.xml|*.xml"
+			};
+			if (dlg.ShowDialog() == true)
+				Load(dlg.FileName);
+		}
+
+		private void btFullRender_Click(object _, RoutedEventArgs __) {
+			if (int.TryParse(tbH.Text, out int h) && int.TryParse(tbW.Text, out int w) && int.TryParse(tbSX.Text, out int FSAA)) {
+				var dlg = new Microsoft.Win32.SaveFileDialog {
+					DefaultExt = "*.png;",
+					CheckPathExists = true,
+					RestoreDirectory = true,
+					DereferenceLinks = true,
+					Title = "Please choose a output filename",
+					Filter = "HQ Rendered Image *.png|*.png"
+				};
+				if (dlg.ShowDialog() == true) {
+					sbr.StartSuperRender(w, h, FSAA, dlg.FileName);
+					RenderAction(new RenderPage(sbr, -1, w) { ofile = dlg.FileName });
+				}
+			}
+			else {
+				MessageBox.Show("A image dimension field is invalid!", "Invalid Field",MessageBoxButton.OK,MessageBoxImage.Error);
 			}
 		}
 	}

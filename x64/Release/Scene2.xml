@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<SaveContainer xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <shapes>
+    <Sphere>
+      <Position>
+        <x>-2</x>
+        <y>0</y>
+        <z>-3</z>
+      </Position>
+      <Radius>1.0001</Radius>
+      <Color>
+        <r>0.5490196078431373</r>
+        <g>0.24705882352941178</g>
+        <b>0.75294117647058822</b>
+      </Color>
+    </Sphere>
+    <Sphere>
+      <Position>
+        <x>2</x>
+        <y>0</y>
+        <z>-3</z>
+      </Position>
+      <Radius>1</Radius>
+      <Color>
+        <r>0.30980392156862746</r>
+        <g>0.77647058823529413</g>
+        <b>0.22352941176470589</b>
+      </Color>
+    </Sphere>
+  </shapes>
+  <camera xsi:type="PinholeCamera">
+    <angle>1.570796326794</angle>
+    <Position>
+      <x>0</x>
+      <y>0</y>
+      <z>0</z>
+    </Position>
+    <background>
+      <r>0.30588235294117649</r>
+      <g>0.25490196078431371</g>
+      <b>0.18823529411764706</b>
+    </background>
+  </camera>
+</SaveContainer>

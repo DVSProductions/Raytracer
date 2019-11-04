@@ -64,6 +64,7 @@ void RenderLoop(int offset, int total) {
 #endif
 
 }
+int threadCount = 0;
 /// <summary>
 /// Allocates memory and prepares, initializes and launches render threads
 /// </summary>
@@ -79,9 +80,8 @@ void rendercycle(std::string filename) {
 	cout << "->LT";
 	Sleep(100);
 #endif
-	int th = 1+ std::thread::hardware_concurrency()/2;
-	for (int n = 0; n < th; n++) {
-		workers.push_back(std::make_unique<std::thread>(std::thread(RenderLoop, n, th)));
+	for (int n = 0; n < threadCount; n++) {
+		workers.push_back(std::make_unique<std::thread>(std::thread(RenderLoop, n, threadCount)));
 	}
 #if DLL_DEBUG
 	std::cout << "->Wait";
@@ -155,6 +155,7 @@ bool workswitch(int Option) {
 	if (Option != 0)
 		return false;
 	prepare();
+	threadCount = std::thread::hardware_concurrency();
 	RenderWorker(files[Option]);
 	return true;
 }
@@ -172,13 +173,22 @@ void prepare3d() {
 	playground = std::make_shared<DDD::Scene>();
 }
 
-void renderScene(int x, int y) {
+void renderPreview(int x, int y) {
 	width = x;
 	height = y;
 	cam->init();
 	cam->setScene(playground);
 	if (renderer != nullptr)renderer.reset();
 	renderer = cam;
-
+	threadCount = 1 + std::thread::hardware_concurrency() / 2;
 	RenderWorker(sceneOutputFile);
+}
+void renderScene(int x, int y,int FSAA,std::string outputFilePath) {
+	width = x;
+	height = y;
+	cam->init();
+	cam->setScene(playground);
+	setsampleQuality(FSAA);
+	threadCount = std::thread::hardware_concurrency();
+	RenderWorker(outputFilePath);
 }

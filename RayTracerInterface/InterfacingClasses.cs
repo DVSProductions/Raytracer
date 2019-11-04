@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Serialization;
 
 namespace RayTracerInterface {
 	public interface ISerializable {
@@ -35,15 +36,16 @@ namespace RayTracerInterface {
 			this.g = g;
 			this.b = b;
 		}
+		public Color() { }
 	}
-	class Sphere : Renderable {
+	public class Sphere : Renderable {
 		public const int TID = 0;
 		public override int TYPEID() => TID;
 		public double Radius = 1;
-		public Color Color = new Color(0, 0, 0);
+		public Color Color = new Color(0.5, 0.5, 0.5);
 		public override string Serialize() => $"{Radius}&{Color.Serialize()}&{Position.Serialize()}&";
 	}
-	class Scene : ISerializable {
+	public class Scene : ISerializable {
 		public List<Renderable> objects = new List<Renderable>();
 		public string Serialize() {
 			var sb = new StringBuilder();
@@ -60,12 +62,13 @@ namespace RayTracerInterface {
 			return sb.ToString();
 		}
 	}
+	[XmlInclude(typeof(PinholeCamera))]
 	public abstract class Camera : ISerializable {
-		public double angle = Math.PI/2;
+		public double angle = Math.PI / 2;
 		public Vec Position = new Vec();
 		public abstract int TYPEID();
 		public abstract string Serialize();
-		protected static string serial(Camera c)=> $"{c.angle}&{c.Position.Serialize()}&";
+		protected static string serial(Camera c) => $"{c.angle}&{c.Position.Serialize()}&";
 		public static Camera ConvertIDToObject(int TYPEID) {
 			switch (TYPEID) {
 				case 0:
@@ -77,10 +80,10 @@ namespace RayTracerInterface {
 		public static string SerializeThis(Camera c) => $"{c.TYPEID()}!{c.Serialize()}!";
 
 	}
-	class PinholeCamera : Camera {
-		public Color background=new Color(0.5,0.5,0.5);
+	public class PinholeCamera : Camera {
+		public Color background = new Color(0.25, 0.25, 0.25);
 		public const int TID = 0;
-		public override string Serialize() => background.Serialize() + "[" + Camera.serial(this)+"[";
+		public override string Serialize() => background.Serialize() + "[" + Camera.serial(this) + "[";
 		public override int TYPEID() => TID;
 	}
 }
