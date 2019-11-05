@@ -23,6 +23,7 @@ namespace RayTracerInterface {
 			g.ColumnDefinitions.Add(new ColumnDefinition());
 			return g;
 		}
+		int[] customColors = new int[1];
 		static System.Windows.Media.Color ConvertColorM(Color c) => System.Windows.Media.Color.FromRgb(Scale(c.r), Scale(c.g), Scale(c.b));
 		System.Drawing.Color ConvertColor(Color c) => System.Drawing.Color.FromArgb(255, Scale(c.r), Scale(c.g), Scale(c.b));
 		static Color ConvertColor(System.Drawing.Color c) => new Color(c.R, c.G, c.B);
@@ -43,13 +44,15 @@ namespace RayTracerInterface {
 					SolidColorOnly = true,
 					FullOpen = true,
 					ShowHelp = false,
-					Color = System.Drawing.Color.FromArgb(0, Scale(value.r), Scale(value.g), Scale(value.b))
+					Color = System.Drawing.Color.FromArgb(0, Scale(value.r), Scale(value.g), Scale(value.b)),
+					CustomColors= customColors
 				};
 				if (diag.ShowDialog() == System.Windows.Forms.DialogResult.OK) {
 					value = ConvertColor(diag.Color);
 					box.Background = new SolidColorBrush(ConvertColorM(value));
 					UpdateCurrentObject(name, value, CurrentObject);
 					alertChanges();
+					customColors = diag.CustomColors;
 				}
 			};
 			g2.Children.Add(box);
@@ -76,7 +79,7 @@ namespace RayTracerInterface {
 				};
 				box.TextChanged += (obj, _) => {
 					var tb = obj as TextBox;
-					tb.Text=tb.Text.Replace(".", ",");
+					tb.Text = tb.Text.Replace(".", ",");
 					if (double.TryParse(tb.Text, out var res)) {
 						apply(res);
 						UpdateCurrentObject(name, value, CurrentObject);
@@ -102,11 +105,10 @@ namespace RayTracerInterface {
 		UIElement MakeDoubleElement(string name, double value, object CurrentObject) {
 			var g = MakeDefaultGrid();
 			g.Children.Add(MakeDefaultTextBlock(name));
-			var tbValue = new TextBox() {
+			var tbValue = SetCP(1, new TextBox() {
 				Text = value.ToString(),
 				Style = FindResource("TBStyle") as Style
-			};
-			tbValue.SetValue(Grid.ColumnProperty, 1);
+			});
 			tbValue.TextChanged += (_, __) => {
 				tbValue.Text = tbValue.Text.Replace(".", ",");
 				if (double.TryParse(tbValue.Text, out var res)) {
@@ -130,6 +132,20 @@ namespace RayTracerInterface {
 			if (fi != null && fi.FieldType == typeof(T))
 				fi.SetValue(CurrentObject, value);
 		}
+		static StackPanel AddToSP(StackPanel target, List<UIElement> elems) {
+			foreach (var e in elems) {
+				target.Children.Add(e);
+				target.Children.Add(new Separator() { Height = 1.5, Background = new SolidColorBrush(Colors.Black), Margin = new Thickness(0, 5, 0, 5) });
+			}
+			return target;
+		}
+
+		UIElement makeRecursiveObject(string name, object value) {
+			var g = MakeDefaultGrid();
+			g.Children.Add(MakeDefaultTextBlock(name));
+			g.Children.Add(SetCP(1, AddToSP(new StackPanel(), VisualizeObject(value))));
+			return g;
+		}
 		List<UIElement> VisualizeObject(object target) {
 			var CurrentType = target.GetType();
 			var ret = new List<UIElement>();
@@ -142,6 +158,8 @@ namespace RayTracerInterface {
 					ret.Add(MakeVectorElement(name, v, target));
 				else if (field is double d)
 					ret.Add(MakeDoubleElement(name, d, target));
+				else if (field is ISerializable r)
+					ret.Add(makeRecursiveObject(name, r));
 			}
 			return ret;
 		}

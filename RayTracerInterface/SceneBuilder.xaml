@@ -94,6 +94,10 @@
 			<Image x:Name="iResults" Grid.Row="1" Grid.RowSpan="1" />
 			<ProgressBar x:Name="pbrendering" Grid.Row="2" Background="{x:Null}" BorderBrush="{x:Null}" BorderThickness="0" Foreground="{DynamicResource LightRed}"/>
 			<Label Name="lbScale" FontSize="20" Padding="4,0" Content="0.01x" HorizontalAlignment="Right" Grid.Row="2" Foreground="White"/>
+			<StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+			<Button Width="30" Margin="2.5" x:Name="CC" Content="CC" Style="{DynamicResource BTStyle}" Click="CC_Click" />
+			<Button Width="30" Margin="2.5" x:Name="CS" Content="CS" Style="{DynamicResource BTStyle}" Click="CS_Click" />
+			</StackPanel>
 		</Grid>
 		<GridSplitter Width="1" Margin="10,0" Grid.Column="1" HorizontalAlignment="Left"  Background="#FF850000"/>
 		<GridSplitter Width="1" Margin="10,0" Grid.Column="1" HorizontalAlignment="Right" Background="#FF850000"/>

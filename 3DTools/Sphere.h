@@ -3,7 +3,6 @@
 #include "ISerializable.h"
 #include "point.h"
 #include "Scene.h"
-#define DDD_CLASS_SPHERE_DESERIALIZE(x) new Sphere(x)
 namespace DDD {
 	class Sphere :
 		public renderable {

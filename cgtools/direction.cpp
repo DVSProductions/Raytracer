@@ -31,6 +31,9 @@ direction direction::operator|(const direction &b) const noexcept {
 direction direction::operator~() noexcept {
 	return *this / !*this;
 }
+direction cgtools::direction::operator~() const noexcept {
+	return *this / !*this;
+}
 //std::string cgtools::direction::serialize() const {
 //	return  std::to_string(x) + "|" + std::to_string(y) + "|" + std::to_string(z);
 //}

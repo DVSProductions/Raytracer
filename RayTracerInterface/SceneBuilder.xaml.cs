@@ -25,6 +25,8 @@ namespace RayTracerInterface {
 		public class SaveContainer {
 			[XmlArray("shapes")]
 			[XmlArrayItem("Sphere", typeof(Sphere))]
+			[XmlArrayItem("Plain", typeof(Plane))]
+			[XmlArrayItem("Group", typeof(Group))]
 			public Renderable[] shapes;
 			public Camera camera;
 
@@ -96,13 +98,16 @@ namespace RayTracerInterface {
 				scene.objects.Add(elem as Renderable);
 			sbr.SetScene(scene.Serialize());
 			sbr.SetCamera(Camera.SerializeThis(cam));
+			//return;
 			sbr.StartPreviewRender(w, h);
 			while (pbrendering.Value != w) {
 				pbrendering.Value = sbr.Status;
 				await Task.Delay(1000 / 60);
 			}
 			while (sbr.ReturnCode == -1) await Task.Delay(1000 / 60);
-			iResults.Source = (BitmapSource)new ImageSourceConverter().ConvertFrom(File.ReadAllBytes(System.IO.Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + "\\" + sbr.SceneFile));
+			string file= System.IO.Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + "\\" + sbr.SceneFile;
+			while (!File.Exists(file)) await (Task.Delay(10));
+			iResults.Source = (BitmapSource)new ImageSourceConverter().ConvertFrom(File.ReadAllBytes(file));
 		}
 		static readonly double[] scales = { 0.01, 0.02, 0.04, 0.08, 0.25, 0.40, 0.5, 1 };
 		//static readonly int[] WaitTime = {   100,  100,  200,  500, 1000, 3000, 20000, 0 };
@@ -152,10 +157,7 @@ namespace RayTracerInterface {
 				});
 				return;
 			}
-			foreach (var e in VisualizeObject(scea.AddedItems[0])) {
-				spProperties.Children.Add(e);
-				spProperties.Children.Add(new Separator() { Height = 1.5, Background = new SolidColorBrush(Colors.Black), Margin = new Thickness(0, 5, 0, 5) });
-			}
+			AddToSP(spProperties, VisualizeObject(scea.AddedItems[0]));
 		}
 		/// <summary>
 		/// Stores aspect ratio or unchecks itself if one of the given values is invalid
@@ -268,8 +270,17 @@ namespace RayTracerInterface {
 				}
 			}
 			else {
-				MessageBox.Show("A image dimension field is invalid!", "Invalid Field",MessageBoxButton.OK,MessageBoxImage.Error);
+				MessageBox.Show("A image dimension field is invalid!", "Invalid Field", MessageBoxButton.OK, MessageBoxImage.Error);
 			}
 		}
+
+		private void CS_Click(object sender, RoutedEventArgs e) {
+			var scene = new Scene();
+			foreach (var elem in lbshapes.Items)
+				scene.objects.Add(elem as Renderable);
+			Clipboard.SetText(scene.Serialize().Replace(',','.'));
+		}
+
+		private void CC_Click(object sender, RoutedEventArgs e) => Clipboard.SetText(cam.Serialize().Replace(',', '.'));
 	}
 }

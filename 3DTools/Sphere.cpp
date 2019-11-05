@@ -38,22 +38,19 @@ namespace DDD {
 
 	Hit DDD::Sphere::intersect(Ray r) const {
 		const auto x0 = r.x0 - p;
-		const double a = r.dir[r.dir];
-		const double b = 2 * x0[r.dir];
-		const double c = x0[x0] - rsq;
 		double results1 = 0, results2 = 0;
 		double t = 0;
-		const auto solutions = findPoint(a, b, c, &results1, &results2);//Pointers save 5% vs passing array
+		const auto solutions = findPoint(r.dir[r.dir], 2 * x0[r.dir], x0[x0] - rsq, &results1, &results2);//Pointers save 5% vs passing array
 		if (solutions == 0)return Hit(false);
 		else if (solutions == 1)t = results1;
-		else t = results1 < results2 ? results1>r.tmin ? results1 : results1 : results2;
+		else t = results1 < results2 ? (results1>r.tmin ? results1 : results2) : results2;
 		if (t < r.tmin || t > r.tmax)return Hit(false);
-		const auto intersection = point(t * r.dir);
+		const auto intersection = t * r.dir;
 		return Hit(t, intersection, getNormal(intersection), this->c);
 	}
 
 	std::string Sphere::serialize() const {
-		return renderable::includeClassID(std::to_string(radius) + "&" + c.serialize() + "&" + p.serialize(), Sphere::CLASSID);
+		return renderable::includeClassID(std::to_string(radius) + "&" + c.serialize() + "&" + p.serialize() + "&", Sphere::CLASSID);
 	}
 
 	void Sphere::load(std::string serialized) {

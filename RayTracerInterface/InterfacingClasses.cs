@@ -45,6 +45,36 @@ namespace RayTracerInterface {
 		public Color Color = new Color(0.5, 0.5, 0.5);
 		public override string Serialize() => $"{Radius}&{Color.Serialize()}&{Position.Serialize()}&";
 	}
+	public class Plane : Renderable {
+		public const int TID = 1;
+		public override int TYPEID() => TID;
+		public double Radius = -1;
+		public Color Color = new Color(0.9, 0.9, 0.9);
+		public Vec Direction = new Vec(0, 1, 0);
+		public Plane() => Position = new Vec(0, -3, 0);
+		public override string Serialize() => $"{Radius}&{Direction.Serialize()}&{Color.Serialize()}&{Position.Serialize()}&";
+	}
+	public class Background : ISerializable {
+		public Color Color = new Color(0.25, 0.25, 0.25);
+		public string Serialize() => $"{Color.Serialize()}";
+		/// <summary>
+		/// Cannot be instantiated
+		/// </summary>
+		public const int TID = -1;
+		public int TYPEID() => -1;
+	}
+	public class Group : Renderable {
+		public const int TID = 2;
+		public override int TYPEID() => TID;
+		public List<Renderable> objects = new List<Renderable>();
+		public override string Serialize() {
+			var sb = new StringBuilder();
+			sb.Append(Position.Serialize() + "$");
+			foreach (var o in objects) 
+				sb.Append(Renderable.SerializeThis(o) + "$");
+			return sb.ToString();
+		}
+	}
 	public class Scene : ISerializable {
 		public List<Renderable> objects = new List<Renderable>();
 		public string Serialize() {
@@ -68,7 +98,7 @@ namespace RayTracerInterface {
 		public Vec Position = new Vec();
 		public abstract int TYPEID();
 		public abstract string Serialize();
-		protected static string serial(Camera c) => $"{c.angle}&{c.Position.Serialize()}&";
+		protected static string Serial(Camera c) => $"{c.angle}&{c.Position.Serialize()}&";
 		public static Camera ConvertIDToObject(int TYPEID) {
 			switch (TYPEID) {
 				case 0:
@@ -81,9 +111,9 @@ namespace RayTracerInterface {
 
 	}
 	public class PinholeCamera : Camera {
-		public Color background = new Color(0.25, 0.25, 0.25);
+		public Background Background = new Background();
 		public const int TID = 0;
-		public override string Serialize() => background.Serialize() + "[" + Camera.serial(this) + "[";
+		public override string Serialize() => Background.Serialize() + "[" + Camera.Serial(this) + "[";
 		public override int TYPEID() => TID;
 	}
 }

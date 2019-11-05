@@ -1,12 +1,18 @@
 #include "3DInfo.h"
 #include <comutil.h>
 #include <string>
+#include <fstream>
+
 #define dll(x) __declspec(dllexport) x __cdecl
 
 extern BSTR ANSItoBSTR(const char* input)noexcept;
 EXTERN_C_START
 dll(void) setScene(const char* serializedData) {
-	playground->load(std::string(serializedData));
+	//std::ofstream ofs("test.txt", std::ofstream::out);
+	auto s = std::string(serializedData);
+	playground->load(s);
+	//ofs << s;
+	//ofs.close();
 }
 dll(void) setCamera(const char* serializedData) {
 	auto sh = DDD::ACamera::createFromSerialization(std::string(serializedData));

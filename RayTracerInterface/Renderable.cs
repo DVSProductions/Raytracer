@@ -6,9 +6,12 @@
 
 		public static Renderable convertIDToObject(int TYPEID) {
 			switch (TYPEID) {
-				case 0:
+				case Sphere.TID:
 					return new Sphere();
-
+				case Plane.TID:
+					return new Plane();
+				case Group.TID:
+					return new Group();
 			}
 			return null;
 		}
@@ -21,7 +24,9 @@
 		/// </summary>
 		/// <returns></returns>
 		public abstract string Serialize();
-		public static string SerializeThis(Renderable r) => $"{r.TYPEID()}!{r.Serialize()}!";
-		public override string ToString() => $"{this.GetType().Name}#{ObjectID}#";
-	}
+		public static string SerializeThis(Renderable r) {
+			return r.TYPEID() != -1 ? $"{r.TYPEID()}!{r.Serialize()}!" : r.Serialize();
+		}
+		public override string ToString() => $"{this.GetType().Name}#{ObjectID}";
+}
 }

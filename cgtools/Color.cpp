@@ -169,8 +169,11 @@ std::string cgtools::Color::serialize() const {
 void cgtools::Color::load(std::string serialized) {
 	auto ret = Serializable::split(serialized);
 	f_chars(ret[0], r);
+	r = pow(r, 2.2);
 	f_chars(ret[1], g);
+	g = pow(g, 2.2);
 	f_chars(ret[2], b);
+	b = pow(b, 2.2);
 }
 
 Color operator*(const double& s, const Color& a) noexcept {
