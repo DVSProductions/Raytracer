@@ -1,7 +1,7 @@
 #include "ACamera.h"
 #include "PinholeCamera.h"
-#define deserial(c,val) case c::CLASSID: return std::make_shared<c>(c(val))
-DDD::ACamera::ACamera(const point& pos, const double& angle)noexcept : position(pos.x, pos.y, pos.z) {
+#define deserial(Material) case Material::CLASSID: return std::make_shared<Material>(Material(s.at(1)))
+DDD::ACamera::ACamera(const cgtools::point& pos, const double& angle)noexcept : position(pos.x, pos.y, pos.z) {
 	this->angle = angle;
 }
 
@@ -11,7 +11,7 @@ std::string DDD::ACamera::includeClassID(std::string data, int CID) {
 
 void DDD::ACamera::setScene(std::shared_ptr<DDD::Scene> s)noexcept { scene = s; }
 
-void DDD::ACamera::move(const point& newPos)noexcept {
+void DDD::ACamera::move(const cgtools::point& newPos)noexcept {
 	position = newPos;
 }
 
@@ -20,13 +20,15 @@ void DDD::ACamera::setAngle(const double& newAngle)noexcept {
 }
 
 std::string DDD::ACamera::serialize()const {
-	return std::to_string(this->angle) + "&" + position.serialize();
+	return std::to_string(this->angle) + "&" + position.serialize() + "&" + std::to_string(reflectionDepth);
 }
 
 void DDD::ACamera::load(std::string serialized) {
 	auto ret = Serializable::split(serialized, "&");
 	f_chars(ret[0], angle);
 	position.load(ret[1]);
+	if (ret.size() == 3)
+		f_chars(ret.at(2), reflectionDepth);
 }
 #include <stdexcept>
 std::shared_ptr<DDD::ACamera> DDD::ACamera::createFromSerialization(std::string data) {
@@ -34,7 +36,11 @@ std::shared_ptr<DDD::ACamera> DDD::ACamera::createFromSerialization(std::string 
 	int n = -1;
 	f_chars(s.at(0), n);
 	switch (n) {
-		deserial(DDD::PinholeCamera, s.at(1));
+		deserial(DDD::PinholeCamera);
 	}
 	throw std::invalid_argument("Unknown type :" + s.at(0));
+}
+
+size_t DDD::ACamera::size() const {
+	return sizeof(DDD::ACamera) + scene->size();
 }

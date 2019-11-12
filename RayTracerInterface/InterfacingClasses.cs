@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
+#pragma warning disable CA1051 // Do not declare visible instance fields
 
 namespace RayTracerInterface {
 	public interface ISerializable {
@@ -42,17 +43,17 @@ namespace RayTracerInterface {
 		public const int TID = 0;
 		public override int TYPEID() => TID;
 		public double Radius = 1;
-		public Color Color = new Color(0.5, 0.5, 0.5);
-		public override string Serialize() => $"{Radius}&{Color.Serialize()}&{Position.Serialize()}&";
+		public AMaterial Color = new Vanta(new Color(0.5, 0.5, 0.5));
+		public override string Serialize() => $"{Radius}&{AMaterial.SerializeThis(Color)}&{Position.Serialize()}&";
 	}
 	public class Plane : Renderable {
 		public const int TID = 1;
 		public override int TYPEID() => TID;
 		public double Radius = -1;
-		public Color Color = new Color(0.9, 0.9, 0.9);
+		public AMaterial Color = new Vanta(new Color(0.9, 0.9, 0.9));
 		public Vec Direction = new Vec(0, 1, 0);
 		public Plane() => Position = new Vec(0, -3, 0);
-		public override string Serialize() => $"{Radius}&{Direction.Serialize()}&{Color.Serialize()}&{Position.Serialize()}&";
+		public override string Serialize() => $"{Radius}&{Direction.Serialize()}&{AMaterial.SerializeThis(Color)}&{Position.Serialize()}&";
 	}
 	public class Background : ISerializable {
 		public Color Color = new Color(0.25, 0.25, 0.25);
@@ -70,7 +71,7 @@ namespace RayTracerInterface {
 		public override string Serialize() {
 			var sb = new StringBuilder();
 			sb.Append(Position.Serialize() + "$");
-			foreach (var o in objects) 
+			foreach (var o in objects)
 				sb.Append(Renderable.SerializeThis(o) + "$");
 			return sb.ToString();
 		}
@@ -96,12 +97,13 @@ namespace RayTracerInterface {
 	public abstract class Camera : ISerializable {
 		public double angle = Math.PI / 2;
 		public Vec Position = new Vec();
+		public ushort Reflections = 1;
 		public abstract int TYPEID();
 		public abstract string Serialize();
-		protected static string Serial(Camera c) => $"{c.angle}&{c.Position.Serialize()}&";
+		protected static string Serial(Camera c) => $"{c.angle}&{c.Position.Serialize()}&{c.Reflections}&";
 		public static Camera ConvertIDToObject(int TYPEID) {
 			switch (TYPEID) {
-				case 0:
+				case PinholeCamera.TID:
 					return new PinholeCamera();
 
 			}
@@ -116,4 +118,49 @@ namespace RayTracerInterface {
 		public override string Serialize() => Background.Serialize() + "[" + Camera.Serial(this) + "[";
 		public override int TYPEID() => TID;
 	}
+	[XmlInclude(typeof(Vanta))]
+	[XmlInclude(typeof(Mirror))]
+	[XmlInclude(typeof(Chalk))]
+	public abstract class AMaterial : ISerializable {
+		private static int ObjectIDCounter = 0;
+		private readonly int ObjectID = ObjectIDCounter++;
+		public abstract int TYPEID();
+		public Color Emission = new Color(0.5, 0.5, 0.5);
+		public static AMaterial ConvertIDToObject(int TYPEID) {
+			switch (TYPEID) {
+				case Vanta.TID:
+					return new Vanta();
+				case Mirror.TID:
+					return new Mirror();
+				case Chalk.TID:
+					return new Chalk();
+			}
+			return null;
+		}
+		public abstract string Serialize();
+		public static string SerializeThis(AMaterial r) => r.TYPEID() != 0 ? $"{r.TYPEID()}#{r.Serialize()}#" : r.Serialize();
+		public override string ToString() => $"{this.GetType().Name}#{ObjectID}";
+
+	}
+
+	public class Vanta : AMaterial {
+		public const int TID = 0;
+		public override string Serialize() => Emission.Serialize();
+		public override int TYPEID() => TID;
+		public Vanta() { }
+		public Vanta(Color c) => Emission = c;
+	}
+	public class Mirror : AMaterial {
+		public const int TID = 1;
+		public Color Albedo = new Color(1.0, 1.0, 1.0);
+		public override string Serialize() => throw new NotImplementedException();
+		public override int TYPEID() => TID;
+	}
+	public class Chalk : AMaterial {
+		public const int TID = 2;
+		public Color Albedo = new Color(0.9, 0.9, 0.9);
+		public override string Serialize() => $"{Albedo.Serialize()}}}{Emission.Serialize()}}}";
+		public override int TYPEID() => TID;
+	}
 }
+#pragma warning restore CA1051 // Do not declare visible instance fields

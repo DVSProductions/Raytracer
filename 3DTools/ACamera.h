@@ -8,6 +8,7 @@
 namespace DDD {
 	class ACamera :public cgtools::Renderer, public ISerializable {
 	protected:
+		unsigned short reflectionDepth=1;
 		std::shared_ptr<DDD::Scene> scene;
 		cgtools::point position;
 		double angle;
@@ -22,6 +23,7 @@ namespace DDD {
 		std::string serialize() const override;
 		void load(std::string serialized)override;
 		static std::shared_ptr<DDD::ACamera> createFromSerialization(std::string data);
+		size_t size()const override;
 		//void setScene(std::shared_ptr<DDD::Scene>& s);
 	};
 }

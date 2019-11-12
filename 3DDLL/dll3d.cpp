@@ -35,6 +35,10 @@ dll(int) getSupportedCamsAt(int idx) {
 	if (idx < 0)return -1;
 	return supportedCams[idx];
 }
+dll(int) getSupportedMaterialsAt(int idx) {
+	if (idx < 0)return -1;
+	return supportedMaterials[idx];
+}
 dll(void) startPreviewRender(int x, int y) {
 	renderPreview(x, y);
 }

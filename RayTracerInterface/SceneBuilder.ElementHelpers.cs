@@ -27,6 +27,35 @@ namespace RayTracerInterface {
 		static System.Windows.Media.Color ConvertColorM(Color c) => System.Windows.Media.Color.FromRgb(Scale(c.r), Scale(c.g), Scale(c.b));
 		System.Drawing.Color ConvertColor(Color c) => System.Drawing.Color.FromArgb(255, Scale(c.r), Scale(c.g), Scale(c.b));
 		static Color ConvertColor(System.Drawing.Color c) => new Color(c.R, c.G, c.B);
+		UIElement MakeMaterialElement(string name, AMaterial value, object CurrentObject) {
+			var g = MakeDefaultGrid();
+			g.Children.Add(MakeDefaultTextBlock(name));
+			g.Children.Add(SetCP(1, AddToSP(new StackPanel(), VisualizeObject(value))));
+			if (sbr is LibraryHandler.MaterialRenderer) {
+				g.RowDefinitions.Add(new RowDefinition());
+				g.RowDefinitions.Add(new RowDefinition());
+				var bt = SetCP(1, new Button() {
+					Style = FindResource("BTStyle") as Style,
+					Content = "Change Mat",
+					HorizontalAlignment = HorizontalAlignment.Center
+				});
+				bt.Click += (_, __) => {
+					var diag = new MaterialSelector(sbr as LibraryHandler.MaterialRenderer);
+					diag.Init();
+					if (diag.ShowDialog() == true) {
+						value = diag.result;
+						UpdateCurrentObject(name, value, CurrentObject);
+						g.Children.RemoveAt(1);
+						g.Children.Add(SetCP(1, AddToSP(new StackPanel(), VisualizeObject(value))));
+						alertChanges();
+					}
+				};
+				bt.SetValue(Grid.RowProperty, 1);
+				//bt.SetValue(Grid.ColumnSpanProperty, 2);
+				g.Children.Add(bt);
+			}
+			return g;
+		}
 		UIElement MakeColorElement(string name, Color value, object CurrentObject) {
 			var g = MakeDefaultGrid();
 			g.Children.Add(MakeDefaultTextBlock(name));
@@ -45,7 +74,7 @@ namespace RayTracerInterface {
 					FullOpen = true,
 					ShowHelp = false,
 					Color = System.Drawing.Color.FromArgb(0, Scale(value.r), Scale(value.g), Scale(value.b)),
-					CustomColors= customColors
+					CustomColors = customColors
 				};
 				if (diag.ShowDialog() == System.Windows.Forms.DialogResult.OK) {
 					value = ConvertColor(diag.Color);
@@ -124,7 +153,29 @@ namespace RayTracerInterface {
 					tbValue.Text = "0";
 			};
 			g.Children.Add(tbValue);
-
+			return g;
+		}
+		UIElement MakeUShortElement(string name, ushort value, object CurrentObject) {
+			var g = MakeDefaultGrid();
+			g.Children.Add(MakeDefaultTextBlock(name));
+			var tbValue = SetCP(1, new TextBox() {
+				Text = value.ToString(),
+				Style = FindResource("TBStyle") as Style
+			});
+			tbValue.TextChanged += (_, __) => {
+				if (ushort.TryParse(tbValue.Text, out var res)) {
+					UpdateCurrentObject(name, res, CurrentObject);
+					alertChanges();
+				}
+				else if (tbValue.Text.Trim().Length == 0) {
+					if (tbValue.Text.Length != 0)
+						tbValue.Text = "";
+				}
+				else if (tbValue.Text == "-") ;
+				else
+					tbValue.Text = "0";
+			};
+			g.Children.Add(tbValue);
 			return g;
 		}
 		void UpdateCurrentObject<T>(string fieldName, T value, object CurrentObject) {
@@ -139,8 +190,7 @@ namespace RayTracerInterface {
 			}
 			return target;
 		}
-
-		UIElement makeRecursiveObject(string name, object value) {
+		UIElement MakeRecursiveObject(string name, object value) {
 			var g = MakeDefaultGrid();
 			g.Children.Add(MakeDefaultTextBlock(name));
 			g.Children.Add(SetCP(1, AddToSP(new StackPanel(), VisualizeObject(value))));
@@ -158,8 +208,12 @@ namespace RayTracerInterface {
 					ret.Add(MakeVectorElement(name, v, target));
 				else if (field is double d)
 					ret.Add(MakeDoubleElement(name, d, target));
+				else if (field is ushort us)
+					ret.Add(MakeUShortElement(name, us, target));
+				else if (field is AMaterial m)
+					ret.Add(MakeMaterialElement(name, m, target));
 				else if (field is ISerializable r)
-					ret.Add(makeRecursiveObject(name, r));
+					ret.Add(MakeRecursiveObject(name, r));
 			}
 			return ret;
 		}

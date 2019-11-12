@@ -10,7 +10,7 @@ namespace RayTracerInterface {
 	/// <summary>
 	/// This class contains the basic interface with a renderer DLL
 	/// </summary>
-	public static partial  class LibraryHandler {
+	public static partial class LibraryHandler {
 		/// <summary>
 		/// Indicates whether we have already tried to load a dll, because if we have
 		/// we are forced to restart the application
@@ -100,19 +100,26 @@ namespace RayTracerInterface {
 				File.Copy(path, dll);
 				while (!File.Exists(dll)) Thread.Sleep(50);
 				isLoaded = true;
-				if (LibInfo() == "1.0"||LibInfo().Contains("1.0"))
-					return new Renderer();
-				else if (LibInfo() == "2.0")
-					return new SceneBasedRenderer();
-				else {
+				string libStr = LibInfo();
+				try {
+					int libnum = (int)(double.Parse(libStr.Replace('.',',')) * 10.0);//removes floating point errors
+					if (libnum == 10)
+						return new Renderer();
+					else if (libnum == 20)
+						return new SceneBasedRenderer();
+					else if (libnum > 20 && libnum < 30)
+						return new MaterialRenderer();
+					else
+						throw new Exception("Unknown Lib");
+				}
+				catch {
 #if TRACE  //Exploiting TRACE constant in project to switch between UI and Console errors
-					Console.Error.WriteLine($"Unknown Library Version \"{LibInfo()}\"");
+					Console.Error.WriteLine($"Incompatible Library Version \"{LibInfo()}\"");
 #else
 					MessageBox.Show($"Unknown Library Version \"{LibInfo()}\"");
 #endif
 					return null;
 				}
-
 			}
 			catch (Exception ex) {
 #if TRACE  //Exploiting TRACE constant in project to switch between UI and Console errors

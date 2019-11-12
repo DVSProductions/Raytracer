@@ -49,6 +49,9 @@
     <Compile Include="..\RayTracerInterface\LibraryHandler.cs">
       <Link>LibraryHandler.cs</Link>
     </Compile>
+    <Compile Include="..\RayTracerInterface\MaterialRenderer.cs">
+      <Link>MaterialRenderer.cs</Link>
+    </Compile>
     <Compile Include="..\RayTracerInterface\Renderable.cs">
       <Link>Renderable.cs</Link>
     </Compile>

@@ -7,6 +7,7 @@
 /// </summary>
 extern const int supportedClasses[];
 extern const int supportedCams[];
+extern const int supportedMaterials[];
 extern std::shared_ptr <DDD::Scene> playground;
 extern std::shared_ptr <DDD::ACamera> cam;
 extern const std::string sceneOutputFile;

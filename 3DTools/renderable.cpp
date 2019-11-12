@@ -5,8 +5,7 @@
 #include "Plane.h"
 #include "Group.h"
 
-
-#define deserial(c) case c::CLASSID: return new c(s.at(1))
+#define deserial(Material) case Material::CLASSID: return new Material(s.at(1))
 namespace DDD {
 	renderable::renderable(cgtools::point position)noexcept :p(position) {}
 	renderable::renderable(std::string serialized) : p(0, 0, 0) {

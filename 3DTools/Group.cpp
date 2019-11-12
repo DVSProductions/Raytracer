@@ -1,6 +1,6 @@
 #include "Group.h"
 
-DDD::Group::Group(std::string serialized) :renderable(point(0, 0, 0)) {
+DDD::Group::Group(std::string serialized) :renderable(cgtools::point(0, 0, 0)) {
 	load(serialized);
 }
 
@@ -22,7 +22,7 @@ void DDD::Group::clear() {
 }
 
 DDD::Hit DDD::Group::intersect(Ray r) const {
-	Hit closest = Hit(false);
+	Hit closest = Hit();
 	auto offsetRay = Ray(r.x0 - p, r.dir, r.tmax, r.tmin);
 	const auto end = objects->end();
 	for (auto it = objects->begin(); it != end; it++) {
@@ -48,4 +48,19 @@ void DDD::Group::load(std::string serialized) {
 	this->clear();
 	for (size_t n = 1; n < siz; n++)
 		objects->push_back(renderable::createFromSerialization(ch.at(n)));
+}
+
+DDD::renderable* DDD::Group::clone() const {
+	auto ret = new Group(p);
+	const auto end = objects->end();
+	for (auto it = objects->begin(); it != end; it++)
+		ret->addObject((*it)->clone());
+	return ret;
+}
+
+size_t DDD::Group::size() const {
+	size_t result = sizeof(DDD::Group);
+	for (auto e : *objects)
+		result += e->size();
+	return result;
 }

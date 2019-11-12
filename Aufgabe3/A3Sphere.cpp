@@ -2,9 +2,9 @@
 #include <iostream>
 using std::cout; using std::endl;
 
-direction A3Sphere::getNormal(point at)const noexcept {
+cgtools::direction A3Sphere::getNormal(cgtools::point at)const noexcept {
 	const auto top = at - this->p;
-	return direction(top.x / radius, top.y / radius, top.z / radius);
+	return cgtools::direction(top.x / radius, top.y / radius, top.z / radius);
 }
 
 A3Sphere::A3Sphere(cgtools::point position, double radius, cgtools::Color color)noexcept :renderable(position) {
@@ -42,11 +42,11 @@ DDD::Hit A3Sphere::intersect(DDD::Ray r) const {
 	double results1 = 0, results2 = 0;
 	double t = 0;
 	const auto solutions = findPoint(a, b, c, &results1, &results2);//Pointers save 5% vs passing array
-	if (solutions == 0)return DDD::Hit(false);
+	if (solutions == 0)return DDD::Hit();
 	else if (solutions == 1)t = results1;
 	else t = results1 < results2 ? results1>r.tmin ? results1 : results1 : results2;
-	if (t < r.tmin || t > r.tmax)return DDD::Hit(false);
-	const auto intersection = point(t * r.dir);
+	if (t < r.tmin || t > r.tmax)return DDD::Hit();
+	const auto intersection = cgtools::point(t * r.dir);
 	return DDD::Hit(t, intersection, getNormal(intersection), this->c);
 }
 
@@ -59,4 +59,11 @@ void A3Sphere::load(std::string serialized) {
 	f_chars(ret[0], radius);
 	c.load(ret[1]);
 	p.load(ret[2]);
+}
+
+size_t A3Sphere::size() const {
+	return sizeof(A3Sphere);
+}
+DDD::renderable* A3Sphere::clone() const {
+	return new A3Sphere(p, radius, c);
 }

@@ -4,6 +4,7 @@
 #include <cmath>
 namespace cgtools {
 	static class ImageWriter {
+	public:
 		/// <summary>
 		/// Ensures that the value is between 0 and 1
 		/// </summary>
@@ -12,7 +13,6 @@ namespace cgtools {
 		static double clamp(double v) noexcept {
 			return fmin(fmax(0, v), 1);
 		}
-	public:
 		/// <summary>
 		/// Creates a PNG image file (Abstracts lodepng)
 		/// </summary>
@@ -22,6 +22,6 @@ namespace cgtools {
 		/// <param name="height">height of the output image</param>
 		/// <param name="linear">seems to be irrelevant. leave at true</param>
 		/// <returns></returns>
-		static unsigned int write(std::string filename, const std::unique_ptr<double[]>& data, size_t width, size_t height, bool linear = true);
+		static unsigned int write(std::string filename, const std::unique_ptr<uint8_t[]>& data, size_t width, size_t height, bool linear = true);
 	}ImageWriter;
 }

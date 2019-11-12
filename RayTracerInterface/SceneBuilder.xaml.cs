@@ -105,7 +105,7 @@ namespace RayTracerInterface {
 				await Task.Delay(1000 / 60);
 			}
 			while (sbr.ReturnCode == -1) await Task.Delay(1000 / 60);
-			string file= System.IO.Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + "\\" + sbr.SceneFile;
+			string file = System.IO.Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + "\\" + sbr.SceneFile;
 			while (!File.Exists(file)) await (Task.Delay(10));
 			iResults.Source = (BitmapSource)new ImageSourceConverter().ConvertFrom(File.ReadAllBytes(file));
 		}
@@ -128,7 +128,7 @@ namespace RayTracerInterface {
 			sbr.Initialize3d();
 			DateTime last = DateTime.MinValue;
 			while (this.Visibility == Visibility.Visible) {
-				if (cam == null) {
+				if ( cam== null) {
 					await Task.Delay(1000);
 					continue;
 				}
@@ -220,7 +220,7 @@ namespace RayTracerInterface {
 			var Selector = new CameraSelector(sbr);
 			Selector.Init();
 			if (Selector.ShowDialog() == true) {
-				cam = Selector.result;
+				 cam= Selector.result;
 				visualizeCamera();
 				alertChanges();
 			}
@@ -278,9 +278,9 @@ namespace RayTracerInterface {
 			var scene = new Scene();
 			foreach (var elem in lbshapes.Items)
 				scene.objects.Add(elem as Renderable);
-			Clipboard.SetText(scene.Serialize().Replace(',','.'));
+			Clipboard.SetText(scene.Serialize().Replace(',', '.'));
 		}
 
-		private void CC_Click(object sender, RoutedEventArgs e) => Clipboard.SetText(cam.Serialize().Replace(',', '.'));
+		private void CC_Click(object sender, RoutedEventArgs e) => Clipboard.SetText(Camera.SerializeThis(cam).Replace(',', '.'));
 	}
 }

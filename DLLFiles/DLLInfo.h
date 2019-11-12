@@ -19,13 +19,13 @@ extern const std::string libVersion;
 /// </summary>
 extern bool working;
 /// <summary>
-/// Main independent thread created by the dll. can do background tasks
-/// </summary>
-extern std::thread worker;
-/// <summary>
 /// Shows the amount of columns rendered
 /// </summary>
 extern int progress;
+/// <summary>
+/// Main independent thread created by the dll. can do background tasks
+/// </summary>
+extern std::thread worker;
 /// <summary>
 /// Return value of lodepng. -1 to unset
 /// </summary>

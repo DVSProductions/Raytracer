@@ -20,6 +20,7 @@ public:
 	// Geerbt über ISerializable
 	std::string serialize() const override;
 	void load(std::string serialized)override;
+	size_t size() const override;
 	//void setScene(std::shared_ptr<DDD::Scene>& s);
 };
 

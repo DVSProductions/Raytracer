@@ -23,5 +23,6 @@ namespace cgtools {
 		direction todirection()noexcept;
 		direction sub(const point& b)noexcept;
 		point operator*(const vector& s)const noexcept;
+		size_t size()const override;
 	};
 }

@@ -18,5 +18,7 @@ namespace DDD {
 		Hit intersect(Ray r)const override;
 		std::string serialize()const override;
 		void load(std::string serialized) override;
+		renderable* clone()const override;
+		size_t size()const override;
 	};
 }

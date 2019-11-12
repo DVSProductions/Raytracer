@@ -59,3 +59,6 @@ void cgtools::vector::load(std::string serialized)noexcept {
 	f_chars(ret[1], y);
 	f_chars(ret[2], z);
 }
+size_t cgtools::vector::size()const {
+	return sizeof(cgtools::vector);
+}

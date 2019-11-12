@@ -33,5 +33,6 @@ namespace cgtools {
 		vector reduceAccuracy(uint8_t power)const noexcept;
 		std::string serialize()const override;
 		void load(std::string serialized)noexcept override;
+		size_t size()const override;
 	};
 }

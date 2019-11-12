@@ -1,14 +1,17 @@
 #include "Hit.h"
 #include <math.h>
-DDD::Hit::Hit(bool hit)noexcept : pos(0, 0, 0), n(0, 0, 0) {
+DDD::Hit::Hit()noexcept : pos(0, 0, 0), n(0, 0, 0),material(nullptr),t(0) {
 	this->hit = false;
 }
-DDD::Hit::Hit(double t, point pos, direction n, Color c)noexcept :pos(pos), n(n) {
+DDD::Hit::Hit(double t, cgtools::point pos, cgtools::direction n, std::shared_ptr<AMaterial>  m)noexcept :pos(pos), n(n),material(m) {
 	this->t = t;
-	this->c = c;
 	this->hit = true;
 }
 
-Color DDD::Hit::shade() const noexcept {
-	return 0.1 * c + (0.9 * fmax(0, (~direction(1, 1, 0.5))[n])) * c;
+DDD::Hit::Hit(double t, cgtools::point pos, cgtools::direction n, cgtools::Color Material) noexcept: Hit(t,pos,n,std::make_unique<Vanta>(Vanta(Material))){
+	
+}
+
+cgtools::Color DDD::Hit::shade() const noexcept {
+	return material->emission * 0.1 + material->emission * (0.9 * fmax(0, (~cgtools::direction(1, 1, 0.5))[n]));
 }

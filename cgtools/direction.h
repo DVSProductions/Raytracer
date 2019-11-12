@@ -24,8 +24,7 @@ namespace cgtools {
 		/// </summary>
 		/// <returns></returns>
 		direction operator~()noexcept;
-		direction operator~()const noexcept;
-		//std::string serialize()const override;
-		//void load(std::string serialized) override;
+		direction operator~()const noexcept; 
+		size_t size()const override;
 	};
 }

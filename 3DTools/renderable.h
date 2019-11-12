@@ -3,6 +3,7 @@
 #include "Hit.h"
 #include "Ray.h"
 #include "../cgtools/ISerializable.h"
+
 namespace DDD {
 	extern int typeids[];
 	class renderable : public ISerializable {
@@ -14,6 +15,7 @@ namespace DDD {
 		cgtools::point p;
 		virtual Hit intersect(Ray r)const = 0;
 		static renderable* createFromSerialization(std::string data);
+		virtual renderable* clone() const=0;
 	};
 }
 

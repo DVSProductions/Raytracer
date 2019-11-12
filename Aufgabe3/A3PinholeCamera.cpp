@@ -21,3 +21,7 @@ cgtools::Color A3PinholeCamera::getColor(double x, double y) {
 	
 }
 
+size_t A3PinholeCamera::size() const {
+	return sizeof(A3PinholeCamera)+__super::size();
+}
+

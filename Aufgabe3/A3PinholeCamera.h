@@ -23,5 +23,6 @@ public:
 	void precalculation(double angle) noexcept;
 	DDD::Ray generateRay(double x, double y) noexcept;
 	cgtools::Color getColor(double x, double y) override;
+	size_t size() const override;
 };
 

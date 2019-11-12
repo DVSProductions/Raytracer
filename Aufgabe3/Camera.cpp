@@ -25,3 +25,7 @@ void Camera::load(std::string serialized) {
 	f_chars(ret[0], angle);
 	position.load(ret[1]);
 }
+
+size_t Camera::size() const {
+	return sizeof(Camera)+scene->size();
+}

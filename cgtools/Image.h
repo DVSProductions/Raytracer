@@ -10,8 +10,9 @@ namespace cgtools {
 		double gamma;
 		/// <summary>
 		/// Storage for RGB values (allocated with NEW not malloc)
+		/// Why double? Improved memory with byte!
 		/// </summary>
-		std::unique_ptr<double[]> buffer;
+		std::unique_ptr<uint8_t[]> buffer;
 		/// <summary>
 		/// Sizes of the buffer
 		/// </summary>

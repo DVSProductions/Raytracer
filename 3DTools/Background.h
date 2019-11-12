@@ -1,9 +1,10 @@
 #pragma once
 #include <renderable.h>
 #include <Hit.h>
+#include "Material.h"
 namespace DDD {
 	class Background : public renderable {
-		cgtools::Color c;
+		std::shared_ptr<Vanta> Material;
 		friend class renderable;
 		friend class PinholeCamera;
 		Background(std::string serialized);
@@ -15,7 +16,8 @@ namespace DDD {
 		std::string serializeFast()const;
 		void load(std::string serialized) override;
 		Background operator=(const Background& b)noexcept;
-
+		renderable* clone() const;
+		size_t size()const override;
 	};
 }
 

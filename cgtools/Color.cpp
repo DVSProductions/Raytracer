@@ -176,10 +176,14 @@ void cgtools::Color::load(std::string serialized) {
 	b = pow(b, 2.2);
 }
 
+size_t cgtools::Color::size() const {
+	return sizeof(Color);
+}
+
 Color operator*(const double& s, const Color& a) noexcept {
 	return Color(s * a.r, s * a.g, s * a.b);
 }
 
-Color cgtools::operator*(const double& s, const Color& a)  noexcept {
-	return Color(a.r * s, a.g * s, a.b * s);
-}
+//Color operator*(const double& s, const Color& a)  noexcept {
+//	return Color(a.r * s, a.g * s, a.b * s);
+//}

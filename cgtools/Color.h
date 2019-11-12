@@ -48,7 +48,7 @@ namespace cgtools {
 		Color operator-=(const double& a) noexcept;
 		Color operator*=(const double& a) noexcept;
 		Color operator/=(const double& a) noexcept;
-		friend Color operator*(const double& s, const Color& a)  noexcept;
+		//friend Color operator*(const double& s, const Color& a)  noexcept;
 		Color operator/(const double& s)noexcept;
 		Color clamp()const noexcept;
 		Color reverseGamma(const double & gamma)const noexcept;
@@ -60,6 +60,7 @@ namespace cgtools {
 		bool operator==(const Color& c) const noexcept;
 		std::string serialize()const override;
 		void load(std::string serialized) override;
+		size_t size()const override;
 	};
 
 	static const Color c_black = Color(0, 0, 0);

@@ -1,17 +1,22 @@
+namespace DDD {
+	struct Hit;
+}
 #pragma once
-#include <Color.h>
-#include <point.h>
-using namespace cgtools;
+#include "../cgtools/Color.h"
+#include "../cgtools/point.h"
+#include "Material.h"
+#include <memory>
 namespace DDD {
 	struct Hit {
 	public:
+		std::shared_ptr<AMaterial> material;
 		double t;
-		point pos;
-		direction n;
-		Color c;
+		cgtools::point pos;
+		cgtools::direction n;
 		bool hit;
-		Hit(bool hit)noexcept;
-		Hit(double t, point pos, direction n, Color c)noexcept;
-		Color shade() const noexcept;
+		Hit()noexcept;
+		Hit(double t, cgtools::point pos, cgtools::direction n, std::shared_ptr<AMaterial> m)noexcept;
+		Hit(double t, cgtools::point pos, cgtools::direction n, cgtools::Color Material)noexcept;
+		cgtools::Color shade() const noexcept;
 	};
 }

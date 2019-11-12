@@ -134,7 +134,7 @@ void prepare() {
 	const Color gray = Color::fromRGB(60, 60, 60).reverseGamma(2.2);//application background color
 	const Color red = Color::fromRGB(0x9B, 0x55, 0x55).reverseGamma(2.2);//application default red color
 	const Color b = Color(0, 0, 1);
-	cam = std::make_shared < A3PinholeCamera>(A3PinholeCamera(M_PI / 2, cgtools::point(0, 0, 0), Color(0.5,0.5,0.5)));
+	 cam= std::make_shared < A3PinholeCamera>(A3PinholeCamera(M_PI / 2, cgtools::point(0, 0, 0), Color(0.5,0.5,0.5)));
 	cam->setScene(Playground);
 	Playground->addObject(new A3Sphere(point(0, 0, -3), 1, Color(1,0,0)));
 	Playground->addObject(new A3Sphere(point(1, 0, -3), 0.5, Color(0,0,1)));/*

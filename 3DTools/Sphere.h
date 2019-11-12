@@ -3,21 +3,25 @@
 #include "ISerializable.h"
 #include "point.h"
 #include "Scene.h"
+#include "Material.h"
 namespace DDD {
 	class Sphere :
 		public renderable {
 		double radius;
 		double rsq;
-		cgtools::Color c;
+		std::shared_ptr<AMaterial>  material;
 		friend class renderable;
 		Sphere(std::string serialized);
-	public:
 		static const int CLASSID = 0;
-		direction getNormal(point at) const noexcept;
+	public:
+		cgtools::direction getNormal(cgtools::point at) const noexcept;
 		Sphere(cgtools::point position, double radius, cgtools::Color color) noexcept;
+		Sphere(cgtools::point position, double radius, std::shared_ptr<AMaterial>  color) noexcept;
 		Hit intersect(Ray r)const override;
 		std::string serialize()const override;
 		void load(std::string serialized) override;
+		renderable* clone() const;
+		size_t size()const override;
 	};
 
 }

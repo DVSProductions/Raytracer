@@ -16,11 +16,14 @@
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)ACamera.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Background.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)CacheCow.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Group.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Hit.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Material.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)PinholeCamera.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Plane.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Ray.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Raytracer.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)renderable.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Scene.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Sphere.cpp" />
@@ -28,11 +31,14 @@
   <ItemGroup>
     <ClInclude Include="$(MSBuildThisFileDirectory)ACamera.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Background.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)CacheCow.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Group.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Hit.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Material.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)PinholeCamera.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Plane.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Ray.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Raytracer.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)renderable.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Scene.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Sphere.h" />

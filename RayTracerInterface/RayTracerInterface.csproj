@@ -79,6 +79,8 @@
     <Compile Include="Abgabe.cs">
       <DependentUpon>Abgabe.xaml</DependentUpon>
     </Compile>
+    <Compile Include="MaterialRenderer.cs" />
+    <Compile Include="MaterialSelector.cs" />
     <Compile Include="CameraSelector.cs" />
     <Compile Include="IRenderPage.cs" />
     <Compile Include="InterfacingClasses.cs" />

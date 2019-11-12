@@ -14,7 +14,7 @@ void DDD::Scene::clear() {
 	objects->clear();
 }
 DDD::Hit DDD::Scene::intersect(DDD::Ray r)const {
-	Hit closest = Hit(false);
+	Hit closest;
 	const auto end = objects->end();
 	for (auto it = objects->begin(); it != end; it++) {
 		const auto h = (*it)->intersect(r);
@@ -47,7 +47,23 @@ void DDD::Scene::load(std::string serialized) {
 	const size_t siz = ch.size();
 	this->clear();
 	for (size_t n = 0; n < siz; n++) {
+		//printf("%d\n", n);
 		objects->push_back(renderable::createFromSerialization(ch.at(n)));
 	}
+}
+
+DDD::renderable* DDD::Scene::clone() const {
+	auto ret = new Scene();
+	const auto end = objects->end();
+	for (auto it = objects->begin(); it != end; it++) 
+		ret->addObject((*it)->clone());
+	return ret;
+}
+
+size_t DDD::Scene::size() const {
+	size_t result=sizeof(DDD::Scene);
+	for (auto e : *objects) 
+		result += e->size();
+	return result;
 }
 
