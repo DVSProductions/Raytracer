@@ -102,7 +102,7 @@ namespace RayTracerInterface {
 				isLoaded = true;
 				string libStr = LibInfo();
 				try {
-					int libnum = (int)(double.Parse(libStr.Replace('.',',')) * 10.0);//removes floating point errors
+					int libnum = (int)(double.Parse(libStr.Replace('.', ',')) * 10.0);//removes floating point errors
 					if (libnum == 10)
 						return new Renderer();
 					else if (libnum == 20)
@@ -125,7 +125,8 @@ namespace RayTracerInterface {
 #if TRACE  //Exploiting TRACE constant in project to switch between UI and Console errors
 				Console.Error.WriteLine(ex.Message);
 #else
-				MessageBox.Show(ex.Message);
+
+				MessageBox.Show(Environment.CurrentDirectory+"\n"+ex.Message);
 #endif
 				return null;
 			}

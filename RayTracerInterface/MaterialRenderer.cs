@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace RayTracerInterface {
 	public static partial class LibraryHandler {
-		public class MaterialRenderer : LibraryHandler.SceneBasedRenderer {
+		public class MaterialRenderer : SceneBasedRenderer {
 			[DllImport(dll, CallingConvention = CallingConvention.Cdecl)]
 			static extern int getSupportedMaterialsAt(int idx);
 			/// <summary>

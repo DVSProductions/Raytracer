@@ -53,12 +53,12 @@ std::string cgtools::vector::serialize() const {
 	return  std::to_string(x) + "|" + std::to_string(y) + "|" + std::to_string(z);
 }
 
-void cgtools::vector::load(std::string serialized)noexcept {
+void cgtools::vector::load(std::string serialized) {
 	auto ret = Serializable::split(serialized);
 	f_chars(ret[0], x);
 	f_chars(ret[1], y);
 	f_chars(ret[2], z);
 }
-size_t cgtools::vector::size()const {
+size_t cgtools::vector::size()const noexcept {
 	return sizeof(cgtools::vector);
 }

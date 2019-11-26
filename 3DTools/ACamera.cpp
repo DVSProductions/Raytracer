@@ -5,6 +5,10 @@ DDD::ACamera::ACamera(const cgtools::point& pos, const double& angle)noexcept : 
 	this->angle = angle;
 }
 
+DDD::ACamera::~ACamera() noexcept {
+	this->scene.reset();
+}
+
 std::string DDD::ACamera::includeClassID(std::string data, int CID) {
 	return std::to_string(CID) + "!" + data;
 }
@@ -25,8 +29,8 @@ std::string DDD::ACamera::serialize()const {
 
 void DDD::ACamera::load(std::string serialized) {
 	auto ret = Serializable::split(serialized, "&");
-	f_chars(ret[0], angle);
-	position.load(ret[1]);
+	f_chars(ret.at(0), angle);
+	position.load(ret.at(1));
 	if (ret.size() == 3)
 		f_chars(ret.at(2), reflectionDepth);
 }

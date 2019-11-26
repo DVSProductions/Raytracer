@@ -19,6 +19,9 @@
 		<Label x:Name="lbStatus" Foreground="White" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontSize="30">Rendering</Label>
 		<Button Visibility="Hidden" x:Name="btBack" Content="Change Settings" Margin="5" Height="30" Width="100" VerticalAlignment="Bottom" HorizontalAlignment="Left" Style="{DynamicResource BTStyle}" Click="btBack_Click"/>
 		<Image x:Name="iResults" Margin="0,0,0,40"/>
-		<Label x:Name="lbEstimation" VerticalAlignment="Bottom" HorizontalAlignment="Right" Foreground="White"></Label>
+		<StackPanel Name="spTime" VerticalAlignment="Bottom" HorizontalAlignment="Right" >
+			<Label Foreground="White" x:Name="lbTotal"></Label>
+			<Label Foreground="White" x:Name="lbEstimation" ></Label>
+		</StackPanel>
 	</Grid>
 </Page>

@@ -37,7 +37,7 @@ void Raytracer::RenderLoop(int offset, int total) {
 void Raytracer::rendercycle(std::string filename) {
 	image = std::make_unique<cgtools::Image>(cgtools::Image(width, height, 2.2));
 	std::vector<std::unique_ptr<std::thread>> workers;
-	for (int n = 0; n < threadCount; n++) 
+	for (int n = 0; n < threadCount; n++)
 		workers.push_back(std::make_unique<std::thread>(std::thread(RenderLoop, n, threadCount)));
 	for (int n = 0; n < workers.size(); n++) {
 		while (!workers.at(n)->joinable())
@@ -77,11 +77,14 @@ void Raytracer::setFullThreadCount() {
 	threadCount = 1;
 }
 #else
-void Raytracer::setPreviewThreadCount() {
+void Raytracer::setPreviewThreadCount() noexcept {
 	threadCount = 1 + std::thread::hardware_concurrency() / 2;
 }
 
-void Raytracer::setFullThreadCount() {
+void Raytracer::setFullThreadCount() noexcept {
 	threadCount = std::thread::hardware_concurrency();
+}
+void Raytracer::setSingleThread() noexcept {
+	threadCount = 1;
 }
 #endif

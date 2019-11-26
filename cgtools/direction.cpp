@@ -9,32 +9,32 @@ direction direction::operator+(const direction& b) const noexcept {
 	return direction(this->x + b.x, this->y + b.y, this->z + b.z);
 }
 
-direction direction::operator-(const direction &b) const  noexcept {
+direction direction::operator-(const direction& b) const  noexcept {
 	return direction(x - b.x, y - b.y, z - b.z);
+}
+direction cgtools::direction::operator-() const noexcept {
+	return direction(-x, -y, -z);
 }
 direction direction::operator*(const double& s) const noexcept {
 	return direction(x * s, y * s, z * s);
 }
 
 direction cgtools::direction::operator*(const vector& s) const noexcept {
-	return direction(s.x*x,s.y*y,s.z*z);
+	return direction(s.x * x, s.y * y, s.z * z);
 }
 
-direction direction::operator/(const double &s) const noexcept {
+direction direction::operator/(const double& s) const noexcept {
 	return direction(x / s, y / s, z / s);
 }
 
-direction direction::operator|(const direction &b) const noexcept {
+direction direction::operator|(const direction& b) const noexcept {
 	return direction(this->y * b.z - this->z * b.y, this->z * b.x - this->x * b.z, this->x * b.y - this->y * b.x);
 }
 
-direction direction::operator~() noexcept {
-	return *this / !*this;
-}
 direction cgtools::direction::operator~() const noexcept {
 	return *this / !*this;
 }
-size_t cgtools::direction::size() const {
+size_t cgtools::direction::size() const noexcept {
 	return sizeof(cgtools::direction);
 }
 //std::string cgtools::direction::serialize() const {

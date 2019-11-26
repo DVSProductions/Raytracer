@@ -5,11 +5,12 @@ DDD::Background::Background(std::string serialized) :renderable(cgtools::point(0
 	Material = std::make_shared<Vanta>(Vanta(cgtools::Color(0, 0, 0)));
 	load(serialized);
 }
-DDD::Background::Background(cgtools::Color color) noexcept :renderable(cgtools::point{ 0,0,0 }) {
+DDD::Background::Background(cgtools::Color color) : renderable(cgtools::point{ 0,0,0 }) {
 	Material = std::make_shared<Vanta>(Vanta(color));
+
 }
 
-DDD::Hit DDD::Background::intersect(Ray r) const {
+DDD::Hit DDD::Background::intersect(Ray r) const noexcept {
 	return DDD::Hit(r.tmax, r.dir * r.tmax, r.dir, Material);
 }
 
@@ -35,6 +36,6 @@ DDD::renderable* DDD::Background::clone() const {
 	return new Background(Material->emission);
 }
 
-size_t DDD::Background::size() const {
+size_t DDD::Background::size() const noexcept {
 	return sizeof(DDD::Background);
 }

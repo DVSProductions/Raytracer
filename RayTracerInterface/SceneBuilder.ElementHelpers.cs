@@ -131,14 +131,19 @@ namespace RayTracerInterface {
 			mktb("Z", value.z, (res) => value.z = res);
 			return g;
 		}
-		UIElement MakeDoubleElement(string name, double value, object CurrentObject) {
+		UIElement MakeTBBasedElement(string name, object value, Action<TextBox> validation) {
 			var g = MakeDefaultGrid();
 			g.Children.Add(MakeDefaultTextBlock(name));
 			var tbValue = SetCP(1, new TextBox() {
 				Text = value.ToString(),
 				Style = FindResource("TBStyle") as Style
 			});
-			tbValue.TextChanged += (_, __) => {
+			tbValue.TextChanged += (_, __) => validation(tbValue);
+			g.Children.Add(tbValue);
+			return g;
+		}
+		UIElement MakeDoubleElement(string name, double value, object CurrentObject) {
+			return MakeTBBasedElement(name, value, (tbValue) => {
 				tbValue.Text = tbValue.Text.Replace(".", ",");
 				if (double.TryParse(tbValue.Text, out var res)) {
 					UpdateCurrentObject(name, res, CurrentObject);
@@ -151,18 +156,10 @@ namespace RayTracerInterface {
 				else if (tbValue.Text == "-") ;
 				else
 					tbValue.Text = "0";
-			};
-			g.Children.Add(tbValue);
-			return g;
+			});
 		}
 		UIElement MakeUShortElement(string name, ushort value, object CurrentObject) {
-			var g = MakeDefaultGrid();
-			g.Children.Add(MakeDefaultTextBlock(name));
-			var tbValue = SetCP(1, new TextBox() {
-				Text = value.ToString(),
-				Style = FindResource("TBStyle") as Style
-			});
-			tbValue.TextChanged += (_, __) => {
+			return MakeTBBasedElement(name, value, (tbValue) => {
 				if (ushort.TryParse(tbValue.Text, out var res)) {
 					UpdateCurrentObject(name, res, CurrentObject);
 					alertChanges();
@@ -174,9 +171,17 @@ namespace RayTracerInterface {
 				else if (tbValue.Text == "-") ;
 				else
 					tbValue.Text = "0";
-			};
-			g.Children.Add(tbValue);
-			return g;
+			});
+		}
+		UIElement MakeStringElement(string name, string value, object CurrentObject) {
+			return MakeTBBasedElement(name, value, (tbValue) => {
+				if (tbValue.Text.Length != 0) {
+					UpdateCurrentObject(name, tbValue.Text, CurrentObject);
+					alertChanges();
+					if (CurrentObject is Renderable r)
+						r.Trigger(name);
+				}
+			});
 		}
 		void UpdateCurrentObject<T>(string fieldName, T value, object CurrentObject) {
 			var fi = CurrentObject.GetType().GetField(fieldName);
@@ -210,6 +215,8 @@ namespace RayTracerInterface {
 					ret.Add(MakeDoubleElement(name, d, target));
 				else if (field is ushort us)
 					ret.Add(MakeUShortElement(name, us, target));
+				else if (field is string s)
+					ret.Add(MakeStringElement(name, s, target));
 				else if (field is AMaterial m)
 					ret.Add(MakeMaterialElement(name, m, target));
 				else if (field is ISerializable r)

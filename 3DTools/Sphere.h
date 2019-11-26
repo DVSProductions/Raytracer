@@ -15,14 +15,13 @@ namespace DDD {
 		static const int CLASSID = 0;
 	public:
 		cgtools::direction getNormal(cgtools::point at) const noexcept;
-		Sphere(cgtools::point position, double radius, cgtools::Color color) noexcept;
+		Sphere(cgtools::point position, double radius, cgtools::Color color);
 		Sphere(cgtools::point position, double radius, std::shared_ptr<AMaterial>  color) noexcept;
-		Hit intersect(Ray r)const override;
+		Hit intersect(Ray r)const noexcept override;
 		std::string serialize()const override;
 		void load(std::string serialized) override;
-		renderable* clone() const;
-		size_t size()const override;
+		renderable* clone() const override;
+		size_t size()const noexcept override;
 	};
-
 }
 

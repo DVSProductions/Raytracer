@@ -1,6 +1,8 @@
 ﻿#pragma warning disable CA1051 // Do not declare visible instance fields
+using System.ComponentModel;
+
 namespace RayTracerInterface {
-	public abstract class Renderable : ISerializable {
+	public abstract class Renderable : ISerializable, INotifyPropertyChanged {
 
 		private static int ObjectIDCounter = 0;
 		private int ObjectID = ObjectIDCounter++;
@@ -18,13 +20,19 @@ namespace RayTracerInterface {
 		}
 		public abstract int TYPEID();
 		public Vec Position = new Vec(0, 0, -3);
+		public string name;
+		public string Name { get => name; set => name = value; }
+
+		public event PropertyChangedEventHandler PropertyChanged;
+		public void Trigger(string name) => PropertyChanged?.Invoke(this, new System.ComponentModel.PropertyChangedEventArgs(name));
+		public Renderable() => Name = $"{this.GetType().Name}#{ObjectID}";
 		/// <summary>
 		/// use <see cref="Renderable.SerializeThis(Renderable)"/> for actual serialization
 		/// </summary>
 		/// <returns></returns>
 		public abstract string Serialize();
 		public static string SerializeThis(Renderable r) => r.TYPEID() != -1 ? $"{r.TYPEID()}!{r.Serialize()}!" : r.Serialize();
-		public override string ToString() => $"{this.GetType().Name}#{ObjectID}";
+		public override string ToString() => Name;
 	}
 }
 

@@ -3,7 +3,7 @@
 #include <cstdint>
 #include "ISerializable.h"
 namespace cgtools {
-	class vector:public ISerializable {
+	class vector :public ISerializable {
 	protected:
 		vector(double x, double y, double z)noexcept :x(x), y(y), z(z) {}
 	public:
@@ -32,7 +32,7 @@ namespace cgtools {
 		double scalar(const vector& v) const noexcept;
 		vector reduceAccuracy(uint8_t power)const noexcept;
 		std::string serialize()const override;
-		void load(std::string serialized)noexcept override;
-		size_t size()const override;
+		void load(std::string serialized) override;
+		size_t size()const noexcept override;
 	};
 }

@@ -5,12 +5,13 @@
 namespace cgtools {
 	class direction : public vector {
 	public:
-		operator std::string()const{
+		operator std::string()const {
 			return "(direction[" + std::to_string(x) + ", " + std::to_string(y) + ", " + std::to_string(z) + "])";
 		}
 		direction operator+(const direction& b) const noexcept;
 		direction(double x, double y, double z) noexcept;
 		direction operator-(const direction& b)const noexcept;
+		direction operator-()const noexcept;
 		direction operator*(const double& s)const noexcept;
 		direction operator*(const vector& s)const noexcept;
 		friend direction operator*(const double& s, const direction& a)noexcept;
@@ -23,8 +24,7 @@ namespace cgtools {
 		/// normalized
 		/// </summary>
 		/// <returns></returns>
-		direction operator~()noexcept;
-		direction operator~()const noexcept; 
-		size_t size()const override;
+		direction operator~()const noexcept;
+		size_t size()const noexcept override;
 	};
 }

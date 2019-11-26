@@ -22,7 +22,7 @@ std::shared_ptr <Camera> cam;
 /// <summary>
 /// targetimage
 /// </summary>
-std::unique_ptr<cgtools::Image> image;
+extern std::unique_ptr<cgtools::Image> image;
 /// <summary>
 /// Renderer storage
 /// </summary>

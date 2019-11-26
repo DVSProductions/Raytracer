@@ -1,11 +1,20 @@
 #include "Material.h"
 #include <stdexcept>
+#include "Glass.h"
+#include "Metal.h"
+#include "LightSource.h"
+#include "Mirror.h"
+#include "Chalk.h"
+#include "Vanta.h"
 #define deserial(Material) case Material::CLASSID: return new Material(s.at(1))
-#define MaterialSplitter "}"
 namespace DDD {
-	AMaterial::AMaterial() {
+	AMaterial::AMaterial() noexcept {
 		std::random_device rd;
-		mt = std::mt19937(rd());
+#if useMT
+		mt = std::mt19937_64(rd());
+#else
+		mt = std::ranlux48_base(rd());
+#endif
 	}
 	AMaterial::AMaterial(cgtools::Color emi, cgtools::Color alb) {
 		emission = emi;
@@ -25,108 +34,16 @@ namespace DDD {
 			deserial(Vanta);
 			deserial(Mirror);
 			deserial(Chalk);
+			deserial(LightSource);
+			deserial(Metal);
+			deserial(Glass);
 		}
 		return nullptr;
 	}
 
-	void AMaterial::operator=(const AMaterial& para) {
+	void AMaterial::operator=(const AMaterial& para) noexcept {
 		scatterFactor = para.scatterFactor;
 		emission = para.emission;
 		albedo = para.albedo;
-	}
-
-
-	Vanta::Vanta(std::string serialized) {
-		load(serialized);
-	}
-
-	Vanta::Vanta(cgtools::Color Material) {
-		scatterFactor = 0;
-		emission = Material;
-		albedo = cgtools::c_black;
-	}
-	Ray Vanta::scatteredRay(Hit origin, Ray originalRay) {
-		throw std::logic_error("Vanta Fully absorbes Rays!");
-	}
-	std::string Vanta::serialize() const {
-		return AMaterial::includeClassID(emission.serialize(), CLASSID);
-	}
-	void Vanta::load(std::string serialized) {
-		/// <summary>
-		/// ensure compatablility with colors
-		/// </summary>
-		/// <param name="serialized"></param>
-		scatterFactor = 0;
-		emission.load(serialized);
-		albedo = cgtools::c_black;
-		return;
-	}
-	AMaterial* Vanta::clone() const {
-		return new Vanta(emission);
-	}
-	size_t Vanta::size() const {
-		return sizeof(Vanta);
-	}
-
-
-	Mirror::Mirror(std::string serialized) {
-		scatterFactor = 0;
-		load(serialized);
-	}
-	Mirror::Mirror(cgtools::Color Material) {
-		scatterFactor = 0;
-		emission = Material;
-		albedo = cgtools::c_white;
-	}
-	Mirror::Mirror(cgtools::Color Emi, cgtools::Color Albe) {
-		scatterFactor = 0;
-		emission = Emi;
-		albedo = Albe;
-	}
-	Ray Mirror::scatteredRay(Hit origin, Ray originalRay) {
-		return Ray(origin.pos, originalRay.dir * -1, originalRay.tmax, 0);
-	}
-	std::string Mirror::serialize() const {
-		return AMaterial::includeClassID(albedo.serialize() + MaterialSplitter + emission.serialize() + MaterialSplitter, CLASSID);
-	}
-	void Mirror::load(std::string serialized) {
-		auto ret = Serializable::split(serialized, MaterialSplitter);
-		albedo.load(ret.at(0));
-		emission.load(ret.at(1));
-	}
-	AMaterial* Mirror::clone() const {
-		return new Mirror(emission, albedo);
-	}
-	size_t Mirror::size() const {
-		return sizeof(Mirror);
-	}
-
-
-	Chalk::Chalk(std::string serialized) {
-		scatterFactor = 1;
-		load(serialized);
-	}
-	Chalk::Chalk(cgtools::Color Emi, cgtools::Color alb) {
-		scatterFactor = 1;
-		dist = std::normal_distribution<double>(0, scatterFactor);
-		albedo = alb;
-		emission = Emi;
-	}
-	Ray Chalk::scatteredRay(Hit origin, Ray originalRay) {
-		return Ray(origin.pos, ~cgtools::direction(dist(mt), dist(mt), dist(mt)) + origin.n, originalRay.tmax, 0.000001);
-	}
-	std::string Chalk::serialize() const {
-		return AMaterial::includeClassID(albedo.serialize() + MaterialSplitter + emission.serialize() + MaterialSplitter, CLASSID);
-	}
-	void Chalk::load(std::string serialized) {
-		auto ret = Serializable::split(serialized, MaterialSplitter);
-		albedo.load(ret.at(0));
-		emission.load(ret.at(1));
-	}
-	AMaterial* Chalk::clone() const {
-		return new Chalk(emission, albedo);
-	}
-	size_t Chalk::size() const {
-		return sizeof(Chalk);
 	}
 }

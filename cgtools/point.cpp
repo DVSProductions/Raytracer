@@ -30,7 +30,7 @@ point cgtools::point::operator*(const vector& s) const noexcept {
 	return point(x * s.x, y * s.y, z * s.z);
 }
 
-size_t cgtools::point::size() const {
+size_t cgtools::point::size() const noexcept {
 	return sizeof(cgtools::point);
 }
 

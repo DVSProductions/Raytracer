@@ -23,7 +23,7 @@ void DDD::Group::clear() {
 
 DDD::Hit DDD::Group::intersect(Ray r) const {
 	Hit closest = Hit();
-	auto offsetRay = Ray(r.x0 - p, r.dir, r.tmax, r.tmin);
+	const auto offsetRay = Ray(r.x0 - p, r.dir, r.tmax, r.tmin);
 	const auto end = objects->end();
 	for (auto it = objects->begin(); it != end; it++) {
 		const auto h = (*it)->intersect(offsetRay);
@@ -51,7 +51,7 @@ void DDD::Group::load(std::string serialized) {
 }
 
 DDD::renderable* DDD::Group::clone() const {
-	auto ret = new Group(p);
+	const auto ret = new Group(p);
 	const auto end = objects->end();
 	for (auto it = objects->begin(); it != end; it++)
 		ret->addObject((*it)->clone());

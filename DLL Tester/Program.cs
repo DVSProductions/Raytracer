@@ -52,12 +52,12 @@ namespace DLL_Tester {
 			var scene = new Scene() {
 				objects ={
 					new Sphere() {
-						Color = new Color(1.0, 0.0, 0.0),
+						Color = new Vanta( new Color(1.0, 0.0, 0.0)),
 						Radius=1,
 						Position=new Vec(0,0,-1.5)
 					},
 					new Sphere() {
-						Color = new Color(0.0, 0.0, 1.0),
+						Color = new Vanta( new Color(0.0, 0.0, 1.0)),
 						Radius=0.5,
 						Position=new Vec(1,0,-1.5)
 					}
@@ -68,7 +68,7 @@ namespace DLL_Tester {
 			ser = Camera.SerializeThis(new PinholeCamera() {
 				angle = Math.PI / 2,
 				Position = new Vec(0, 0, 0),
-				Background = new Background() { Color = new Color(0.5, 0.5, 0.5)}
+				Background = new Background() { Color = new Color(0.5, 0.5, 0.5) }
 			});
 			sbr.SetCamera(ser);
 			int width = 16 * 1;
@@ -82,7 +82,7 @@ namespace DLL_Tester {
 		}
 		static void testKirby(LibraryHandler.SceneBasedRenderer sbr) {
 			var _ = sbr.LibraryInfo;
-			var x=sbr.OutputFiles;
+			var x = sbr.OutputFiles;
 			var __ = sbr.SuppportedClass;
 			var ___ = sbr.SuppportedCams;
 			var ____ = sbr.SceneFile;
@@ -93,7 +93,7 @@ namespace DLL_Tester {
 			sbr.StartPreviewRender(160, 90);
 
 		}
-			static void Main() {
+		static void Main() {
 			var rend = LibraryHandler.TryLoadLib(@"..\..\..\x64\Release\Aufgabe4.dll");
 			//TestOnce(rend);
 			testKirby(rend as LibraryHandler.SceneBasedRenderer);

@@ -97,6 +97,8 @@
       <PreprocessorDefinitions>WIN32;NDEBUG;AUFGABE2_EXPORTS;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -104,6 +106,9 @@
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableUAC>false</EnableUAC>
+      <ProgramDatabaseFile>$(OutDir)CompilerCrap\$(TargetName).pdb</ProgramDatabaseFile>
+      <ProfileGuidedDatabase>$(OutDir)CompilerCrap\$(TargetName).pgd</ProfileGuidedDatabase>
+      <ImportLibrary>$(OutDir)CompilerCrap\$(TargetName).lib</ImportLibrary>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -158,6 +163,7 @@
       <BrowseInformation>true</BrowseInformation>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <LanguageStandard>stdcpp17</LanguageStandard>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -165,6 +171,9 @@
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableUAC>false</EnableUAC>
+      <ProgramDatabaseFile>$(OutDir)CompilerCrap\$(TargetName).pdb</ProgramDatabaseFile>
+      <ProfileGuidedDatabase>$(OutDir)CompilerCrap\$(TargetName).pgd</ProfileGuidedDatabase>
+      <ImportLibrary>$(OutDir)CompilerCrap\$(TargetName).lib</ImportLibrary>
     </Link>
     <Bscmake>
       <PreserveSbr>true</PreserveSbr>

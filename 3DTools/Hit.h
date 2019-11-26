@@ -16,7 +16,7 @@ namespace DDD {
 		bool hit;
 		Hit()noexcept;
 		Hit(double t, cgtools::point pos, cgtools::direction n, std::shared_ptr<AMaterial> m)noexcept;
-		Hit(double t, cgtools::point pos, cgtools::direction n, cgtools::Color Material)noexcept;
+		Hit(double t, cgtools::point pos, cgtools::direction n, cgtools::Color Material);
 		cgtools::Color shade() const noexcept;
 	};
 }

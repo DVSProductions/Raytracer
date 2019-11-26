@@ -23,19 +23,23 @@ namespace RayTracerInterface {
 			InitializeComponent();
 			pbStatus.Maximum = width;
 			pbStatus.Value = 0;
-			if (outputIdx != -1) 
+			if (outputIdx != -1)
 				ofile = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + "\\" + renderer.OutputFiles[outputIdx];
 			Wait();
 			ShowEstimation();
 		}
 		int s = 0;
 		Stopwatch sw;
+
+		static string TsToString(TimeSpan ts) => $"{(ts.Days != 0 ? $"{ts.Days}" : "")}{ts.Hours:00}:{ts.Minutes:00}:{ts.Seconds:00} ";
 		async void ShowEstimation() {
 			long max = (int)pbStatus.Maximum;
 			while (pbStatus.Maximum != pbStatus.Value) {
 				if (s != 0) {
-					var ts = new TimeSpan(sw.ElapsedTicks / s * (max - s));
-					lbEstimation.Content = $"{ts.Hours:00}:{ts.Minutes:00}:{ts.Seconds:00} Remaining";
+					var swT = sw.Elapsed;
+					lbEstimation.Content = TsToString(new TimeSpan(swT.Ticks / s * (max - s))) + "Remaining";
+					lbTotal.Content = TsToString(swT) + "Total";
+
 				}
 				await Task.Delay(1000);
 			}
@@ -57,7 +61,7 @@ namespace RayTracerInterface {
 			lbTime.Content = sw.ElapsedMilliseconds + "ms";
 			pbStatus.IsIndeterminate = true;
 			lbStatus.Content = "Exporting png";
-			lbEstimation.Visibility = Visibility.Hidden;
+			spTime.Visibility = Visibility.Collapsed;
 			while (renderer.ReturnCode == -1) await Task.Delay(100);
 			pbStatus.IsIndeterminate = false;
 			pbStatus.Visibility = Visibility.Hidden;

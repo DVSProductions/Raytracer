@@ -1,5 +1,6 @@
 #include "Sphere.h"
 #include <iostream>
+#include "Vanta.h"
 namespace DDD {
 	cgtools::direction Sphere::getNormal(cgtools::point at)const noexcept {
 		const auto top = at - this->p;
@@ -8,7 +9,7 @@ namespace DDD {
 	Sphere::Sphere(std::string serialized) :renderable(cgtools::point(0, 0, 0)) {
 		this->load(serialized);
 	}
-	Sphere::Sphere(cgtools::point position, double radius, cgtools::Color color)noexcept :Sphere(position, radius, std::make_shared<Vanta>(Vanta(color))) {
+	Sphere::Sphere(cgtools::point position, double radius, cgtools::Color color) : Sphere(position, radius, std::make_shared<Vanta>(Vanta(color))) {
 
 	}
 	Sphere::Sphere(cgtools::point position, double radius, std::shared_ptr<AMaterial>  mat) noexcept : renderable(position) {
@@ -39,7 +40,7 @@ namespace DDD {
 	}
 
 
-	Hit DDD::Sphere::intersect(Ray r) const {
+	Hit DDD::Sphere::intersect(Ray r) const noexcept {
 		const auto x0 = r.x0 - p;
 		double results1 = 0, results2 = 0;
 		double t = 0;
@@ -58,18 +59,18 @@ namespace DDD {
 
 	void Sphere::load(std::string serialized) {
 		auto ret = Serializable::split(serialized, "&");
-		f_chars(ret[0], radius);
+		f_chars(ret.at(0), radius);
 		rsq = radius * radius;
 		if (material != nullptr) material.reset();
 		material = std::shared_ptr<AMaterial>(AMaterial::createFromSerialization(ret.at(1)));
-		p.load(ret[2]);
+		p.load(ret.at(2));
 	}
 
 	DDD::renderable* Sphere::clone() const {
 		return new Sphere(p, radius, material);
 	}
 
-	size_t Sphere::size() const {
+	size_t Sphere::size() const noexcept {
 		return sizeof(Sphere);
 	}
 

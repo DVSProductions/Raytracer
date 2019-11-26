@@ -1,6 +1,7 @@
 #include "Plane.h"
 #include <string>
 #include "vector.h"
+#include "Vanta.h"
 DDD::Plane::Plane(std::string serialized) : renderable(cgtools::point(0, 0, 0)), n(0, 0, 0) {
 	load(serialized);
 }
@@ -12,14 +13,14 @@ DDD::Plane::Plane(cgtools::point postion, cgtools::direction dir, std::shared_pt
 	r = radius;
 }
 
-DDD::Plane::Plane(cgtools::point position, cgtools::direction dir, cgtools::Color color)noexcept :Plane(position, dir, std::make_shared<Vanta>(Vanta(color))) {}
-DDD::Plane::Plane(cgtools::point position, cgtools::direction dir, cgtools::Color color, double radius) noexcept :Plane(position, dir, color) {
+DDD::Plane::Plane(cgtools::point position, cgtools::direction dir, cgtools::Color color) : Plane(position, dir, std::make_shared<Vanta>(Vanta(color))) {}
+DDD::Plane::Plane(cgtools::point position, cgtools::direction dir, cgtools::Color color, double radius) : Plane(position, dir, color) {
 	r = radius;
 }
 
 
 
-DDD::Hit DDD::Plane::intersect(Ray r) const {
+DDD::Hit DDD::Plane::intersect(Ray r) const noexcept {
 	const auto x0 = r.x0 - p;
 	const auto a = x0[n];
 	const auto b = r.dir[n];
@@ -47,6 +48,6 @@ DDD::renderable* DDD::Plane::clone() const {
 	return new Plane(p, n, Material, r);
 }
 
-size_t DDD::Plane::size() const {
+size_t DDD::Plane::size() const noexcept {
 	return sizeof(DDD::Plane);
 }

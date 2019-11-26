@@ -13,7 +13,7 @@ namespace DDD {
 		const static int CLASSID = 0;
 		PinholeCamera(double angle, const cgtools::point& position, Background background) noexcept;
 		PinholeCamera(double angle, const cgtools::point& position, Background background, unsigned short reflectionDepth) noexcept;
-		void init() noexcept;
+		void init() noexcept override;
 		void precalculation(double angle) noexcept;
 		DDD::Ray generateRay(double x, double y) noexcept;
 		cgtools::Color getColor(double x, double y) override;

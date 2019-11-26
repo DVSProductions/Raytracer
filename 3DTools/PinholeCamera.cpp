@@ -35,7 +35,7 @@ namespace DDD {
 		std::stack<cgtools::Color> aStack;
 		cgtools::Color ret = cgtools::c_black;
 		for (size_t n = 0; n != reflectionDepth; n++) {
-			auto h = scene->intersect(r);
+			const auto h = scene->intersect(r);
 			if (h.hit == false) {
 				ret = this->background.Material->emission;
 				break;

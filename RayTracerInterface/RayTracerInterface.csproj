@@ -79,6 +79,7 @@
     <Compile Include="Abgabe.cs">
       <DependentUpon>Abgabe.xaml</DependentUpon>
     </Compile>
+    <Compile Include="FieldSet.cs" />
     <Compile Include="MaterialRenderer.cs" />
     <Compile Include="MaterialSelector.cs" />
     <Compile Include="CameraSelector.cs" />
@@ -97,6 +98,7 @@
     <Compile Include="ShapeSelector.xaml.cs">
       <DependentUpon>ShapeSelector.xaml</DependentUpon>
     </Compile>
+    <Compile Include="VisualStorage.cs" />
     <Page Include="Abgabe.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

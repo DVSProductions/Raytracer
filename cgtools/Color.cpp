@@ -176,7 +176,7 @@ void cgtools::Color::load(std::string serialized) {
 	b = pow(b, 2.2);
 }
 
-size_t cgtools::Color::size() const {
+size_t cgtools::Color::size() const noexcept {
 	return sizeof(Color);
 }
 

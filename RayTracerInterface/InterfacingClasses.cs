@@ -62,7 +62,7 @@ namespace RayTracerInterface {
 		/// Cannot be instantiated
 		/// </summary>
 		public const int TID = -1;
-		public int TYPEID() => -1;
+		public static int TYPEID() => -1;
 	}
 	public class Group : Renderable {
 		public const int TID = 2;
@@ -121,11 +121,14 @@ namespace RayTracerInterface {
 	[XmlInclude(typeof(Vanta))]
 	[XmlInclude(typeof(Mirror))]
 	[XmlInclude(typeof(Chalk))]
+	[XmlInclude(typeof(LightSource))]
+	[XmlInclude(typeof(Metal))]
+	[XmlInclude(typeof(Glass))]
 	public abstract class AMaterial : ISerializable {
 		private static int ObjectIDCounter = 0;
 		private readonly int ObjectID = ObjectIDCounter++;
 		public abstract int TYPEID();
-		public Color Emission = new Color(0.5, 0.5, 0.5);
+		public Color Emission = new Color(0, 0, 0);
 		public static AMaterial ConvertIDToObject(int TYPEID) {
 			switch (TYPEID) {
 				case Vanta.TID:
@@ -134,6 +137,12 @@ namespace RayTracerInterface {
 					return new Mirror();
 				case Chalk.TID:
 					return new Chalk();
+				case LightSource.TID:
+					return new LightSource();
+				case Metal.TID:
+					return new Metal();
+				case Glass.TID:
+					return new Glass();
 			}
 			return null;
 		}
@@ -147,19 +156,40 @@ namespace RayTracerInterface {
 		public const int TID = 0;
 		public override string Serialize() => Emission.Serialize();
 		public override int TYPEID() => TID;
-		public Vanta() { }
+		public Vanta() => Emission = new Color(0.5, 0.5, 0.5);
 		public Vanta(Color c) => Emission = c;
 	}
 	public class Mirror : AMaterial {
 		public const int TID = 1;
-		public Color Albedo = new Color(1.0, 1.0, 1.0);
-		public override string Serialize() => throw new NotImplementedException();
+		public Color Albedo = new Color(0.95, 0.95, 0.95);
+		public Mirror() => Emission = new Color(0, 0, 0);
+		public override string Serialize() => $"{Albedo.Serialize()}}}{Emission.Serialize()}}}";
 		public override int TYPEID() => TID;
 	}
 	public class Chalk : AMaterial {
 		public const int TID = 2;
 		public Color Albedo = new Color(0.9, 0.9, 0.9);
 		public override string Serialize() => $"{Albedo.Serialize()}}}{Emission.Serialize()}}}";
+		public override int TYPEID() => TID;
+	}
+	public class LightSource : AMaterial {
+		public const int TID = 3;
+		public override string Serialize() => new Color(Emission.r * Overdrive, Emission.g * Overdrive, Emission.b * Overdrive).Serialize();
+		public override int TYPEID() => TID;
+		public double Overdrive = 1;
+	}
+	public class Metal : AMaterial {
+		public const int TID = 4;
+		public Color Albedo = new Color(0.95, 0.95, 0.95);
+		public double ScatterFactor = 0.1;
+		public override string Serialize() => $"{ScatterFactor}}}{Albedo.Serialize()}}}{Emission.Serialize()}}}";
+		public override int TYPEID() => TID;
+	}
+	public class Glass : AMaterial {
+		public const int TID = 5;
+		public Color Albedo = new Color(0.95, 0.95, 0.95);
+		public double Refraction = 1.5;
+		public override string Serialize() => $"{Refraction}}}{Albedo.Serialize()}}}{Emission.Serialize()}}}";
 		public override int TYPEID() => TID;
 	}
 }

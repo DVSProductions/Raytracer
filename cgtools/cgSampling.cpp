@@ -16,7 +16,7 @@ cgtools::cgSampling::cgSampling(short samples, std::shared_ptr<Renderer> ActualR
 	if (samples < 1)samples = 1;
 	this->samples = samples;
 	std::random_device rd;
-	mt = std::mt19937(rd());
+	mt = std::mt19937_64(rd());
 	//mt = std::mt19937(10);
 	dist = std::uniform_real_distribution<double>(0, 1);
 	samsq = static_cast<int>(samples)* static_cast<int>(samples);
@@ -39,7 +39,7 @@ Color cgSampling::getColor(double x, double y) {
 #else
 			results += child->getColor(x + (xi + dist(mt)) / samples, y + (yi + dist(mt)) / samples);
 #endif
-	}
+		}
 	}
 	return results / samsq;// results / samsq;
 }

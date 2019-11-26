@@ -12,7 +12,7 @@ namespace cgtools {
 			return "(point[" + std::to_string(x) + ", " + std::to_string(y) + ", " + std::to_string(z) + "])";
 		}
 		point(vector v)noexcept :vector(v.x, v.y, v.z) {}
-		point(double uniform) noexcept:vector(uniform, uniform, uniform){}
+		point(double uniform) noexcept :vector(uniform, uniform, uniform) {}
 		point(double x, double y, double z) noexcept :vector(x, y, z) {}
 		point operator-()noexcept;
 		point operator-(const point& p) const noexcept;
@@ -23,6 +23,6 @@ namespace cgtools {
 		direction todirection()noexcept;
 		direction sub(const point& b)noexcept;
 		point operator*(const vector& s)const noexcept;
-		size_t size()const override;
+		size_t size()const noexcept override;
 	};
 }

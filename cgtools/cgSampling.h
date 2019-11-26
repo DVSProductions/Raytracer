@@ -18,9 +18,9 @@ namespace cgtools {
 		/// </summary>
 		short samsq;
 		/// <summary>
-		/// Twister generator
+		/// Twister generator. 64 bit version saves about 15%
 		/// </summary>
-		std::mt19937 mt;
+		std::mt19937_64 mt;
 		/// <summary>
 		/// Uniform generator for sampling positions
 		/// </summary>

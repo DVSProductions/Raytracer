@@ -3,7 +3,7 @@
 #include <exception>
 #include <memory>
 using namespace cgtools;
-unsigned int ImageWriter::write(std::string filename, const std::unique_ptr<uint8_t[]>& data, size_t width, size_t height, bool linear) {
+unsigned int ImageWriter::write(std::string filename, uint8_t* data, size_t width, size_t height, bool linear) {
 	//std::vector<uint8_t> parsed;
 	//parsed.reserve(4ul * width * height);
 	for (size_t y = 0; y != height; y++) {
@@ -14,5 +14,5 @@ unsigned int ImageWriter::write(std::string filename, const std::unique_ptr<uint
 		}
 	}
 	remove(filename.c_str());
-	return lodepng::encode(filename, data.get(), static_cast<unsigned int>(width), static_cast<unsigned int>(height));
+	return lodepng::encode(filename, data, static_cast<unsigned int>(width), static_cast<unsigned int>(height));
 }

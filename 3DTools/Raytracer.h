@@ -27,6 +27,7 @@ namespace Raytracer {
 	/// <param name="rend">Renderer to use</param>
 	void RenderWorker(std::string filename);
 	void setsampleQuality(int samples = 10);
-	void setPreviewThreadCount();
-	void setFullThreadCount();
+	void setPreviewThreadCount() noexcept;
+	void setFullThreadCount() noexcept;
+	void setSingleThread() noexcept;
 };

@@ -100,6 +100,9 @@
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableUAC>false</EnableUAC>
+      <ProgramDatabaseFile>$(OutDir)CompilerCrap\$(TargetName).pdb</ProgramDatabaseFile>
+      <ProfileGuidedDatabase>$(OutDir)CompilerCrap\$(TargetName).pgd</ProfileGuidedDatabase>
+      <ImportLibrary>$(OutDir)CompilerCrap\$(TargetName).lib</ImportLibrary>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -152,6 +155,9 @@
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableUAC>false</EnableUAC>
+      <ProgramDatabaseFile>$(OutDir)CompilerCrap\$(TargetName).pdb</ProgramDatabaseFile>
+      <ProfileGuidedDatabase>$(OutDir)CompilerCrap\$(TargetName).pgd</ProfileGuidedDatabase>
+      <ImportLibrary>$(OutDir)CompilerCrap\$(TargetName).lib</ImportLibrary>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>

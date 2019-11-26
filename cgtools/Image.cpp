@@ -9,8 +9,8 @@ Image::Image(size_t width, size_t height, double gamma) {
 	sizeY = height;
 	buffer = make_unique< uint8_t[]>(height * width * 4ul);
 }
-uint8_t quanizise(double v, double gamma) {
-	return static_cast<uint8_t>( fmin(fmax(0, pow(v, gamma)), 1) * UINT8_MAX);
+uint8_t quanizise(double v, double gamma)noexcept {
+	return static_cast<uint8_t>(fmin(fmax(0, pow(v, gamma)), 1) * UINT8_MAX);
 }
 void Image::setPixel(size_t x, size_t y, Color color) noexcept {
 	if (x >= sizeX || y >= sizeY)return;
@@ -24,5 +24,5 @@ void Image::setPixel(size_t x, size_t y, Color color) noexcept {
 }
 
 unsigned int Image::write(std::string filename) {
-	return ImageWriter::write(filename, buffer, sizeX, sizeY);
+	return ImageWriter::write(filename, buffer.get(), sizeX, sizeY);
 }

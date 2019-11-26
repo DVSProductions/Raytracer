@@ -71,28 +71,28 @@ namespace lodepng {
 	from here.*/
 
 #ifdef LODEPNG_COMPILE_ALLOCATORS
-	static void* lodepng_malloc(size_t size) {
+	static void* lodepng_malloc(size_t size) noexcept {
 #ifdef LODEPNG_MAX_ALLOC
 		if (size > LODEPNG_MAX_ALLOC) return 0;
 #endif
 		return malloc(size);
 	}
 
-	static void* lodepng_realloc(void* ptr, size_t new_size) {
+	static void* lodepng_realloc(void* ptr, size_t new_size) noexcept {
 #ifdef LODEPNG_MAX_ALLOC
 		if (new_size > LODEPNG_MAX_ALLOC) return 0;
 #endif
 		return realloc(ptr, new_size);
 	}
 
-	static void lodepng_free(void* ptr) {
+	static void lodepng_free(void* ptr) noexcept {
 		free(ptr);
 	}
 #else /*LODEPNG_COMPILE_ALLOCATORS*/
 	/* TODO: support giving additional void* payload to the custom allocators */
-	void* lodepng_malloc(size_t size);
-	void* lodepng_realloc(void* ptr, size_t new_size);
-	void lodepng_free(void* ptr);
+	void* lodepng_malloc(size_t size)  noexcept;
+	void* lodepng_realloc(void* ptr, size_t new_size)  noexcept;
+	void lodepng_free(void* ptr)  noexcept;
 #endif /*LODEPNG_COMPILE_ALLOCATORS*/
 
 	/* convince the compiler to inline a function, for use when this measurably improves performance */
