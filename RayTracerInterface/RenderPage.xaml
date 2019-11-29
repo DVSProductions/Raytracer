@@ -9,7 +9,7 @@
       Title="RenderPage">
 
 	<Grid Background="Black">
-		<Button x:Name="btExport" Visibility="Collapsed" Content="Open location" Margin="5" Height="30" Width="100" VerticalAlignment="Bottom" HorizontalAlignment="Right" Style="{DynamicResource BTStyle}" Click="btExport_Click"/>
+		<Button x:Name="btExport" Visibility="Collapsed" Content="Open location" Margin="5" Height="30" Width="100" VerticalAlignment="Bottom" HorizontalAlignment="Right" Style="{DynamicResource BTStyle}" Click="BtExport_Click"/>
 		<Label HorizontalAlignment="Center" Visibility="Collapsed" x:Name="lbTime" Height="30" FontSize="20" Padding="0" VerticalAlignment="Bottom" HorizontalContentAlignment="Center" Foreground="White" Content="5000"/>
 		<ProgressBar Margin="-25" x:Name="pbStatus" Background="{DynamicResource BGColor}" Foreground="{DynamicResource LightRed}" Value="11">
 			<ProgressBar.Effect>
@@ -17,11 +17,21 @@
 			</ProgressBar.Effect>
 		</ProgressBar>
 		<Label x:Name="lbStatus" Foreground="White" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontSize="30">Rendering</Label>
-		<Button Visibility="Hidden" x:Name="btBack" Content="Change Settings" Margin="5" Height="30" Width="100" VerticalAlignment="Bottom" HorizontalAlignment="Left" Style="{DynamicResource BTStyle}" Click="btBack_Click"/>
+		<Button Visibility="Hidden" x:Name="btBack" Content="Change Settings" Margin="5" Height="30" Width="100" VerticalAlignment="Bottom" HorizontalAlignment="Left" Style="{DynamicResource BTStyle}" Click="BtBack_Click"/>
 		<Image x:Name="iResults" Margin="0,0,0,40"/>
-		<StackPanel Name="spTime" VerticalAlignment="Bottom" HorizontalAlignment="Right" >
-			<Label Foreground="White" x:Name="lbTotal"></Label>
-			<Label Foreground="White" x:Name="lbEstimation" ></Label>
-		</StackPanel>
+		<Grid Name="spTime" VerticalAlignment="Bottom" Margin="10" HorizontalAlignment="Right" >
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition/>
+				<ColumnDefinition/>
+			</Grid.ColumnDefinitions>
+			<Grid.RowDefinitions>
+				<RowDefinition/>
+				<RowDefinition/>
+			</Grid.RowDefinitions>
+			<Label Grid.Row="0" Grid.Column="0" Foreground="White" Padding="0" HorizontalAlignment="Right" x:Name="lbTotal"/>
+			<Label Grid.Row="0" Grid.Column="1" Foreground="White" Padding="0" HorizontalAlignment="Left" Content="Total" />
+			<Label Grid.Row="1" Grid.Column="0" Foreground="White" Padding="0" HorizontalAlignment="Right" x:Name="lbEstimation"/>
+			<Label Grid.Row="1" Grid.Column="1" Foreground="White" Padding="0" HorizontalAlignment="Left" Content="Remaining"/>
+		</Grid>
 	</Grid>
 </Page>

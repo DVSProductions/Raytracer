@@ -11,10 +11,11 @@ namespace RayTracerInterface {
 		/// Handler to <see cref="MainWindow"/> for opening a render page
 		/// </summary>
 		readonly Action<IRenderPage> switchToRenderPage;
-		public Action GoBack;
+		public Action GoBack { get; set; }
 		readonly LibraryHandler.Renderer renderer;
 
 		public CompilationSettings(Action<IRenderPage> switchToRenderPage, LibraryHandler.Renderer renderer) {
+			System.Diagnostics.Contracts.Contract.Requires(renderer != null);
 			this.renderer = renderer;
 			InitializeComponent();
 			foreach (var s in renderer.OutputFiles)
@@ -94,8 +95,6 @@ namespace RayTracerInterface {
 
 		}
 
-		private void Button_Click_3(object sender, RoutedEventArgs e) {
-			GoBack();
-		}
+		private void Button_Click_3(object sender, RoutedEventArgs e) => GoBack();
 	}
 }

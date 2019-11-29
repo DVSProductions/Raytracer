@@ -51,7 +51,7 @@
         <Refraction>1.5</Refraction>
       </Color>
     </Sphere>
-	<Sphere>
+    <Sphere>
       <Position>
         <x>-7</x>
         <y>0</y>
@@ -227,7 +227,7 @@
         </Albedo>
       </Color>
     </Sphere>
-	<Sphere>
+    <Sphere>
       <Position>
         <x>9</x>
         <y>0</y>
@@ -479,23 +479,6 @@
         <Refraction>2</Refraction>
       </Color>
     </Sphere>
-    <Sphere>
-      <Position>
-        <x>0</x>
-        <y>0</y>
-        <z>5</z>
-      </Position>
-      <name>Sphere#24</name>
-      <Name>Sphere#24</Name>
-      <Radius>5</Radius>
-      <Color xsi:type="Vanta">
-        <Emission>
-          <r>1</r>
-          <g>1</g>
-          <b>1</b>
-        </Emission>
-      </Color>
-    </Sphere>
   </shapes>
   <camera xsi:type="PinholeCamera">
     <angle>1.7</angle>
@@ -504,7 +487,7 @@
       <y>0</y>
       <z>0</z>
     </Position>
-    <Reflections>20</Reflections>
+    <Reflections>150</Reflections>
     <Background>
       <Color>
         <r>1</r>

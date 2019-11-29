@@ -1,69 +1,41 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics.Contracts;
 using System.IO;
-using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using System.Xml;
 using System.Xml.Serialization;
 
 namespace RayTracerInterface {
-	public class Constants {
-		public static string MyString;
-	}
-	public class ShapeTemplateSelctor : DataTemplateSelector {
-		public DataTemplate GroupTemplate { get; set; }
-
-		public ShapeTemplateSelctor(DataTemplate defaul, DataTemplate GroupTemplate) {
-			this.GroupTemplate = GroupTemplate;
-			DefaultTemplate = defaul;
-
-		}
-
-		public DataTemplate DefaultTemplate { get; set; }
-
-		public override DataTemplate SelectTemplate(object item, DependencyObject container) => item is Group ? GroupTemplate : DefaultTemplate;
-	}
 	/// <summary>
 	/// Interaktionslogik für SceneBuilder.xaml
 	/// </summary>
 	public partial class SceneBuilder : Page, IRenderPage {
-		public class SaveContainer {
-			[XmlArray("shapes")]
-			[XmlArrayItem("Sphere", typeof(Sphere))]
-			[XmlArrayItem("Plain", typeof(Plane))]
-			[XmlArrayItem("Group", typeof(Group))]
-			public Renderable[] shapes;
-			public Camera camera;
-
-		}
 		public Action OnBack { get; set; }
 		/// <summary>
 		/// Aspect ratio to keep while the box is checked
 		/// </summary>
 		double ratio = 16.0 / 9.0;
-		Action<IRenderPage> RenderAction;
-		LibraryHandler.SceneBasedRenderer sbr;
+		readonly Action<IRenderPage> RenderAction;
+		readonly LibraryHandler.SceneBasedRenderer sbr;
 		Camera cam;
 		static readonly SolidColorBrush white = new SolidColorBrush(Colors.White);
-		ObservableCollection<Renderable> Shapes;
+		readonly ObservableCollection<Renderable> Shapes;
 		//Label lbshapesContainer => lbshapesContainerContainer.Content as Label;
 		//ListBox Lbshapes => lbshapesContainer.Content as ListBox;
 		//List<Renderable> RenderObjects=new List<Renderable>();		
-		public void Save(string filename) {
+		public void Save(string fileName) {
 			//try {
-			using (var fs = new FileStream(filename, FileMode.Create))
+			using (var fs = new FileStream(fileName, FileMode.Create))
 				Save(fs);
 			//}
 			//catch (Exception ex) {
@@ -72,31 +44,56 @@ namespace RayTracerInterface {
 		}
 		public void Save(Stream target) {
 			using (var writer = new StreamWriter(target, new UTF8Encoding())) {
+				//var tmp = new List<Renderable>(Shapes.Count);
+				//tmp.AddRange(Shapes);
 				var tmp = new Renderable[Shapes.Count];
 				Shapes.CopyTo(tmp, 0);
 				new XmlSerializer(typeof(SaveContainer)).Serialize(writer, new SaveContainer() { camera = cam, shapes = tmp });
-				writer.Close();
 			}
 		}
+		/// <summary>
+		/// Loads a xml file and ensures compatibility with old version
+		/// </summary>
+		/// <param name="path"></param>
 		public void Load(string path) {
-			using (var fs = new FileStream(path, FileMode.Open))
-				Load(fs);
+			var xml = File.ReadAllLines(path);
+			bool hasOldColorElements = false;
+			using var ms = new MemoryStream();
+			using var sw = new StreamWriter(ms);
+			var n = 0;
+			for (; n < xml.Length; n++) {
+				var line = xml[n];
+				if (line.Contains("<camera")) break;
+				if (line.Contains("<Color>")) {
+					hasOldColorElements = true;
+					line = line.Replace("<Color>", $"<Color xsi:type=\"Vanta\">{Environment.NewLine}<Emission>");
+				}
+				else if (hasOldColorElements) 
+					line = line.Replace("</Color>", $"</Emission>{Environment.NewLine}</Color>");
+				sw.Write(line);
+				sw.Write(Environment.NewLine);
+			}
+			for (; n < xml.Length; n++)
+				sw.Write(xml[n]);
+			sw.Flush();
+			ms.Position = 0;
+			Load(ms);
 		}
 		public void Load(Stream from) {
-			using (var reader = XmlReader.Create(from))
-				Load(reader);
+			using var reader = XmlReader.Create(from);
+			Load(reader);
 		}
 		public void Load(XmlReader reader) {
 			var dat = new XmlSerializer(typeof(SaveContainer)).Deserialize(reader) as SaveContainer;
-			this.cam = dat.camera;
+			cam = dat.camera;
 			VisualizeCamera();
 			Shapes.Clear();
-			foreach (var e in dat.shapes) 
+			foreach (var e in dat.shapes)
 				Shapes.Add(e);
 			Lbshapes.SelectedIndex = 0;
-			alertChanges();
+			AlertChanges();
 		}
-		public static DataTrigger genDT(string forWhat) => new DataTrigger() {
+		public static DataTrigger GenDT(string forWhat) => new DataTrigger() {
 			Binding = new Binding() {
 				RelativeSource = new RelativeSource() {
 					Mode = RelativeSourceMode.FindAncestor,
@@ -106,13 +103,17 @@ namespace RayTracerInterface {
 			},
 			Value = true
 		};
-		public static DataTrigger addSetters(DataTrigger dt, Setter[] arr) {
-			foreach (var s in arr) dt.Setters.Add(s);
-			return dt;
+		public static DataTrigger AddSetters(DataTrigger dataTrigger, Setter[] setters) {
+			Contract.Requires(setters != null);
+			Contract.Requires(dataTrigger != null);
+			foreach (var s in setters) dataTrigger.Setters.Add(s);
+			return dataTrigger;
 		}
-		public static Style addSetters(Style s, Setter[] arr) {
-			foreach (var se in arr) s.Setters.Add(se);
-			return s;
+		public static Style AddSetters(Style style, Setter[] setters) {
+			Contract.Requires(setters != null);
+			Contract.Requires(style != null);
+			foreach (var se in setters) style.Setters.Add(se);
+			return style;
 		}
 		public SceneBuilder(LibraryHandler.SceneBasedRenderer renderer, Action<IRenderPage> moveToRenderer) {
 			InitializeComponent();
@@ -121,7 +122,7 @@ namespace RayTracerInterface {
 			RenderAction = moveToRenderer;
 			Lbshapes.SelectionChanged += Lbshapes_SelectionChanged;
 			Lbshapes.ItemsSource = Shapes;
-			Lbshapes.ItemTemplateSelector = new ShapeTemplateSelctor(FindResource("ShapeTemplateDefault") as DataTemplate, FindResource("ShapeTemplateGroup") as DataTemplate);
+			Lbshapes.ItemTemplateSelector = new ShapeTemplateSelector(FindResource("ShapeTemplateDefault") as DataTemplate, FindResource("ShapeTemplateGroup") as DataTemplate);
 			RenderLoop();
 		}
 		DateTime lastChange = DateTime.Now;
@@ -166,10 +167,10 @@ namespace RayTracerInterface {
 			return start;
 		}
 		async void RenderLoop() {
-			while (this.Visibility != Visibility.Visible) await Task.Delay(500);
-			sbr.Initialize3d();
-			DateTime last = DateTime.MinValue;
-			while (this.Visibility == Visibility.Visible) {
+			while (Visibility != Visibility.Visible) await Task.Delay(500);
+			sbr.Initialize3D();
+			var last = DateTime.MinValue;
+			while (Visibility == Visibility.Visible) {
 				if (cam == null) {
 					await Task.Delay(1000);
 					continue;
@@ -185,12 +186,9 @@ namespace RayTracerInterface {
 		///		Should trigger a re-render
 		/// </para>
 		/// </summary>
-		void alertChanges() {
-			lastChange = DateTime.Now;
+		void AlertChanges() => lastChange = DateTime.Now;
 
-		}
-
-		private void Lbshapes_SelectionChanged(object __, SelectionChangedEventArgs scea) {
+		private void Lbshapes_SelectionChanged(object _, SelectionChangedEventArgs scea) {
 			spProperties.Children.Clear();
 			if (scea.AddedItems.Count == 0) {
 				spProperties.Children.Add(new TextBlock() {
@@ -229,16 +227,13 @@ namespace RayTracerInterface {
 			if (cbLink.IsChecked == true && int.TryParse(tbH.Text, out var i))
 				tbW.Text = ((int)(ratio * i)).ToString();
 		}
-		T FindParentT<T>(FrameworkElement o) where T : FrameworkElement => o == null ? null : (o is T t ? t : FindParentT<T>((o.Parent == null ? VisualTreeHelper.GetParent(o) : o.Parent) as FrameworkElement));
+		static T FindParentT<T>(FrameworkElement o) where T : FrameworkElement => o == null ? null : (o is T t ? t : FindParentT<T>((o.Parent ?? VisualTreeHelper.GetParent(o)) as FrameworkElement));
 		ListBox FindParentListBox(FrameworkElement source) =>
 			source == null ?
 				null :
 				source.GetType() == typeof(ListBox) ?
 				source as ListBox :
-					FindParentListBox(
-						source.Parent == null ?
-							VisualTreeHelper.GetParent(source) as FrameworkElement :
-							source.Parent as FrameworkElement
+					FindParentListBox((source.Parent ?? VisualTreeHelper.GetParent(source)) as FrameworkElement
 					);
 		private void Button_Click(object source, RoutedEventArgs _) {
 			var Selector = new ShapeSelector(sbr);
@@ -246,13 +241,13 @@ namespace RayTracerInterface {
 			if (Selector.ShowDialog() == true) {
 				//(FindParentListBox(source as FrameworkElement).ItemsSource as ObservableCollection<Renderable>).Add(Selector.result);
 				Shapes.Add(Selector.result);
-				alertChanges();
+				AlertChanges();
 			}
 		}
 		private void DeleteShape(object sender, RoutedEventArgs _) {
 			var snd = sender as Button;
 			(FindParentListBox(snd).ItemsSource as ObservableCollection<Renderable>).Remove(((snd.Parent as Grid).Children[0] as VisualStorage).Storage as Renderable);
-			alertChanges();
+			AlertChanges();
 		}
 		void VisualizeCamera() {
 			spCam.Children.Clear();
@@ -278,11 +273,11 @@ namespace RayTracerInterface {
 			if (Selector.ShowDialog() == true) {
 				cam = Selector.result;
 				VisualizeCamera();
-				alertChanges();
+				AlertChanges();
 			}
 		}
 
-		private void btExport_Click(object _, RoutedEventArgs __) {
+		private void BtExport_Click(object _, RoutedEventArgs __) {
 			var dlg = new Microsoft.Win32.SaveFileDialog {
 				DefaultExt = "*.xml;",
 				CheckPathExists = true,
@@ -295,7 +290,7 @@ namespace RayTracerInterface {
 				Save(dlg.FileName);
 		}
 
-		private void btImport_Click(object _, RoutedEventArgs __) {
+		private void BtImport_Click(object _, RoutedEventArgs __) {
 			var dlg = new Microsoft.Win32.OpenFileDialog {
 				DefaultExt = "*.xml;",
 				CheckFileExists = true,
@@ -310,7 +305,7 @@ namespace RayTracerInterface {
 				Load(dlg.FileName);
 		}
 
-		private void btFullRender_Click(object _, RoutedEventArgs __) {
+		private void BtFullRender_Click(object _, RoutedEventArgs __) {
 			if (int.TryParse(tbH.Text, out int h) && int.TryParse(tbW.Text, out int w) && int.TryParse(tbSX.Text, out int FSAA)) {
 				var dlg = new Microsoft.Win32.SaveFileDialog {
 					DefaultExt = "*.png;",
@@ -322,7 +317,7 @@ namespace RayTracerInterface {
 				};
 				if (dlg.ShowDialog() == true) {
 					sbr.StartSuperRender(w, h, FSAA, dlg.FileName);
-					RenderAction(new RenderPage(sbr, -1, w) { ofile = dlg.FileName });
+					RenderAction(new RenderPage(sbr, -1, w) { Ofile = dlg.FileName });
 				}
 			}
 			else {

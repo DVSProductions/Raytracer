@@ -44,7 +44,7 @@ namespace RayTracerInterface {
 				return;
 			}
 			var rend = LibraryHandler.TryLoadLib(path);
-			if (rend!=null)
+			if (rend != null)
 				openNext(rend);
 		}
 		/// <summary>

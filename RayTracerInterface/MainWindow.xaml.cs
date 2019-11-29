@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Reflection;
 using System.Windows;
-using System.Windows.Controls;
 
 namespace RayTracerInterface {
 	/// <summary>
@@ -70,7 +68,7 @@ namespace RayTracerInterface {
 			if (LibraryHandler.IsLoaded) OpenPage2(prefetchRenderer);
 			else
 				pageViewer.Content = new DND(OpenPage2);
-			App.makeMeDark(this);
+			App.MakeMeDark(this);
 		}
 
 	}

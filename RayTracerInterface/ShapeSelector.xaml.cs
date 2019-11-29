@@ -1,16 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace RayTracerInterface {
 	/// <summary>
@@ -24,7 +13,7 @@ namespace RayTracerInterface {
 #pragma warning restore CA1051 // Sichtbare Instanzfelder nicht deklarieren
 		public ShapeSelector(LibraryHandler.SceneBasedRenderer sbr) {
 			this.WindowStartupLocation = WindowStartupLocation.CenterOwner;
-			App.makeMeDarkModal(this);
+			App.MakeMeDarkModal(this);
 			this.sbr = sbr;
 			InitializeComponent();
 		}
@@ -36,7 +25,7 @@ namespace RayTracerInterface {
 		}
 		private void Button_Click(object sender, RoutedEventArgs e) {
 			if (lbshapes.SelectedIndex == -1) return;
-			result = Renderable.convertIDToObject(sbr.SuppportedClass[lbshapes.SelectedIndex].TYPEID());
+			result = Renderable.ConvertIDToObject(sbr.SuppportedClass[lbshapes.SelectedIndex].TYPEID());
 			DialogResult = true;
 		}
 	}

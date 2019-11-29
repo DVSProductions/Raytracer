@@ -107,6 +107,7 @@
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <EnableParallelCodeGeneration>true</EnableParallelCodeGeneration>
+      <BrowseInformation>true</BrowseInformation>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -124,6 +125,9 @@
     <CustomBuildStep>
       <Command>del "$(OutDir)\$(ProjectName).lib" &amp;&amp; del "$(OutDir)\$(ProjectName).exp" &amp;&amp; del "$(OutDir)\$(ProjectName).ipdb"&amp;&amp; del "$(OutDir)\$(ProjectName).iobj"&amp;&amp; del "$(OutDir)\$(ProjectName).pdb"</Command>
     </CustomBuildStep>
+    <Bscmake>
+      <PreserveSbr>true</PreserveSbr>
+    </Bscmake>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>

@@ -25,7 +25,7 @@ namespace RayTracerInterface {
 		}
 		int[] customColors = new int[1];
 		static System.Windows.Media.Color ConvertColorM(Color c) => System.Windows.Media.Color.FromRgb(Scale(c.r), Scale(c.g), Scale(c.b));
-		System.Drawing.Color ConvertColor(Color c) => System.Drawing.Color.FromArgb(255, Scale(c.r), Scale(c.g), Scale(c.b));
+		static System.Drawing.Color ConvertColor(Color c) => System.Drawing.Color.FromArgb(255, Scale(c.r), Scale(c.g), Scale(c.b));
 		static Color ConvertColor(System.Drawing.Color c) => new Color(c.R, c.G, c.B);
 		UIElement MakeMaterialElement(string name, AMaterial value, object CurrentObject) {
 			var g = MakeDefaultGrid();
@@ -47,7 +47,7 @@ namespace RayTracerInterface {
 						UpdateCurrentObject(name, value, CurrentObject);
 						g.Children.RemoveAt(1);
 						g.Children.Add(SetCP(1, AddToSP(new StackPanel(), VisualizeObject(value))));
-						alertChanges();
+						AlertChanges();
 					}
 				};
 				bt.SetValue(Grid.RowProperty, 1);
@@ -80,7 +80,7 @@ namespace RayTracerInterface {
 					value = ConvertColor(diag.Color);
 					box.Background = new SolidColorBrush(ConvertColorM(value));
 					UpdateCurrentObject(name, value, CurrentObject);
-					alertChanges();
+					AlertChanges();
 					customColors = diag.CustomColors;
 				}
 			};
@@ -112,13 +112,13 @@ namespace RayTracerInterface {
 					if (double.TryParse(tb.Text, out var res)) {
 						apply(res);
 						UpdateCurrentObject(name, value, CurrentObject);
-						alertChanges();
+						AlertChanges();
 					}
 					else if (tb.Text.Trim().Length == 0) {
 						if (tb.Text.Length != 0)
 							tb.Text = "";
 					}
-					else if (tb.Text == "-") ;
+					else if (tb.Text == "-")return;
 					else
 						tb.Text = "0";
 				};
@@ -147,13 +147,13 @@ namespace RayTracerInterface {
 				tbValue.Text = tbValue.Text.Replace(".", ",");
 				if (double.TryParse(tbValue.Text, out var res)) {
 					UpdateCurrentObject(name, res, CurrentObject);
-					alertChanges();
+					AlertChanges();
 				}
 				else if (tbValue.Text.Trim().Length == 0) {
 					if (tbValue.Text.Length != 0)
 						tbValue.Text = "";
 				}
-				else if (tbValue.Text == "-") ;
+				else if (tbValue.Text == "-") return;
 				else
 					tbValue.Text = "0";
 			});
@@ -162,13 +162,13 @@ namespace RayTracerInterface {
 			return MakeTBBasedElement(name, value, (tbValue) => {
 				if (ushort.TryParse(tbValue.Text, out var res)) {
 					UpdateCurrentObject(name, res, CurrentObject);
-					alertChanges();
+					AlertChanges();
 				}
 				else if (tbValue.Text.Trim().Length == 0) {
 					if (tbValue.Text.Length != 0)
 						tbValue.Text = "";
 				}
-				else if (tbValue.Text == "-") ;
+				else if (tbValue.Text == "-") return;
 				else
 					tbValue.Text = "0";
 			});
@@ -177,7 +177,7 @@ namespace RayTracerInterface {
 			return MakeTBBasedElement(name, value, (tbValue) => {
 				if (tbValue.Text.Length != 0) {
 					UpdateCurrentObject(name, tbValue.Text, CurrentObject);
-					alertChanges();
+					AlertChanges();
 					if (CurrentObject is Renderable r)
 						r.Trigger(name);
 				}

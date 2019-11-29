@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Diagnostics.Contracts;
 using System.IO;
 using System.Reflection;
 using System.Threading.Tasks;
@@ -13,33 +14,33 @@ namespace RayTracerInterface {
 		/// <summary>
 		/// index of the outputFile
 		/// </summary>
-		public string ofile;
+		public string Ofile { get; set; }
 
 		public Action OnBack { get; set; }
 
 		readonly LibraryHandler.Renderer renderer;
-		public RenderPage(LibraryHandler.Renderer rend, int outputIdx, int width) {
+		public RenderPage(LibraryHandler.Renderer rend, int outputIndex, int width) {
+			Contract.Requires(rend != null);
 			renderer = rend;
 			InitializeComponent();
 			pbStatus.Maximum = width;
 			pbStatus.Value = 0;
-			if (outputIdx != -1)
-				ofile = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + "\\" + renderer.OutputFiles[outputIdx];
+			if (outputIndex != -1)
+				Ofile = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + "\\" + renderer.OutputFiles[outputIndex];
 			Wait();
 			ShowEstimation();
 		}
 		int s = 0;
 		Stopwatch sw;
 
-		static string TsToString(TimeSpan ts) => $"{(ts.Days != 0 ? $"{ts.Days}" : "")}{ts.Hours:00}:{ts.Minutes:00}:{ts.Seconds:00} ";
+		static string TsToString(TimeSpan ts) => $"{(ts.Days != 0 ? $"{ts.Days} " : " ")}{ts.Hours:00}:{ts.Minutes:00}:{ts.Seconds:00}";
 		async void ShowEstimation() {
 			long max = (int)pbStatus.Maximum;
 			while (pbStatus.Maximum != pbStatus.Value) {
 				if (s != 0) {
 					var swT = sw.Elapsed;
-					lbEstimation.Content = TsToString(new TimeSpan(swT.Ticks / s * (max - s))) + "Remaining";
-					lbTotal.Content = TsToString(swT) + "Total";
-
+					lbTotal.Content = TsToString(swT);
+					lbEstimation.Content = TsToString(new TimeSpan(swT.Ticks / s * (max - s)));
 				}
 				await Task.Delay(1000);
 			}
@@ -58,7 +59,7 @@ namespace RayTracerInterface {
 				await Task.Delay(33);
 			}
 			sw.Stop();
-			lbTime.Content = sw.ElapsedMilliseconds + "ms";
+			lbTime.Content = sw.Elapsed.TotalSeconds >= 100 ? TsToString(sw.Elapsed) : (sw.ElapsedMilliseconds + "ms");
 			pbStatus.IsIndeterminate = true;
 			lbStatus.Content = "Exporting png";
 			spTime.Visibility = Visibility.Collapsed;
@@ -67,7 +68,7 @@ namespace RayTracerInterface {
 			pbStatus.Visibility = Visibility.Hidden;
 			btBack.Visibility = Visibility.Visible;
 			if (renderer.ReturnCode == 0) {
-				iResults.Source = (BitmapSource)new ImageSourceConverter().ConvertFrom(File.ReadAllBytes(ofile));
+				iResults.Source = (BitmapSource)new ImageSourceConverter().ConvertFrom(File.ReadAllBytes(Ofile));
 				lbStatus.Visibility = Visibility.Hidden;
 				btExport.Visibility = Visibility.Visible;
 				lbTime.Visibility = Visibility.Visible;
@@ -80,10 +81,10 @@ namespace RayTracerInterface {
 		/// <summary>
 		/// Calls the back function provided by <see cref="MainWindow"/>
 		/// </summary>
-		private void btBack_Click(object sender, RoutedEventArgs e) => OnBack();
+		private void BtBack_Click(object sender, RoutedEventArgs e) => OnBack();
 		/// <summary>
 		/// Opens a explorer instance highlighting the rendered file
 		/// </summary>
-		private void btExport_Click(object sender, RoutedEventArgs e) => _ = Process.Start("explorer", $"/select,\"{ofile}\"");
+		private void BtExport_Click(object sender, RoutedEventArgs e) => _ = Process.Start("explorer", $"/select,\"{Ofile}\"");
 	}
 }

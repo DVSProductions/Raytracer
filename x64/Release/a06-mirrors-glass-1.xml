@@ -11,16 +11,16 @@
       <Name>Plane#3</Name>
       <Radius>-1</Radius>
       <Color xsi:type="Chalk">
-        <Emission>
-          <r>0</r>
-          <g>0</g>
-          <b>0</b>
-        </Emission>
-        <Albedo>
-          <r>0.9</r>
-          <g>0.9</g>
-          <b>0.9</b>
-        </Albedo>
+      <Emission>
+        <r>0</r>
+        <g>0</g>
+        <b>0</b>
+      </Emission>
+      <Albedo>
+        <r>0.9</r>
+        <g>0.9</g>
+        <b>0.9</b>
+      </Albedo>
       </Color>
       <Direction>
         <x>0</x>

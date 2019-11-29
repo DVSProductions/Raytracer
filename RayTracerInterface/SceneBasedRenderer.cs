@@ -1,10 +1,9 @@
 ﻿#pragma warning disable CA1822 // Member als statisch markieren
-using System;
+#pragma warning disable IDE1006 // Naming Styles
+#pragma warning disable CA1704 // Member als statisch markieren
 using System.Collections.Generic;
-using System.Linq;
+using System.Diagnostics.Contracts;
 using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace RayTracerInterface {
 	public static partial class LibraryHandler {
@@ -37,7 +36,7 @@ namespace RayTracerInterface {
 					if (suppclass != null) return suppclass;
 					suppclass = new List<Renderable>();
 					foreach (var id in SuppportedClassIDs)
-						suppclass.Add(Renderable.convertIDToObject(id));
+						suppclass.Add(Renderable.ConvertIDToObject(id));
 					return suppclass;
 				}
 			}
@@ -48,7 +47,7 @@ namespace RayTracerInterface {
 			/// <summary>
 			/// Dynamically created list containing all the Object Types that our current DLL supports
 			/// </summary>
-			public List<int> SuppportedCamIDs {
+			public List<int> SupportedCamIDs {
 				get {
 					if (suppcamIDs != null) return suppcamIDs;
 					var n = 0;
@@ -62,32 +61,38 @@ namespace RayTracerInterface {
 				}
 			}
 			private List<Camera> suppcam;
-			public List<Camera> SuppportedCams {
+			public List<Camera> SupportedCams {
 				get {
 					if (suppcam != null) return suppcam;
 					suppcam = new List<Camera>();
-					foreach (var id in SuppportedCamIDs)
+					foreach (var id in SupportedCamIDs)
 						suppcam.Add(Camera.ConvertIDToObject(id));
 					return suppcam;
 				}
 			}
 
-			[DllImport(dll, CallingConvention = CallingConvention.Cdecl)]
+			[DllImport(dll, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
 			static extern void setScene(string serializedData);
-			public void SetScene(string serializedData) => setScene(serializedData.Replace(",", "."));
-			[DllImport(dll, CallingConvention = CallingConvention.Cdecl)]
+			public void SetScene(string serializedData) {
+				Contract.Requires(serializedData != null);
+				setScene(serializedData.Replace(",", "."));
+			}
+			[DllImport(dll, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
 			static extern void setCamera(string serializedData);
-			public void SetCamera(string serializedData) => setCamera(serializedData.Replace(",", "."));
+			public void SetCamera(string serializedData) {
+				Contract.Requires(serializedData != null);
+				setCamera(serializedData.Replace(",", "."));
+			}
 			[DllImport(dll, CallingConvention = CallingConvention.Cdecl)]
 			static extern void initialize3d();
-			public void Initialize3d() => initialize3d();
+			public void Initialize3D() => initialize3d();
 			[DllImport(dll, CallingConvention = CallingConvention.Cdecl)]
 			static extern void startPreviewRender(int x, int y);
 			public void StartPreviewRender(int x, int y) => startPreviewRender(x, y);
-			[DllImport(dll, CallingConvention = CallingConvention.Cdecl)]
+			[DllImport(dll, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
 			static extern void startSuperRender(int x, int y, int FSAA, string outputFilePath);
-			public void StartSuperRender(int x, int y,int FSAA, string outputFilePath) => startSuperRender(x, y, FSAA, outputFilePath);
-			[DllImport(dll, CallingConvention = CallingConvention.Cdecl)]
+			public void StartSuperRender(int x, int y, int fsaa, string outputFilePath) => startSuperRender(x, y, fsaa, outputFilePath);
+			[DllImport(dll, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Unicode)]
 			[return: MarshalAs(UnmanagedType.BStr)]
 			static extern string sceneFile();
 			private string scf;
@@ -102,5 +107,7 @@ namespace RayTracerInterface {
 		}
 	}
 }
+#pragma warning restore IDE1006 // Naming Styles
 
 #pragma warning restore CA1822 // Member als statisch markieren
+#pragma warning restore CA1704 // Member als statisch markieren

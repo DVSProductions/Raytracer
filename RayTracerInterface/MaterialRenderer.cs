@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace RayTracerInterface {
 	public static partial class LibraryHandler {
@@ -17,7 +13,7 @@ namespace RayTracerInterface {
 			/// <summary>
 			/// Dynamically created list containing all the Object Types that our current DLL supports
 			/// </summary>
-			public List<int> SuppportedMaterialIDs {
+			public List<int> SupportedMaterialIDs {
 				get {
 					if (suppmatIDs != null) return suppmatIDs;
 					var n = 0;
@@ -31,11 +27,11 @@ namespace RayTracerInterface {
 				}
 			}
 			private List<AMaterial> suppmat;
-			public List<AMaterial> SuppportedMaterials {
+			public List<AMaterial> SupportedMaterials {
 				get {
 					if (suppmat != null) return suppmat;
 					suppmat = new List<AMaterial>();
-					foreach (var id in SuppportedMaterialIDs)
+					foreach (var id in SupportedMaterialIDs)
 						suppmat.Add(AMaterial.ConvertIDToObject(id));
 					return suppmat;
 				}

@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
+using System.Diagnostics.Contracts;
 using System.Text;
-using System.Threading.Tasks;
 using System.Xml.Serialization;
 #pragma warning disable CA1051 // Do not declare visible instance fields
-
+#pragma warning disable CA1709
+#pragma warning disable CA1704
 namespace RayTracerInterface {
 	public interface ISerializable {
 		string Serialize();
@@ -16,6 +16,9 @@ namespace RayTracerInterface {
 		public Vec() {
 		}
 
+		[System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "z")]
+		[System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "y")]
+		[System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "x")]
 		public Vec(double x, double y, double z) {
 			this.x = x;
 			this.y = y;
@@ -100,7 +103,10 @@ namespace RayTracerInterface {
 		public ushort Reflections = 1;
 		public abstract int TYPEID();
 		public abstract string Serialize();
-		protected static string Serial(Camera c) => $"{c.angle}&{c.Position.Serialize()}&{c.Reflections}&";
+		protected static string Serial(Camera cam) {
+			Contract.Requires(cam != null);
+			return $"{cam.angle}&{cam.Position.Serialize()}&{cam.Reflections}&";
+		}
 		public static Camera ConvertIDToObject(int TYPEID) {
 			switch (TYPEID) {
 				case PinholeCamera.TID:
@@ -109,7 +115,10 @@ namespace RayTracerInterface {
 			}
 			return null;
 		}
-		public static string SerializeThis(Camera c) => $"{c.TYPEID()}!{c.Serialize()}!";
+		public static string SerializeThis(Camera cam) {
+			Contract.Requires(cam != null);
+			return $"{cam.TYPEID()}!{cam.Serialize()}!";
+		}
 
 	}
 	public class PinholeCamera : Camera {
@@ -147,7 +156,10 @@ namespace RayTracerInterface {
 			return null;
 		}
 		public abstract string Serialize();
-		public static string SerializeThis(AMaterial r) => r.TYPEID() != 0 ? $"{r.TYPEID()}#{r.Serialize()}#" : r.Serialize();
+		public static string SerializeThis(AMaterial mat) {
+			Contract.Requires(mat != null);
+			return mat.TYPEID() != 0 ? $"{mat.TYPEID()}#{mat.Serialize()}#" : mat.Serialize();
+		}
 		public override string ToString() => $"{this.GetType().Name}#{ObjectID}";
 
 	}
@@ -157,7 +169,7 @@ namespace RayTracerInterface {
 		public override string Serialize() => Emission.Serialize();
 		public override int TYPEID() => TID;
 		public Vanta() => Emission = new Color(0.5, 0.5, 0.5);
-		public Vanta(Color c) => Emission = c;
+		public Vanta(Color color) => Emission = color;
 	}
 	public class Mirror : AMaterial {
 		public const int TID = 1;
@@ -194,3 +206,5 @@ namespace RayTracerInterface {
 	}
 }
 #pragma warning restore CA1051 // Do not declare visible instance fields
+#pragma warning restore CA1709
+#pragma warning restore CA1704

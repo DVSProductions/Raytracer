@@ -1,13 +1,14 @@
 ﻿#pragma warning disable CA1051 // Do not declare visible instance fields
 using System.ComponentModel;
+using System.Diagnostics.Contracts;
 
 namespace RayTracerInterface {
 	public abstract class Renderable : ISerializable, INotifyPropertyChanged {
 
 		private static int ObjectIDCounter = 0;
-		private int ObjectID = ObjectIDCounter++;
+		private readonly int ObjectID = ObjectIDCounter++;
 
-		public static Renderable convertIDToObject(int TYPEID) {
+		public static Renderable ConvertIDToObject(int TYPEID) {
 			switch (TYPEID) {
 				case Sphere.TID:
 					return new Sphere();
@@ -15,8 +16,9 @@ namespace RayTracerInterface {
 					return new Plane();
 				case Group.TID:
 					return new Group();
-			}
-			return null;
+				default:
+					return null;
+			};
 		}
 		public abstract int TYPEID();
 		public Vec Position = new Vec(0, 0, -3);
@@ -24,14 +26,21 @@ namespace RayTracerInterface {
 		public string Name { get => name; set => name = value; }
 
 		public event PropertyChangedEventHandler PropertyChanged;
-		public void Trigger(string name) => PropertyChanged?.Invoke(this, new System.ComponentModel.PropertyChangedEventArgs(name));
-		public Renderable() => Name = $"{this.GetType().Name}#{ObjectID}";
+		public void Trigger(string targetName) {
+			Contract.Requires(targetName != null);
+			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(targetName));
+		}
+
+		protected Renderable() => Name = $"{this.GetType().Name}#{ObjectID}";
 		/// <summary>
 		/// use <see cref="Renderable.SerializeThis(Renderable)"/> for actual serialization
 		/// </summary>
 		/// <returns></returns>
 		public abstract string Serialize();
-		public static string SerializeThis(Renderable r) => r.TYPEID() != -1 ? $"{r.TYPEID()}!{r.Serialize()}!" : r.Serialize();
+		public static string SerializeThis(Renderable target) {
+			Contract.Requires(target != null);
+			return target.TYPEID() != -1 ? $"{target.TYPEID()}!{target.Serialize()}!" : target.Serialize();
+		}
 		public override string ToString() => Name;
 	}
 }

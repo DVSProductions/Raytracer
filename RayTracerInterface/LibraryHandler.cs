@@ -1,4 +1,5 @@
-﻿using System;
+﻿#pragma warning disable IDE1006 // Naming Styles
+using System;
 using System.Diagnostics;
 using System.IO;
 using System.Reflection;
@@ -11,12 +12,7 @@ namespace RayTracerInterface {
 	/// This class contains the basic interface with a renderer DLL
 	/// </summary>
 	public static partial class LibraryHandler {
-		/// <summary>
-		/// Indicates whether we have already tried to load a dll, because if we have
-		/// we are forced to restart the application
-		/// </summary>
-		private static bool isLoaded = false;
-		public static bool IsLoaded => isLoaded;
+		public static bool IsLoaded { get; private set; } = false;
 		/// <summary>
 		/// Location of the local dll copy
 		/// </summary>
@@ -25,7 +21,7 @@ namespace RayTracerInterface {
 		/// get library info string
 		/// </summary>
 		/// <returns></returns>
-		[DllImport(dll, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
+		[DllImport(dll, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Unicode)]
 		[return: MarshalAs(UnmanagedType.BStr)]
 		private static extern string LibInfo();
 		/// <summary>
@@ -33,7 +29,7 @@ namespace RayTracerInterface {
 		/// </summary>
 		/// <param name="errorCode">lodePNG error</param>
 		/// <returns></returns>
-		[DllImport(dll, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
+		[DllImport(dll, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Unicode)]
 		[return: MarshalAs(UnmanagedType.BStr)]
 		private static extern string LodeReturnDecode(int errorCode);
 		/// <summary>
@@ -44,7 +40,7 @@ namespace RayTracerInterface {
 		/// </summary>
 		/// <param name="file">index in filename array</param>
 		/// <returns>filename or "_" on error</returns>
-		[DllImport(dll, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
+		[DllImport(dll, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Unicode)]
 		[return: MarshalAs(UnmanagedType.BStr)]
 		private static extern string OutputFile(int file);
 
@@ -84,7 +80,7 @@ namespace RayTracerInterface {
 		/// <param name="path">Full path to DLL</param>
 		/// <returns></returns>
 		public static Renderer TryLoadLib(string path) {
-			if (isLoaded) Reboot(path);
+			if (IsLoaded) Reboot(path);
 			try {
 				if (File.Exists(dll)) {
 					for (var n = 0; n < 10; n++) {
@@ -99,7 +95,7 @@ namespace RayTracerInterface {
 				}
 				File.Copy(path, dll);
 				while (!File.Exists(dll)) Thread.Sleep(50);
-				isLoaded = true;
+				IsLoaded = true;
 				string libStr = LibInfo();
 				try {
 					int libnum = (int)(double.Parse(libStr.Replace('.', ',')) * 10.0);//removes floating point errors
@@ -116,7 +112,7 @@ namespace RayTracerInterface {
 #if TRACE  //Exploiting TRACE constant in project to switch between UI and Console errors
 					Console.Error.WriteLine($"Incompatible Library Version \"{LibInfo()}\"");
 #else
-					MessageBox.Show($"Unknown Library Version \"{LibInfo()}\"");
+					MessageBox.Show($"Unknown Library Version \"{LibInfo()}\"", "Renderer Error", MessageBoxButton.OK, MessageBoxImage.Error);
 #endif
 					return null;
 				}
@@ -126,10 +122,12 @@ namespace RayTracerInterface {
 				Console.Error.WriteLine(ex.Message);
 #else
 
-				MessageBox.Show(Environment.CurrentDirectory+"\n"+ex.Message);
+				MessageBox.Show(Environment.CurrentDirectory + "\n" + ex.Message);
 #endif
 				return null;
 			}
 		}
 	}
 }
+
+#pragma warning restore IDE1006 // Naming Styles

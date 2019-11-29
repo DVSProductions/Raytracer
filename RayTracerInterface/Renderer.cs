@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 
+#pragma warning disable CA1822 // Mark members as static
 namespace RayTracerInterface {
 	public static partial class LibraryHandler {
 		public class Renderer {
@@ -29,8 +30,11 @@ namespace RayTracerInterface {
 					return outfiles;
 				}
 			}
+			[System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "y")]
+			[System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "x")]
 			public bool Render(int option, int x, int y) => render(option, x, y);
 			public int Status => status();
 		}
 	}
 }
+#pragma warning restore CA1822 // Mark members as static
