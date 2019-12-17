@@ -56,7 +56,7 @@ void Raytracer::RenderLoop(uint_fast32_t offset, uint_fast32_t total, std::share
 void Raytracer::rendercycle(std::string filename) {
 	//using namespace std::chrono_literals;
 	image = std::make_unique<cgtools::Image>(cgtools::Image(width, height, 2.2));
-	if (threadCount != 1) {
+	if (threadCount != -1) {
 		std::vector<std::unique_ptr<std::thread>> workers;
 		for (uint_fast16_t n = 0; n < threadCount; n++)
 			workers.push_back(std::make_unique<std::thread>(std::thread(RenderLoop, n, threadCount, renderer->clone())));
@@ -86,7 +86,7 @@ void Raytracer::rendercycle(std::string filename) {
 void Raytracer::RenderWorker(std::string filename) {
 	progress = 0;
 	lodepngReturn = -1;
-	if (threadCount == 1)
+	if (threadCount == -1)
 		rendercycle(filename);
 	else {
 		worker = std::thread(Raytracer::rendercycle, filename);
@@ -123,6 +123,10 @@ void Raytracer::setFullThreadCount() noexcept {
 #endif
 void Raytracer::setSingleThread() noexcept {
 	threadCount = 1;
+}
+
+void Raytracer::setThreadCount(int count) noexcept {
+	if (count > 0)threadCount = count;
 }
 
 void Raytracer::abort() noexcept {

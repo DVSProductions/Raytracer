@@ -47,3 +47,7 @@ extern uint_fast32_t width, height;
 /// Used to scale contents of the image
 /// </summary>
 extern int scaling;
+/// <summary>
+/// keep at -1 to disable
+/// </summary>
+extern int_fast32_t progressOverride;

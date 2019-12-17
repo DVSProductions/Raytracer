@@ -54,5 +54,23 @@ public:
 		const std::string s = __applyToMatrix(___amWorker, +);
 		Assert::AreEqual(std::string("0\n1\n2\n3\n4\n5\n6\n7\n8\n9\n10\n11\n12\n13\n14\n15\n"), s);
 	}
+	std::string Scene2 = "4!1]3]2#0.95|0.95|0.95|}0|0|0|}#]0|0|-3|]!$";
+	TEST_METHOD(CylinderTest) {
+		prepare3d();
+		width = 400;
+		height = 200;
+		cgtools::transformStack ts;
+		ts.add(new cgtools::Translation(point(0, 0, 10)));
+		ts.add(new cgtools::Rotation(1, 10));
+		ts.add(new cgtools::ComplexRotation(cgtools::direction(0, 1, 0), -10));
+		auto c = new DDD::MovablePinholeCamera(1.5, DDD::Background(cgtools::c_white), 3, ts);
+		cam = (std::shared_ptr<DDD::ACamera>)c;
+		playground->load(Scene2);
+		cam->setScene(playground);
+		cam->init();
+		Raytracer::setsampleQuality(0);
+		Raytracer::setSingleThread();
+		Raytracer::RenderWorker(sceneOutputFile);
+	}
 	};
 }

@@ -72,6 +72,8 @@ dll(int) status() {
 	//	joined = true;
 	//	worker.join();
 	//}
+	if (progressOverride != -1)
+		return progressOverride;
 	return progress;
 }
 /// <summary>

@@ -10,6 +10,8 @@ namespace RayTracerInterface {
 				Sphere.TID => new Sphere(),
 				Plane.TID => new Plane(),
 				Group.TID => new Group(),
+				Pipe.TID=>new Pipe(),
+				Cylinder.TID=>new Cylinder(),
 				_ => null,
 			};
 		}

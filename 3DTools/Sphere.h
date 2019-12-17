@@ -16,7 +16,7 @@ namespace DDD {
 	public:
 		cgtools::direction getNormal(cgtools::point at) const noexcept;
 		Sphere(cgtools::point position, double radius, cgtools::Color color);
-		Sphere(cgtools::point position, double radius, std::shared_ptr<AMaterial>  color) noexcept;
+		Sphere(cgtools::point position, double radius, std::shared_ptr<AMaterial> color) noexcept;
 		Hit intersect(Ray r)const noexcept override;
 		std::string serialize()const override;
 		void load(std::string serialized) override;

@@ -23,7 +23,7 @@
 /// <summary>
 /// -1 terminated array of Supported Element classes
 /// </summary>
-const std::string files[] = { "a06-mirrors-glass-1.png","a06-mirrors-glass-2.png","_" };
+const std::string files[] = { "a06-mirrors-glass-1.png","a07-mirrors-glass-2.png","_" };
 const std::string libVersion = "3";
 
 void prepare() {
@@ -99,10 +99,10 @@ bool workswitch(int Option) {
 
 //-----------------------------------------------------------------------------
 //3D scene Functions
-const int supportedClasses[] = { 0,1,2,-1 };
-const int supportedCams[] = { 0,1,-1 };
-const int supportedMaterials[] = { 0,1,2,3,4,5, -1 };
-const int supportedTransforms[] = { 0,1,2,3,-1 };
+const int supportedClasses[] = { 0,1,2,3,4,			-1 };
+const int supportedCams[] = { 0,1,					-1 };
+const int supportedMaterials[] = { 0,1,2,3,4,5,		-1 };
+const int supportedTransforms[] = { 0,1,2,3,		-1 };
 const std::string sceneOutputFile = "sof.png";
 
 void prepare3d() {

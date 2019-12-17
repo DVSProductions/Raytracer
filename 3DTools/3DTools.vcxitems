@@ -18,6 +18,7 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)Background.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)CacheCow.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Chalk.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Cylinder.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Glass.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Group.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Hit.cpp" />
@@ -27,6 +28,7 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)Mirror.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)MovablePinholeCamera.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)PinholeCamera.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Pipe.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Plane.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Ray.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Raytracer.cpp" />
@@ -40,6 +42,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)Background.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)CacheCow.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Chalk.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Cylinder.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Glass.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Group.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Hit.h" />
@@ -49,6 +52,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)Mirror.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)MovablePinholeCamera.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)PinholeCamera.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Pipe.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Plane.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Ray.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Raytracer.h" />

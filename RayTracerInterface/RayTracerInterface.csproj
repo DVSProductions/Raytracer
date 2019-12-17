@@ -119,6 +119,8 @@
     </ApplicationDefinition>
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="InterfacingClasses\Material\AlbedoMat.cs" />
+    <Compile Include="InterfacingClasses\Shape\Cylinder.cs" />
+    <Compile Include="InterfacingClasses\Shape\Pipe.cs" />
     <Compile Include="InterfacingClasses\Transformation\ATransformation.cs" />
     <Compile Include="InterfacingClasses\Material\Glass.cs" />
     <Compile Include="InterfacingClasses\Material\Chalk.cs" />

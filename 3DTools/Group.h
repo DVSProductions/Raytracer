@@ -10,9 +10,10 @@
 #include <string>
 namespace DDD {
 	class Group : public renderable {
-		std::unique_ptr<std::vector<DDD::renderable*>> objects;
 		friend class renderable;
 		Group(std::string serialized);
+	protected:
+		std::unique_ptr<std::vector<DDD::renderable*>> objects;
 	public:
 		static const int CLASSID = 2;
 		Group(cgtools::point position); 
@@ -23,6 +24,6 @@ namespace DDD {
 		std::string serialize()const override;
 		void load(std::string serialized) override;
 		renderable* clone()const override;
-		size_t size()const override;
+		size_t size()const noexcept override;
 	};
 }

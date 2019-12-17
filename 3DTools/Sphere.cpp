@@ -64,12 +64,12 @@ namespace DDD {
 		}
 		if (t < r.tmin || t > r.tmax)
 			return Hit();
-		const auto intersection = r.x0 + (r.dir * t);
+		const auto intersection = r.getPoint(t);
 		return Hit(t, intersection, getNormal(intersection), this->material);
 	}
 
 	std::string Sphere::serialize() const {
-		return renderable::includeClassID(std::to_string(radius) + "&" + material->serialize() + "&" + p.serialize() + "&", Sphere::CLASSID);
+		return renderable::includeClassID(std::to_string(radius) + "&" + material->serialize() + "&" + p.serialize() + "&", CLASSID);
 	}
 
 	void Sphere::load(std::string serialized) {

@@ -20,4 +20,7 @@ namespace DDD {
 	Ray Ray::transform(cgtools::matrix translator) noexcept {
 		return Ray(translator * x0, translator * dir, this->tmax, tmin);
 	}
+	cgtools::point Ray::getPoint(double t) const noexcept {
+		return x0 + (dir * t);
+	}
 }

@@ -14,5 +14,6 @@ namespace DDD {
 		cgtools::point pointAt(double t)const noexcept;
 		const Ray operator=(const Ray& v) noexcept;
 		Ray transform(cgtools::matrix translator)noexcept;
+		cgtools::point getPoint(double t)const noexcept;
 	};
 }

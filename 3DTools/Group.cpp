@@ -21,6 +21,10 @@ void DDD::Group::clear()noexcept {
 			delete[](objects->at(n));
 		objects->clear();
 		_CATCH_ALL
+			try {
+			objects->clear();
+			_CATCH_ALL
+		}
 	}
 }
 
@@ -61,7 +65,7 @@ DDD::renderable* DDD::Group::clone() const {
 	return ret;
 }
 
-size_t DDD::Group::size() const {
+size_t DDD::Group::size() const noexcept {
 	size_t result = sizeof(DDD::Group);
 	for (auto e : *objects)
 		result += e->size();

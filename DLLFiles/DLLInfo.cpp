@@ -23,3 +23,7 @@ uint_fast32_t width, height;
 /// Used to scale contents of the image
 /// </summary>
 int scaling = 1;
+/// <summary>
+/// keep at -1 to disable
+/// </summary>
+int_fast32_t progressOverride = -1;

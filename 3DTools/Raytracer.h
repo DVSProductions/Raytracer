@@ -30,6 +30,7 @@ namespace Raytracer {
 	void setPreviewThreadCount() noexcept;
 	void setFullThreadCount() noexcept;
 	void setSingleThread() noexcept;
+	void setThreadCount(int count)noexcept;
 	void abort() noexcept;
 	void pauseRender(bool value) noexcept;
 	void setPersistence(bool value)noexcept;

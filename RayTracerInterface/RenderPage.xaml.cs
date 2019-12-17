@@ -64,9 +64,8 @@ namespace RayTracerInterface {
 		/// </summary>
 		async void Wait() {
 			sw = Stopwatch.StartNew();
-			while (pbStatus.Maximum != pbStatus.Value) {
-				s = renderer.Status;
-				pbStatus.Value = s;
+			while (pbStatus.Maximum != pbStatus.Value) {				
+				pbStatus.Value = s = renderer.Status;
 				await Task.Delay(33);
 			}
 			sw.Stop();

@@ -4,6 +4,8 @@
 #include "Background.h"
 #include "Plane.h"
 #include "Group.h"
+#include "Pipe.h"
+#include "Cylinder.h"
 
 #define deserial(Material) case Material::CLASSID: return new Material(s.at(1))
 namespace DDD {
@@ -23,6 +25,8 @@ namespace DDD {
 			deserial(Background);
 			deserial(Plane);
 			deserial(Group);
+			deserial(Pipe);
+			deserial(Cylinder);
 		}
 		return nullptr;
 	}

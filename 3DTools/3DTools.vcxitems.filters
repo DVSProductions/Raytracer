@@ -1,10 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="$(MSBuildThisFileDirectory)CacheCow.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)Hit.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)Ray.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)Raytracer.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)ACamera.cpp">
       <Filter>Camera</Filter>
     </ClCompile>
@@ -53,13 +49,26 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)Scene.cpp">
       <Filter>Renderable</Filter>
     </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Cylinder.cpp">
+      <Filter>Renderable</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Hit.cpp">
+      <Filter>Util</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Ray.cpp">
+      <Filter>Util</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Raytracer.cpp">
+      <Filter>Util</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Pipe.cpp">
+      <Filter>Renderable</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)CacheCow.cpp">
+      <Filter>Util</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="$(MSBuildThisFileDirectory)CacheCow.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)Hit.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)Ray.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)Raytracer.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)Ziggurat.hpp" />
     <ClInclude Include="$(MSBuildThisFileDirectory)ACamera.h">
       <Filter>Camera</Filter>
     </ClInclude>
@@ -108,6 +117,27 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)Scene.h">
       <Filter>Renderable</Filter>
     </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Cylinder.h">
+      <Filter>Renderable</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Hit.h">
+      <Filter>Util</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Ray.h">
+      <Filter>Util</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Raytracer.h">
+      <Filter>Util</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Ziggurat.hpp">
+      <Filter>Util</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Pipe.h">
+      <Filter>Renderable</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)CacheCow.h">
+      <Filter>Util</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Renderable">
@@ -118,6 +148,9 @@
     </Filter>
     <Filter Include="Camera">
       <UniqueIdentifier>{3ce9b88d-e5a4-4e32-adcc-659b0800f070}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Util">
+      <UniqueIdentifier>{8e007461-8b83-4b34-98a9-1782989e4a24}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
