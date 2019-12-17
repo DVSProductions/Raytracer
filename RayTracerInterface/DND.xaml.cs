@@ -2,7 +2,6 @@
 using System.IO;
 using System.Windows;
 using System.Windows.Controls;
-
 namespace RayTracerInterface {
 	/// <summary>
 	/// Interaktionslogik für DND.xaml
@@ -16,13 +15,11 @@ namespace RayTracerInterface {
 			InitializeComponent();
 			this.openNext = onComplete;
 		}
-
 		//string FlattenArray(string[] arr) {
 		//	var ret = "(";
 		//	foreach(var e in arr) ret += e + ", ";
 		//	return ret.TrimEnd(new[] { ',', ' ' }) + ")";
 		//}
-
 		/// <summary>
 		/// Handles Drag and drop events
 		/// <para>
@@ -46,6 +43,7 @@ namespace RayTracerInterface {
 			var rend = LibraryHandler.TryLoadLib(path);
 			if (rend != null)
 				openNext(rend);
+			else MessageBox.Show("Could not load dll");
 		}
 		/// <summary>
 		/// Shows filepicker Modal Dialog and opens library

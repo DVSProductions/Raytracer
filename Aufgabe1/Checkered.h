@@ -35,5 +35,7 @@ public:
 	/// the pattern using modulo if the ColoredSquare returns black
 	/// </summary>
 	Color getColor(double x, double y) noexcept override;
+	std::shared_ptr<Renderer> clone()override;
+
 };
 

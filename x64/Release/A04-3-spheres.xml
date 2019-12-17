@@ -7,11 +7,15 @@
         <y>-0.25</y>
         <z>-2.5</z>
       </Position>
+      <name>Sphere#0</name>
+      <Name>Sphere#0</Name>
       <Radius>0.7</Radius>
-      <Color>
-        <r>1</r>
-        <g>0</g>
-        <b>0</b>
+      <Color xsi:type="Vanta">
+        <Emission>
+          <r>1</r>
+          <g>0</g>
+          <b>0</b>
+        </Emission>
       </Color>
     </Sphere>
     <Sphere>
@@ -20,11 +24,15 @@
         <y>-0.25</y>
         <z>-2.5</z>
       </Position>
+      <name>Sphere#1</name>
+      <Name>Sphere#1</Name>
       <Radius>0.7</Radius>
-      <Color>
-        <r>0</r>
-        <g>0</g>
-        <b>1</b>
+      <Color xsi:type="Vanta">
+        <Emission>
+          <r>0</r>
+          <g>0</g>
+          <b>1</b>
+        </Emission>
       </Color>
     </Sphere>
     <Sphere>
@@ -33,11 +41,15 @@
         <y>-0.25</y>
         <z>-2.5</z>
       </Position>
+      <name>Sphere#2</name>
+      <Name>Sphere#2</Name>
       <Radius>0.5</Radius>
-      <Color>
-        <r>0</r>
-        <g>1</g>
-        <b>0</b>
+      <Color xsi:type="Vanta">
+        <Emission>
+          <r>0</r>
+          <g>1</g>
+          <b>0</b>
+        </Emission>
       </Color>
     </Sphere>
     <Plain>
@@ -46,10 +58,15 @@
         <y>-0.5</y>
         <z>0</z>
       </Position>
-      <Color>
-        <r>0.9</r>
-        <g>0.9</g>
-        <b>0.9</b>
+      <name>Plane#3</name>
+      <Name>Plane#3</Name>
+      <Radius>-1</Radius>
+      <Color xsi:type="Vanta">
+        <Emission>
+          <r>0.9</r>
+          <g>0.9</g>
+          <b>0.9</b>
+        </Emission>
       </Color>
       <Direction>
         <x>0</x>
@@ -59,17 +76,18 @@
     </Plain>
   </shapes>
   <camera xsi:type="PinholeCamera">
-    <angle>1</angle>
+    <angle>1.5707963267948966</angle>
     <Position>
       <x>0</x>
       <y>0</y>
-      <z>2</z>
+      <z>0</z>
     </Position>
+    <Reflections>1</Reflections>
     <Background>
       <Color>
-        <r>0.93333333333333335</r>
-        <g>0.23529411764705882</g>
-        <b>0.81176470588235294</b>
+        <r>0.25</r>
+        <g>0.25</g>
+        <b>0.25</b>
       </Color>
     </Background>
   </camera>

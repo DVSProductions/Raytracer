@@ -108,6 +108,7 @@
       <LanguageStandard>stdcpp17</LanguageStandard>
       <EnableParallelCodeGeneration>true</EnableParallelCodeGeneration>
       <BrowseInformation>true</BrowseInformation>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -159,6 +160,7 @@
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <EnableParallelCodeGeneration>true</EnableParallelCodeGeneration>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -204,6 +206,14 @@
     <ProjectReference Include="..\Aufgabe6\Aufgabe6.vcxproj">
       <Project>{ad363638-c359-4a00-a7d6-a5dd56ca2acc}</Project>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Update="C:\Users\DVSProductions\OneDrive\Uni\Medieninformatik\Semester 3\Computergrafik Grundlagen\Abgabe\cgtools\transformStack">
+      <FileType>Document</FileType>
+    </ClCompile>
+    <ClCompile Update="C:\Users\DVSProductions\OneDrive\Uni\Medieninformatik\Semester 3\Computergrafik Grundlagen\Abgabe\cgtools\transformStack.cpp">
+      <FileType>Document</FileType>
+    </ClCompile>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

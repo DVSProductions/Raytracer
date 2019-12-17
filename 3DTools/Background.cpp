@@ -1,5 +1,5 @@
 #include "Background.h"
-#include "point.h"
+#include "../cgtools/point.h"
 #include <memory.h>
 DDD::Background::Background(std::string serialized) :renderable(cgtools::point(0, 0, 0)) {
 	Material = std::make_shared<Vanta>(Vanta(cgtools::Color(0, 0, 0)));
@@ -32,7 +32,7 @@ DDD::Background DDD::Background::operator=(const Background& b) noexcept {
 	return *this;
 }
 
-DDD::renderable* DDD::Background::clone() const {
+DDD::renderable* DDD::Background::clone() const  {
 	return new Background(Material->emission);
 }
 

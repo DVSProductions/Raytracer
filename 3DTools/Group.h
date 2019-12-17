@@ -1,6 +1,10 @@
 #pragma once
+#ifndef _WIN64
+#define _CATCH_ALL }catch(...){
+#endif // !_CATCH_ALL
+
 #include "renderable.h"
-#include "point.h"
+#include "../cgtools/point.h"
 #include <memory>
 #include <vector>
 #include <string>
@@ -14,7 +18,7 @@ namespace DDD {
 		Group(cgtools::point position); 
 		~Group();
 		void addObject(DDD::renderable* obj);
-		void clear();
+		void clear()noexcept;
 		Hit intersect(Ray r)const override;
 		std::string serialize()const override;
 		void load(std::string serialized) override;

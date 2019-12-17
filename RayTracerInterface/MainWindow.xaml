@@ -6,10 +6,8 @@
         xmlns:local="clr-namespace:RayTracerInterface"
         mc:Ignorable="d"
 		Background="{DynamicResource BGColor}"
-        Title="Render Interface (Valentino Saitz s895153)" Height="450" Width="675">
+        Title="Render Interface (Valentino Saitz s895153)" Height="450" Width="675" Closed="Window_Closed">
 	<Grid>
-		<Frame NavigationUIVisibility="Hidden" x:Name="pageViewer">
-
-		</Frame>
+		<Frame NavigationUIVisibility="Hidden" x:Name="pageViewer"/>
 	</Grid>
 </Window>

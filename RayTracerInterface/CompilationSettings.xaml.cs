@@ -1,7 +1,7 @@
 ﻿using System;
+using System.Globalization;
 using System.Windows;
 using System.Windows.Controls;
-
 namespace RayTracerInterface {
 	/// <summary>
 	/// Interaktionslogik für CompilationSettings.xaml
@@ -13,7 +13,6 @@ namespace RayTracerInterface {
 		readonly Action<IRenderPage> switchToRenderPage;
 		public Action GoBack { get; set; }
 		readonly LibraryHandler.Renderer renderer;
-
 		public CompilationSettings(Action<IRenderPage> switchToRenderPage, LibraryHandler.Renderer renderer) {
 			System.Diagnostics.Contracts.Contract.Requires(renderer != null);
 			this.renderer = renderer;
@@ -34,7 +33,7 @@ namespace RayTracerInterface {
 		private void CheckBox_Click(object sender, RoutedEventArgs e) {
 			if (sender is CheckBox cb && cb.IsChecked == true) {
 				try {
-					ratio = double.Parse(tbW.Text) / double.Parse(tbH.Text);
+					ratio = double.Parse(tbW.Text, CultureInfo.InvariantCulture) / double.Parse(tbH.Text, CultureInfo.InvariantCulture);
 				}
 				catch {
 					cb.IsChecked = false;
@@ -86,15 +85,12 @@ namespace RayTracerInterface {
 				MessageBox.Show(ex.Message);
 			}
 		}
-
 		private void Button_Click_2(object sender, RoutedEventArgs e) {
 			if (renderer is LibraryHandler.SceneBasedRenderer sbr)
 				switchToRenderPage(new SceneBuilder(sbr, switchToRenderPage));
 			else
 				MessageBox.Show("ERROR THIS IS NOT A SCENE BASED RENDERER");
-
 		}
-
 		private void Button_Click_3(object sender, RoutedEventArgs e) => GoBack();
 	}
 }

@@ -1,12 +1,11 @@
-#include "DllInfo.h"
-#include <comutil.h>
-#include "lodepng.h"
-#include "cgtools.h"
-#define dll(x) __declspec(dllexport) x __cdecl
+#include "DLLInfo.h"
+#include "../cgtools/lodepng.h"
+#include "../cgtools/cgtools.h"
 /// <summary>
 /// DEFINE THIS IN YOUR DLL
 /// </summary>
 bool workswitch(int Option);
+#if _WIN64
 /// <summary>
 /// Converts a regular c-style string to a BSTR for usage in c#
 /// </summary>
@@ -22,13 +21,22 @@ BSTR ANSItoBSTR(const char* input)noexcept {
 	}
 	return result;
 }
+#define SysAllocString(x) ::SysAllocString(x)
+#else
+BSTR ANSItoBSTR(const char* input)noexcept {
+	return (char*)input;
+#define SysAllocString(x) x
+#define max(a,b) ((a)>(b)?(a):(b))
+}
+
+#endif // __WIN64
 EXTERN_C_START
 /// <summary>
 /// Returns the current version of the DLL spec
 /// </summary>
 /// <returns></returns>
 dll(BSTR) LibInfo(void) {
-	return ::SysAllocString(ANSItoBSTR(libVersion.c_str()));
+	return SysAllocString(ANSItoBSTR(libVersion.c_str()));
 }
 /// <summary>
 /// Sends A list of files that will be created by this program

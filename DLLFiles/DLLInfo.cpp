@@ -10,7 +10,7 @@ std::thread worker{};
 /// <summary>
 /// Shows the amount of columns rendered
 /// </summary>
-int progress = 0;
+uint_fast32_t progress = 0;
 /// <summary>
 /// Return value of lodepng. -1 to unset
 /// </summary>
@@ -18,7 +18,7 @@ int lodepngReturn = -1;
 /// <summary>
 /// Height and with of result
 /// </summary>
-int width, height;
+uint_fast32_t width, height;
 /// <summary>
 /// Used to scale contents of the image
 /// </summary>

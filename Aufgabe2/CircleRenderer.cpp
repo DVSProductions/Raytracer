@@ -10,8 +10,8 @@ bool cmp(const Circle& a, const Circle& b)noexcept {
 }
 CircleRenderer::CircleRenderer(int mywidth, int myheight){
 	const std::random_device rd;
-	std::mt19937 mt(10);
-	//std::mt19937 mt(rd());
+	std::mt19937_64 mt(10);
+	//std::mt19937_64 mt(rd());
 	const std::uniform_int_distribution<int> rw(0, mywidth);
 	const std::uniform_int_distribution<int> rh(0, myheight);
 	const std::uniform_int_distribution<int> rr(myheight / 100, myheight /10);
@@ -28,6 +28,10 @@ Color CircleRenderer::getColor(double x, double y)noexcept {
 		if ((result == nullptr || circles[n].radius < result->radius) && circles[n].isPointInCircle(x, y))
 			result = &circles[n];
 	return result == nullptr ? c_black : result->color;
+}
+
+std::shared_ptr<Renderer> CircleRenderer::clone() {
+	return nullptr;
 }
 
 //Color CircleRenderer::getColor(double x, double y) {

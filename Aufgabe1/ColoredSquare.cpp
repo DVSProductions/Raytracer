@@ -24,3 +24,7 @@ ColoredSquare::ColoredSquare(const Color* color, int a, int screenX, int screenY
 Color ColoredSquare::getColor(double x, double y)noexcept {
 	return (x > left&& x<right && y>top&& y < bottom ? &color : c_black);
 }
+
+std::shared_ptr<Renderer> ColoredSquare::clone() {
+	return nullptr;
+}

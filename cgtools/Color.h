@@ -55,12 +55,12 @@ namespace cgtools {
 		static Color hsvToRgb(const Color& hsv) noexcept;
 		std::string toString() const;
 		static Color hue(double h) noexcept;
-		static Color getRandom(std::mt19937 mt);
+		static Color getRandom(std::mt19937_64 mt);
 		static Color fromRGB(const uint8_t& r, const uint8_t& g, const uint8_t& b)noexcept;
 		bool operator==(const Color& c) const noexcept;
 		std::string serialize()const override;
 		void load(std::string serialized) override;
-		size_t size()const noexcept override;
+		size_t size()const override;
 	};
 
 	static const Color c_black = Color(0, 0, 0);

@@ -10,3 +10,6 @@ std::vector<std::string> Serializable::split(std::string s, std::string delim) {
 	}
 	return ret;
 }
+void _f_chars(std::string str, double* result) { *result = stod(str); }
+void _f_chars(std::string str, int* result) { *result = stoi(str); }
+void _f_chars(std::string str, long unsigned int* result) { *result = stol(str); }

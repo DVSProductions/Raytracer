@@ -20,7 +20,7 @@ namespace DDD {
 		this->albedo = Albedo;
 		this->emission = Emi;
 		this->refractionIndex = refractionIndex;
-		dist2 = std::uniform_real_distribution<double>(0, 1);
+		initRandom(0, 1);
 	}
 	cgtools::direction Glass::getScatteredDirection(Hit origin, Ray originalRay) {
 		cgtools::direction localn = origin.n;
@@ -33,7 +33,7 @@ namespace DDD {
 			n2 = tmp;
 		}
 		const auto refr = refract(originalRay.dir,localn , n1, n2);
-		if (refr.squaredLength() != 0 && dist2(mt) > getSchlick(originalRay.dir, localn, n1, n2))
+		if (refr.squaredLength() != 0 && dist() > getSchlick(originalRay.dir, localn, n1, n2))
 			return refr;
 		return originalRay.dir - 2 * (localn[originalRay.dir]) * localn;
 	}
@@ -48,7 +48,7 @@ namespace DDD {
 		f_chars(ret.at(0), refractionIndex);
 		albedo.load(ret.at(1));
 		emission.load(ret.at(2));
-		dist2 = std::uniform_real_distribution<double>(0, 1);
+		initRandom(0,1);
 	}
 	AMaterial* Glass::clone() const {
 		return new Glass(emission, albedo, refractionIndex);

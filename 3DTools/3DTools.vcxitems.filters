@@ -1,0 +1,123 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="$(MSBuildThisFileDirectory)CacheCow.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Hit.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Ray.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Raytracer.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)ACamera.cpp">
+      <Filter>Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Group.cpp">
+      <Filter>Renderable</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Background.cpp">
+      <Filter>Material</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Chalk.cpp">
+      <Filter>Material</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Glass.cpp">
+      <Filter>Material</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)LightSource.cpp">
+      <Filter>Material</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Material.cpp">
+      <Filter>Material</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Metal.cpp">
+      <Filter>Material</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Mirror.cpp">
+      <Filter>Material</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)MovablePinholeCamera.cpp">
+      <Filter>Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)PinholeCamera.cpp">
+      <Filter>Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Plane.cpp">
+      <Filter>Renderable</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)renderable.cpp">
+      <Filter>Renderable</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Sphere.cpp">
+      <Filter>Renderable</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Vanta.cpp">
+      <Filter>Material</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Scene.cpp">
+      <Filter>Renderable</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="$(MSBuildThisFileDirectory)CacheCow.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Hit.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Ray.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Raytracer.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Ziggurat.hpp" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)ACamera.h">
+      <Filter>Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Group.h">
+      <Filter>Renderable</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Background.h">
+      <Filter>Material</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Chalk.h">
+      <Filter>Material</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Glass.h">
+      <Filter>Material</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)LightSource.h">
+      <Filter>Material</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Material.h">
+      <Filter>Material</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Metal.h">
+      <Filter>Material</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Mirror.h">
+      <Filter>Material</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)MovablePinholeCamera.h">
+      <Filter>Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)PinholeCamera.h">
+      <Filter>Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Plane.h">
+      <Filter>Renderable</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)renderable.h">
+      <Filter>Renderable</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Sphere.h">
+      <Filter>Renderable</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Vanta.h">
+      <Filter>Material</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Scene.h">
+      <Filter>Renderable</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Renderable">
+      <UniqueIdentifier>{39b958e7-9329-4b46-85c4-7d3919a8606d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Material">
+      <UniqueIdentifier>{a1c9599c-64b5-44aa-a4bc-78d3f443fb0a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Camera">
+      <UniqueIdentifier>{3ce9b88d-e5a4-4e32-adcc-659b0800f070}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

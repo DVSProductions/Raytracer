@@ -14,9 +14,9 @@ namespace DDD {
 		emission = Emi;
 		albedo = Albe;
 	}
-	Ray Mirror::scatteredRay(Hit origin, Ray originalRay) noexcept {
-		const auto r = originalRay.dir - 2 * (origin.n[originalRay.dir]) * origin.n;
-		return Ray(origin.pos, r, originalRay.tmax, 0.000001);
+	Ray Mirror::scatteredRay(Hit hit, Ray originalRay) noexcept {
+		const auto r = originalRay.dir - ((hit.n * (hit.n[originalRay.dir])) * 2);
+		return Ray(hit.pos, ~r, originalRay.tmax, 0.001);
 	}
 	std::string Mirror::serialize() const {
 		return AMaterial::includeClassID(albedo.serialize() + MaterialSplitter + emission.serialize() + MaterialSplitter, CLASSID);

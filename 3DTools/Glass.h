@@ -5,7 +5,6 @@ namespace DDD {
 		friend class AMaterial;
 		static const int CLASSID = 5;
 		double refractionIndex = 0;
-		std::uniform_real_distribution<double> dist2;
 		Glass(std::string serialized);
 		static cgtools::direction refract(cgtools::direction d, cgtools::direction n, double n1, double n2)noexcept;
 		static double getSchlick(cgtools::direction d, cgtools::direction n, double n1, double n2)noexcept;

@@ -7,7 +7,6 @@
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="720"
       Title="RenderPage">
-
 	<Grid Background="Black">
 		<Button x:Name="btExport" Visibility="Collapsed" Content="Open location" Margin="5" Height="30" Width="100" VerticalAlignment="Bottom" HorizontalAlignment="Right" Style="{DynamicResource BTStyle}" Click="BtExport_Click"/>
 		<Label HorizontalAlignment="Center" Visibility="Collapsed" x:Name="lbTime" Height="30" FontSize="20" Padding="0" VerticalAlignment="Bottom" HorizontalContentAlignment="Center" Foreground="White" Content="5000"/>
@@ -28,10 +27,11 @@
 				<RowDefinition/>
 				<RowDefinition/>
 			</Grid.RowDefinitions>
-			<Label Grid.Row="0" Grid.Column="0" Foreground="White" Padding="0" HorizontalAlignment="Right" x:Name="lbTotal"/>
-			<Label Grid.Row="0" Grid.Column="1" Foreground="White" Padding="0" HorizontalAlignment="Left" Content="Total" />
-			<Label Grid.Row="1" Grid.Column="0" Foreground="White" Padding="0" HorizontalAlignment="Right" x:Name="lbEstimation"/>
-			<Label Grid.Row="1" Grid.Column="1" Foreground="White" Padding="0" HorizontalAlignment="Left" Content="Remaining"/>
+			<Label Grid.Row="0" Grid.Column="0" Foreground="White" Padding="0" HorizontalAlignment="Right" Content="?" x:Name="lbTotal"/>
+			<Label Grid.Row="0" Grid.Column="1" Foreground="White" Padding="0" HorizontalAlignment="Left" Content=" Total" />
+			<Label Grid.Row="1" Grid.Column="0" Foreground="White" Padding="0" HorizontalAlignment="Right" Content="?" x:Name="lbEstimation"/>
+			<Label Grid.Row="1" Grid.Column="1" Foreground="White" Padding="0" HorizontalAlignment="Left" Content=" Remaining"/>
 		</Grid>
+		<Button x:Name="btAbort" Visibility="Collapsed"  Style="{DynamicResource BTStyle}" Content="Abort" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="10" Height="30" Width="60" Click="btAbort_Click"/>
 	</Grid>
 </Page>

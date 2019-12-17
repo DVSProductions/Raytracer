@@ -3,7 +3,7 @@
 #include <string>
 #include <cmath>
 namespace cgtools {
-	static class ImageWriter {
+	class ImageWriter {
 	public:
 		/// <summary>
 		/// Ensures that the value is between 0 and 1
@@ -23,5 +23,5 @@ namespace cgtools {
 		/// <param name="linear">seems to be irrelevant. leave at true</param>
 		/// <returns></returns>
 		static unsigned int write(std::string filename, uint8_t* data, size_t width, size_t height, bool linear = true);
-	}ImageWriter;
+	};
 }

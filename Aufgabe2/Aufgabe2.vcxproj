@@ -190,6 +190,14 @@
     <ClInclude Include="CircleRenderer.h" />
     <ClInclude Include="StratifiedSampling.h" />
   </ItemGroup>
+  <ItemGroup>
+    <ClCompile Update="C:\Users\DVSProductions\OneDrive\Uni\Medieninformatik\Semester 3\Computergrafik Grundlagen\Abgabe\cgtools\transformStack">
+      <FileType>Document</FileType>
+    </ClCompile>
+    <ClCompile Update="C:\Users\DVSProductions\OneDrive\Uni\Medieninformatik\Semester 3\Computergrafik Grundlagen\Abgabe\cgtools\transformStack.cpp">
+      <FileType>Document</FileType>
+    </ClCompile>
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

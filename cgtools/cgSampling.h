@@ -1,6 +1,6 @@
 #pragma once
 #include "Renderer.h"
-#include <random>
+#include "randfast.h"
 #include <cinttypes>
 #include <memory>
 namespace cgtools {
@@ -8,7 +8,7 @@ namespace cgtools {
 		/// <summary>
 			/// Supersampling height and size
 			/// </summary>
-		int samples;
+		unsigned int samples;
 		/// <summary>
 		/// Pointer to the renderer that provides us with an image to supersample
 		/// </summary>
@@ -16,15 +16,11 @@ namespace cgtools {
 		/// <summary>
 		/// Samples squared. Saves time.
 		/// </summary>
-		short samsq;
+		double samsq;
 		/// <summary>
-		/// Twister generator. 64 bit version saves about 15%
+		/// Turbo generator
 		/// </summary>
-		std::mt19937_64 mt;
-		/// <summary>
-		/// Uniform generator for sampling positions
-		/// </summary>
-		std::uniform_real_distribution<double> dist;
+		randfast dist;
 	public:
 		/// <summary>
 		/// Creates a new Stratified Sampler and initializes all random sources for it
@@ -39,6 +35,7 @@ namespace cgtools {
 		/// <param name="y">position to start sampling Y</param>
 		/// <returns></returns>
 		Color getColor(double x, double y) override;
+		std::shared_ptr<Renderer> clone() override;
 	};
 
 }

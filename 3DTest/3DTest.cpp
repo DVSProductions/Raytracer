@@ -2,6 +2,7 @@
 #include "CppUnitTest.h"
 #include "../cgtools/Color.h"
 #include "../Aufgabe5/Aufgabe5.cpp"
+#include "../3DTools/ACamera.h"
 
 #include <bitset>
 #include <sstream>

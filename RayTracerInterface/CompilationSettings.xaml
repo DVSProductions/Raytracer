@@ -26,12 +26,10 @@
 						<Label Grid.Row="1" Grid.Column="0" Content="Height" Foreground="White"/>
 						<TextBox x:Name="tbW" Grid.Row="0" Grid.Column="1" Margin="3,3,0,3" Width="50" Text="1600" VerticalContentAlignment="Center" HorizontalContentAlignment="Right" Style="{DynamicResource TBStyle}" KeyUp="TbW_KeyUp"/>
 						<TextBox x:Name="tbH" Grid.Row="1" Grid.Column="1" Margin="3,3,0,3" Text="900" VerticalContentAlignment="Center" HorizontalContentAlignment="Right" Style="{DynamicResource TBStyle}" KeyUp="TbH_KeyUp" />
-
 						<Border Grid.Column="2" Grid.ColumnSpan="2" Margin="0,0,10,0" Grid.RowSpan="2" CornerRadius="4" Width="20" Height="30" BorderBrush="Red" BorderThickness="3" HorizontalAlignment="Right"></Border>
 						<CheckBox x:Name="cbLink" Grid.Column="2" Grid.RowSpan="2" VerticalAlignment="Center" HorizontalAlignment="Center" Click="CheckBox_Click" IsChecked="True"/>
 					</Grid>
-				</Border>
-				
+				</Border>				
 				<Label VerticalAlignment="Top" HorizontalAlignment="Left" Foreground="White" Padding="5,1" Margin="10,0"  Background="{DynamicResource BGColor}">Render Size</Label>
 			</Grid>
 			<Grid Margin="5" Background="{DynamicResource BGColor}">

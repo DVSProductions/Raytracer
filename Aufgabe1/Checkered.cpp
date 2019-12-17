@@ -13,3 +13,7 @@ Color Checkered::getColor(double x, double y)noexcept {
 	return (!(c == c_black)) ? c : ((ix % mod >= mod / 2) ? (iy % mod < mod / 2) ? &A : &B : (iy % mod < mod / 2) ? &B : &A);
 	//return !(c == black) ? c : ((x % mod >= mod / 2) && (y % mod < mod / 2) ? A : B;//kept it for sexapeal
 }
+
+std::shared_ptr<Renderer> Checkered::clone() {
+	return nullptr;
+}

@@ -1,6 +1,12 @@
 #include "ACamera.h"
 #include "PinholeCamera.h"
-#define deserial(Material) case Material::CLASSID: return std::make_shared<Material>(Material(s.at(1)))
+#include "MovablePinholeCamera.h"
+#define deserial(cam) case cam::CLASSID: return std::make_shared<cam>(cam(s.at(1)))
+
+DDD::ACamera::ACamera(const double& angle) noexcept : position(0, 0, 0) {
+	this->angle = angle;
+}
+
 DDD::ACamera::ACamera(const cgtools::point& pos, const double& angle)noexcept : position(pos.x, pos.y, pos.z) {
 	this->angle = angle;
 }
@@ -41,6 +47,7 @@ std::shared_ptr<DDD::ACamera> DDD::ACamera::createFromSerialization(std::string 
 	f_chars(s.at(0), n);
 	switch (n) {
 		deserial(DDD::PinholeCamera);
+		deserial(DDD::MovablePinholeCamera);
 	}
 	throw std::invalid_argument("Unknown type :" + s.at(0));
 }

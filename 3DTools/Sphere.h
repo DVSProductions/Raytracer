@@ -1,7 +1,7 @@
 #pragma once
-#include "Renderer.h"
-#include "ISerializable.h"
-#include "point.h"
+#include "../cgtools/Renderer.h"
+#include "../cgtools/point.h"
+#include "../cgtools/ISerializable.h"
 #include "Scene.h"
 #include "Material.h"
 namespace DDD {

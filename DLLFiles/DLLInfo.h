@@ -1,4 +1,13 @@
 #pragma once
+#ifdef _WIN64 
+#define dll(x) __declspec(dllexport) x __cdecl
+#include <comutil.h>
+#else
+#define EXTERN_C_START
+#define EXTERN_C_END
+#define dll(x) x
+#define BSTR char*
+#endif
 #define DLL_DEBUG false
 #if DLL_DEBUG
 #include <iostream>
@@ -21,7 +30,7 @@ extern bool working;
 /// <summary>
 /// Shows the amount of columns rendered
 /// </summary>
-extern int progress;
+extern uint_fast32_t progress;
 /// <summary>
 /// Main independent thread created by the dll. can do background tasks
 /// </summary>
@@ -33,7 +42,7 @@ extern int lodepngReturn;
 /// <summary>
 /// Height and with of result
 /// </summary>
-extern int width, height;
+extern uint_fast32_t width, height;
 /// <summary>
 /// Used to scale contents of the image
 /// </summary>

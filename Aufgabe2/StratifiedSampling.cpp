@@ -38,3 +38,7 @@ Color StratifiedSampling::getColor(double x, double y) {
 
 	return Color(resultsR / samsq, resultsG / samsq, resultsB / samsq);
 }
+
+std::shared_ptr<Renderer> StratifiedSampling::clone() {
+	return nullptr;
+}

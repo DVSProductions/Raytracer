@@ -1,7 +1,7 @@
-#include "Plane.h"
 #include <string>
-#include "vector.h"
+#include "Plane.h"
 #include "Vanta.h"
+#include "../cgtools/vector.h"
 DDD::Plane::Plane(std::string serialized) : renderable(cgtools::point(0, 0, 0)), n(0, 0, 0) {
 	load(serialized);
 }
@@ -26,10 +26,10 @@ DDD::Hit DDD::Plane::intersect(Ray r) const noexcept {
 	const auto b = r.dir[n];
 	const auto t = -(a / b);
 	const auto hitpoint = r.pointAt(t);
-	if (this->r != -1 && !(p - hitpoint) > this->r)
+	if (this->r != -1 && (!(p - hitpoint)) > this->r)
 		return Hit();
 	if (t > r.tmax || t < r.tmin)return Hit();
-	return Hit(t, hitpoint, ~n, Material);
+	return Hit(t, hitpoint, n, Material);
 }
 
 std::string DDD::Plane::serialize() const {
@@ -40,6 +40,7 @@ void DDD::Plane::load(std::string serialized) {
 	auto ret = Serializable::split(serialized, "&");
 	f_chars(ret.at(0), r);
 	n.load(ret.at(1));
+	n = ~n;
 	Material = std::shared_ptr<AMaterial>(AMaterial::createFromSerialization(ret.at(2)));
 	p.load(ret.at(3));
 }

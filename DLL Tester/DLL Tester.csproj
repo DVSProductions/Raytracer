@@ -8,10 +8,11 @@
     <OutputType>Exe</OutputType>
     <RootNamespace>DLL_Tester</RootNamespace>
     <AssemblyName>DLL Tester</AssemblyName>
-    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>x64</PlatformTarget>
@@ -22,6 +23,8 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>..\RayTracerInterface\config\RayTracerInterface.ruleset</CodeAnalysisRuleSet>
+    <LangVersion>8.0</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>x64</PlatformTarget>
@@ -31,6 +34,8 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>..\RayTracerInterface\config\RayTracerInterface.ruleset</CodeAnalysisRuleSet>
+    <LangVersion>8.0</LangVersion>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -43,23 +48,95 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\RayTracerInterface\InterfacingClasses.cs">
-      <Link>InterfacingClasses.cs</Link>
+    <Compile Include="..\RayTracerInterface\InterfacingClasses\Camera\Camera.cs">
+      <Link>InterfacingClasses\Camera\Camera.cs</Link>
     </Compile>
-    <Compile Include="..\RayTracerInterface\LibraryHandler.cs">
-      <Link>LibraryHandler.cs</Link>
+    <Compile Include="..\RayTracerInterface\InterfacingClasses\Camera\MovablePinholeCamera.cs">
+      <Link>InterfacingClasses\Camera\MovablePinholeCamera.cs</Link>
     </Compile>
-    <Compile Include="..\RayTracerInterface\MaterialRenderer.cs">
-      <Link>MaterialRenderer.cs</Link>
+    <Compile Include="..\RayTracerInterface\InterfacingClasses\Camera\PinholeCamera.cs">
+      <Link>InterfacingClasses\Camera\PinholeCamera.cs</Link>
     </Compile>
-    <Compile Include="..\RayTracerInterface\Renderable.cs">
-      <Link>Renderable.cs</Link>
+    <Compile Include="..\RayTracerInterface\InterfacingClasses\Fragment\Color.cs">
+      <Link>InterfacingClasses\Fragment\Color.cs</Link>
     </Compile>
-    <Compile Include="..\RayTracerInterface\Renderer.cs">
-      <Link>Renderer.cs</Link>
+    <Compile Include="..\RayTracerInterface\InterfacingClasses\Fragment\ISerializable.cs">
+      <Link>InterfacingClasses\Fragment\ISerializable.cs</Link>
     </Compile>
-    <Compile Include="..\RayTracerInterface\SceneBasedRenderer.cs">
-      <Link>SceneBasedRenderer.cs</Link>
+    <Compile Include="..\RayTracerInterface\InterfacingClasses\Fragment\Vec.cs">
+      <Link>InterfacingClasses\Fragment\Vec.cs</Link>
+    </Compile>
+    <Compile Include="..\RayTracerInterface\InterfacingClasses\Material\AlbedoMat.cs">
+      <Link>InterfacingClasses\Material\AlbedoMat.cs</Link>
+    </Compile>
+    <Compile Include="..\RayTracerInterface\InterfacingClasses\Material\AMaterial.cs">
+      <Link>InterfacingClasses\Material\AMaterial.cs</Link>
+    </Compile>
+    <Compile Include="..\RayTracerInterface\InterfacingClasses\Material\Background.cs">
+      <Link>InterfacingClasses\Material\Background.cs</Link>
+    </Compile>
+    <Compile Include="..\RayTracerInterface\InterfacingClasses\Material\Chalk.cs">
+      <Link>InterfacingClasses\Material\Chalk.cs</Link>
+    </Compile>
+    <Compile Include="..\RayTracerInterface\InterfacingClasses\Material\Glass.cs">
+      <Link>InterfacingClasses\Material\Glass.cs</Link>
+    </Compile>
+    <Compile Include="..\RayTracerInterface\InterfacingClasses\Material\LightSource.cs">
+      <Link>InterfacingClasses\Material\LightSource.cs</Link>
+    </Compile>
+    <Compile Include="..\RayTracerInterface\InterfacingClasses\Material\Metal.cs">
+      <Link>InterfacingClasses\Material\Metal.cs</Link>
+    </Compile>
+    <Compile Include="..\RayTracerInterface\InterfacingClasses\Material\Mirror.cs">
+      <Link>InterfacingClasses\Material\Mirror.cs</Link>
+    </Compile>
+    <Compile Include="..\RayTracerInterface\InterfacingClasses\Material\Vanta.cs">
+      <Link>InterfacingClasses\Material\Vanta.cs</Link>
+    </Compile>
+    <Compile Include="..\RayTracerInterface\InterfacingClasses\Shape\Group.cs">
+      <Link>InterfacingClasses\Shape\Group.cs</Link>
+    </Compile>
+    <Compile Include="..\RayTracerInterface\InterfacingClasses\Shape\Plane.cs">
+      <Link>InterfacingClasses\Shape\Plane.cs</Link>
+    </Compile>
+    <Compile Include="..\RayTracerInterface\InterfacingClasses\Shape\Renderable.cs">
+      <Link>InterfacingClasses\Shape\Renderable.cs</Link>
+    </Compile>
+    <Compile Include="..\RayTracerInterface\InterfacingClasses\Shape\Scene.cs">
+      <Link>InterfacingClasses\Shape\Scene.cs</Link>
+    </Compile>
+    <Compile Include="..\RayTracerInterface\InterfacingClasses\Shape\Sphere.cs">
+      <Link>InterfacingClasses\Shape\Sphere.cs</Link>
+    </Compile>
+    <Compile Include="..\RayTracerInterface\InterfacingClasses\Transformation\ATransformation.cs">
+      <Link>InterfacingClasses\Transformation\ATransformation.cs</Link>
+    </Compile>
+    <Compile Include="..\RayTracerInterface\InterfacingClasses\Transformation\ComplexRotation.cs">
+      <Link>InterfacingClasses\Transformation\ComplexRotation.cs</Link>
+    </Compile>
+    <Compile Include="..\RayTracerInterface\InterfacingClasses\Transformation\Rotation.cs">
+      <Link>InterfacingClasses\Transformation\Rotation.cs</Link>
+    </Compile>
+    <Compile Include="..\RayTracerInterface\InterfacingClasses\Transformation\Scaling.cs">
+      <Link>InterfacingClasses\Transformation\Scaling.cs</Link>
+    </Compile>
+    <Compile Include="..\RayTracerInterface\InterfacingClasses\Transformation\Translation.cs">
+      <Link>InterfacingClasses\Transformation\Translation.cs</Link>
+    </Compile>
+    <Compile Include="..\RayTracerInterface\Renderer\LibraryHandler.cs">
+      <Link>Renderer\LibraryHandler.cs</Link>
+    </Compile>
+    <Compile Include="..\RayTracerInterface\Renderer\MaterialRenderer.cs">
+      <Link>Renderer\MaterialRenderer.cs</Link>
+    </Compile>
+    <Compile Include="..\RayTracerInterface\Renderer\Renderer.cs">
+      <Link>Renderer\Renderer.cs</Link>
+    </Compile>
+    <Compile Include="..\RayTracerInterface\Renderer\SceneBasedRenderer.cs">
+      <Link>Renderer\SceneBasedRenderer.cs</Link>
+    </Compile>
+    <Compile Include="..\RayTracerInterface\Renderer\TransformableRenderer.cs">
+      <Link>Renderer\TransformableRenderer.cs</Link>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

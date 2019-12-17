@@ -21,6 +21,9 @@
   <ItemGroup>
     <ClCompile Include="Aufgabe4.cpp" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="cpp.hint" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <ProjectGuid>{6B4DBC8C-7192-4E18-A999-3EE6F8D304AF}</ProjectGuid>
@@ -148,6 +151,7 @@
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <AdditionalIncludeDirectories>C:\Users\DVSProductions\OneDrive\Uni\Medieninformatik\Semester 3\Computergrafik Grundlagen\Abgabe\cgtools;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -184,4 +188,12 @@
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
+  <ItemGroup>
+    <ClCompile Update="C:\Users\DVSProductions\OneDrive\Uni\Medieninformatik\Semester 3\Computergrafik Grundlagen\Abgabe\cgtools\transformStack">
+      <FileType>Document</FileType>
+    </ClCompile>
+    <ClCompile Update="C:\Users\DVSProductions\OneDrive\Uni\Medieninformatik\Semester 3\Computergrafik Grundlagen\Abgabe\cgtools\transformStack.cpp">
+      <FileType>Document</FileType>
+    </ClCompile>
+  </ItemGroup>
 </Project>

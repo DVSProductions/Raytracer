@@ -1,9 +1,8 @@
 #include "3DInfo.h"
-#include <comutil.h>
+
 #include <string>
 #include <fstream>
 
-#define dll(x) __declspec(dllexport) x __cdecl
 
 extern BSTR ANSItoBSTR(const char* input)noexcept;
 EXTERN_C_START

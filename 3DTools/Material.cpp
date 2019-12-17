@@ -8,20 +8,35 @@
 #include "Vanta.h"
 #define deserial(Material) case Material::CLASSID: return new Material(s.at(1))
 namespace DDD {
-	AMaterial::AMaterial() noexcept {
-		std::random_device rd;
-#if useMT
-		mt = std::mt19937_64(rd());
+#if useRandfast
+	void AMaterial::initRandom(double min, double max) {
+		dist = randfast(std::mt19937_64(std::random_device()())(), min, max);
+	}
+	void AMaterial::initRandom(double roughness) {
+#if useRandfast
+		initRandom(-roughness, roughness);
 #else
-		mt = std::ranlux48_base(rd());
+		initRandom(0, roughness / 2);
 #endif
 	}
-	AMaterial::AMaterial(cgtools::Color emi, cgtools::Color alb) {
+	AMaterial::AMaterial()noexcept : dist(0) {}
+#else
+	AMaterial::AMaterial() {
+		std::random_device rd;
+		mt = std::mt19937_64(rd());
+	}
+	void initRandom(double average, double diviation) {
+		dist = cxx::ziggurat_normal_distribution<double>(average, diviation);
+
+	}
+#endif
+
+	AMaterial::AMaterial(cgtools::Color emi, cgtools::Color alb) : AMaterial() {
 		emission = emi;
 		albedo = alb;
 	}
 	std::string DDD::AMaterial::includeClassID(std::string data, int CID) {
-		return std::string();
+		return std::to_string(CID) + "#" + data;
 	}
 
 	DDD::AMaterial* DDD::AMaterial::createFromSerialization(std::string data) {

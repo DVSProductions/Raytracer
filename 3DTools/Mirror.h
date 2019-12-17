@@ -5,6 +5,7 @@ namespace DDD {
 		friend class AMaterial;
 		static const int CLASSID = 1;
 		Mirror(std::string serialized);
+	
 	public:
 		Mirror(cgtools::Color Material) noexcept;
 		Mirror(cgtools::Color Emi, cgtools::Color Albe) noexcept;

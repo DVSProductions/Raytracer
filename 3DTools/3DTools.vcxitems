@@ -25,6 +25,7 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)Material.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Metal.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Mirror.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)MovablePinholeCamera.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)PinholeCamera.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Plane.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Ray.cpp" />
@@ -46,6 +47,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)Material.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Metal.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Mirror.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)MovablePinholeCamera.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)PinholeCamera.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Plane.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Ray.h" />

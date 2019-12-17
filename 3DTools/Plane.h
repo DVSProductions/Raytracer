@@ -1,6 +1,6 @@
 #pragma once
 #include "renderable.h"
-#include "point.h"
+#include "../cgtools/point.h"
 #include <memory>
 namespace DDD {
 	class Plane :public renderable {

@@ -5,10 +5,10 @@ namespace DDD {
 	}
 	Metal::Metal(cgtools::Color Emi, cgtools::Color Albedo, double roughness) noexcept : Mirror(Emi, Albedo) {
 		scatterFactor = roughness;
-		dist = cxx::ziggurat_normal_distribution<double>(0, scatterFactor / 2);
+		initRandom(scatterFactor);
 	}
 	Ray Metal::scatteredRay(Hit origin, Ray originalRay)  noexcept {
-		const auto r = ~((originalRay.dir - 2 * (origin.n[originalRay.dir]) * origin.n) + cgtools::direction(dist(mt), dist(mt), dist(mt)));
+		const auto r = ~((originalRay.dir - 2 * (origin.n[originalRay.dir]) * origin.n) + cgtools::direction(RNG(), RNG(), RNG()));
 		return Ray(origin.pos, r, originalRay.tmax, 0.000001);
 	}
 	std::string Metal::serialize() const {
@@ -19,7 +19,7 @@ namespace DDD {
 		f_chars(ret.at(0), scatterFactor);
 		albedo.load(ret.at(1));
 		emission.load(ret.at(2));
-		dist = cxx::ziggurat_normal_distribution<double>(0, scatterFactor / 2);
+		initRandom(scatterFactor);
 	}
 	AMaterial* Metal::clone() const {
 		return new Metal(emission, albedo, scatterFactor);

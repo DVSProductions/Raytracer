@@ -15,7 +15,7 @@ namespace Raytracer {
 	/// </summary>
 	/// <param name="offset">my thread index</param>
 	/// <param name="total">total number of threads</param>
-	void RenderLoop(int offset, int total);
+	void RenderLoop(uint_fast32_t offset, uint_fast32_t total, std::shared_ptr<cgtools::Renderer> target);
 	/// <summary>
 	/// Allocates memory and prepares, initializes and launches render threads
 	/// </summary>
@@ -30,4 +30,8 @@ namespace Raytracer {
 	void setPreviewThreadCount() noexcept;
 	void setFullThreadCount() noexcept;
 	void setSingleThread() noexcept;
+	void abort() noexcept;
+	void pauseRender(bool value) noexcept;
+	void setPersistence(bool value)noexcept;
+	bool hasRestoreFile();
 };

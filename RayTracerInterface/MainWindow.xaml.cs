@@ -1,7 +1,7 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Reflection;
 using System.Windows;
-
 namespace RayTracerInterface {
 	/// <summary>
 	/// Interaktionslogik für MainWindow.xaml
@@ -13,13 +13,10 @@ namespace RayTracerInterface {
 		/// </summary>
 		/// <param name="p">The page to open</param>
 		void OpenPage3(IRenderPage p) {
-			if (p is SceneBuilder) {
+			if (p is SceneBuilder&& startingWidth == 0) {
 				startingWidth = this.Width;
 				this.Width = this.Height * (16.0 / 9.0) + 300;
 			}
-			else if (startingWidth != 0)
-				this.Width = startingWidth;
-
 			pageViewer.Content = p;
 			p.OnBack = () => pageViewer.GoBack();
 		}
@@ -70,6 +67,6 @@ namespace RayTracerInterface {
 				pageViewer.Content = new DND(OpenPage2);
 			App.MakeMeDark(this);
 		}
-
+		private void Window_Closed(object sender, EventArgs e) => _ = Process.Start(Assembly.GetExecutingAssembly().Location, App.Cleanup);
 	}
 }

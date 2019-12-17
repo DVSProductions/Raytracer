@@ -7,7 +7,6 @@
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="Abgabe">
-
     <Grid>
 		<TextBox BorderThickness="0" FontSize="18" Foreground="White" x:Name="tbConsole" FontFamily="Consolas" TextWrapping="Wrap" Margin="5" ScrollViewer.VerticalScrollBarVisibility="Auto" Background="{x:Null}" BorderBrush="{x:Null}" SelectionBrush="#FFD60000" AutoWordSelection="True" IsReadOnly="True" UndoLimit="0"/>
 		<Button Padding="10,5" Margin="10" Content="Open Output Directory" VerticalAlignment="Bottom" HorizontalAlignment="Right" Style="{DynamicResource BTStyle}" Click="Button_Click"/>

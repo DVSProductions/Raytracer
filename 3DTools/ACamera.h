@@ -1,17 +1,18 @@
 #pragma once
-#include <point.h>
-#include <Renderer.h>
+#include <memory>
 #include "Ray.h"
 #include "Scene.h"
-#include "ISerializable.h"
-#include <memory>
+#include "../cgtools/point.h"
+#include "../cgtools/Renderer.h"
+#include "../cgtools/ISerializable.h"
 namespace DDD {
 	class ACamera :public cgtools::Renderer, public ISerializable {
 	protected:
-		unsigned short reflectionDepth = 1;
+		uint_fast16_t reflectionDepth = 1;
 		std::shared_ptr<DDD::Scene> scene;
 		cgtools::point position;
 		double angle;
+		ACamera(const double& angle) noexcept;
 		ACamera(const cgtools::point& pos, const double& angle) noexcept;
 		~ACamera()noexcept;
 		static std::string includeClassID(std::string data, int CID);

@@ -3,17 +3,17 @@
 #include "point.h"
 #include "Color.h"
 namespace cgtools {
+	class point;
 	class direction : public vector {
+		friend class point;
 	public:
-		operator std::string()const {
-			return "(direction[" + std::to_string(x) + ", " + std::to_string(y) + ", " + std::to_string(z) + "])";
-		}
+		operator std::string()const;
 		direction operator+(const direction& b) const noexcept;
 		direction(double x, double y, double z) noexcept;
 		direction operator-(const direction& b)const noexcept;
 		direction operator-()const noexcept;
+		direction operator*(const point& v) const noexcept;
 		direction operator*(const double& s)const noexcept;
-		direction operator*(const vector& s)const noexcept;
 		friend direction operator*(const double& s, const direction& a)noexcept;
 		direction operator/(const double& s) const noexcept;
 		/// <summary>
@@ -25,6 +25,8 @@ namespace cgtools {
 		/// </summary>
 		/// <returns></returns>
 		direction operator~()const noexcept;
-		size_t size()const noexcept override;
+		point operator+(const point & p)const noexcept;
+		point operator+(point p)const noexcept ;
+		size_t size()const override;
 	};
 }

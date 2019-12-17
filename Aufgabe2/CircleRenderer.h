@@ -18,5 +18,7 @@ public:
 	/// <param name="height">width of the image</param>
 	CircleRenderer(int width, int height);
 	Color getColor(double x, double y) noexcept override;
+	std::shared_ptr<Renderer> clone()override;
+
 };
 

@@ -45,5 +45,7 @@ public:
 	/// <param name="y">position to start sampling Y</param>
 	/// <returns></returns>
 	Color getColor(double x, double y) override;
+	std::shared_ptr<Renderer> clone()override;
+
 };
 

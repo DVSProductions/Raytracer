@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Windows;
-
 namespace RayTracerInterface {
 	/// <summary>
 	/// Interaction logic for ShapeSelector.xaml

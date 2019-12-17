@@ -6,17 +6,17 @@ namespace DDD {
 	}
 	Chalk::Chalk(cgtools::Color Emi, cgtools::Color alb) noexcept {
 		scatterFactor = 1;
-		dist = cxx::ziggurat_normal_distribution<double>(0, scatterFactor / 2);
+		initRandom(scatterFactor);
 		albedo = alb;
 		emission = Emi;
 	}
 	Ray Chalk::scatteredRay(Hit origin, Ray originalRay) {
-		cgtools::direction r = cgtools::direction(dist(mt), dist(mt), dist(mt));
+		auto r = cgtools::direction(RNG(), RNG(), RNG());
 		while (r.squaredLength() > 1) {
-			r = cgtools::direction(dist(mt), dist(mt), dist(mt));
+			r = cgtools::direction(RNG(), RNG(), RNG());
 		}
 		return Ray(origin.pos, ~(r + origin.n), originalRay.tmax, 0.000001);
-		//return Ray(origin.pos, ~(cgtools::direction(dist(mt), dist(mt), dist(mt)) + origin.n), originalRay.tmax, 0.000001);
+		//return Ray(origin.pos, ~(cgtools::direction(RNG(), RNG(), RNG()) + origin.n), originalRay.tmax, 0.000001);
 	}
 	std::string Chalk::serialize() const {
 		return AMaterial::includeClassID(albedo.serialize() + MaterialSplitter + emission.serialize() + MaterialSplitter, CLASSID);
@@ -25,6 +25,7 @@ namespace DDD {
 		auto ret = Serializable::split(serialized, MaterialSplitter);
 		albedo.load(ret.at(0));
 		emission.load(ret.at(1));
+		initRandom(scatterFactor);
 	}
 	AMaterial* Chalk::clone() const {
 		return new Chalk(emission, albedo);

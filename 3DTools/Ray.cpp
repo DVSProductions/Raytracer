@@ -10,11 +10,14 @@ namespace DDD {
 		return x0 + (dir * t);
 	}
 	const Ray Ray::operator=(const Ray& v) noexcept {
-		this->x0 = v.x0;
-		this->dir = v.dir;
-		this->tmax = v.tmax;
-		this->tmin = v.tmin;
-		this->refractionIndex = v.refractionIndex;
+		x0 = v.x0;
+		dir = v.dir;
+		tmax = v.tmax;
+		tmin = v.tmin;
+		refractionIndex = v.refractionIndex;
 		return *this;
+	}
+	Ray Ray::transform(cgtools::matrix translator) noexcept {
+		return Ray(translator * x0, translator * dir, this->tmax, tmin);
 	}
 }

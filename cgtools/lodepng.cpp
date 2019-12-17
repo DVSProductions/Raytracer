@@ -1615,7 +1615,7 @@ About uivector, ucvector and string:
 		unsigned usezeros = 1; /*not sure if setting it to false for windowsize < 8192 is better or worse*/
 		unsigned numzeros = 0;
 
-		unsigned offset; /*the offset represents the distance in LZ77 terminology*/
+		unsigned MI; /*the offset represents the distance in LZ77 terminology*/
 		unsigned length;
 		unsigned lazy = 0;
 		unsigned lazylength = 0, lazyoffset = 0;
@@ -1648,7 +1648,7 @@ About uivector, ucvector and string:
 
 			/*the length and offset found for the current position*/
 			length = 0;
-			offset = 0;
+			MI = 0;
 
 			hashpos = hash->chain[wpos];
 
@@ -1683,7 +1683,7 @@ About uivector, ucvector and string:
 
 					if (current_length > length) {
 						length = current_length; /*the longest length*/
-						offset = current_offset; /*the offset that is related to this longest length*/
+						MI = current_offset; /*the offset that is related to this longest length*/
 						/*jump out once a length of max length is found (speed gain). This also jumps
 						out if length is MAX_SUPPORTED_DEFLATE_LENGTH*/
 						if (current_length >= nicematch) break;
@@ -1707,7 +1707,7 @@ About uivector, ucvector and string:
 				if (!lazy && length >= 3 && length <= maxlazymatch && length < MAX_SUPPORTED_DEFLATE_LENGTH) {
 					lazy = 1;
 					lazylength = length;
-					lazyoffset = offset;
+					lazyoffset = MI;
 					continue; /*try the next byte*/
 				}
 				if (lazy) {
@@ -1719,26 +1719,26 @@ About uivector, ucvector and string:
 					}
 					else {
 						length = lazylength;
-						offset = lazyoffset;
+						MI = lazyoffset;
 						hash->head[hashval] = -1; /*the same hashchain update will be done, this ensures no wrong alteration*/
 						hash->headz[numzeros] = -1; /*idem*/
 						--pos;
 					}
 				}
 			}
-			if (length >= 3 && offset > windowsize) ERROR_BREAK(86 /*too big (or overflown negative) offset*/);
+			if (length >= 3 && MI > windowsize) ERROR_BREAK(86 /*too big (or overflown negative) offset*/);
 
 			/*encode it as length/distance pair or literal value*/
 			if (length < 3) /*only lengths of 3 or higher are supported as length/distance pair*/ {
 				if (!uivector_push_back(out, in[pos])) ERROR_BREAK(83 /*alloc fail*/);
 			}
-			else if (length < minmatch || (length == 3 && offset > 4096)) {
+			else if (length < minmatch || (length == 3 && MI > 4096)) {
 				/*compensate for the fact that longer offsets have more extra bits, a
 				length of only 3 may be not worth it then*/
 				if (!uivector_push_back(out, in[pos])) ERROR_BREAK(83 /*alloc fail*/);
 			}
 			else {
-				addLengthDistance(out, length, offset);
+				addLengthDistance(out, length, MI);
 				for (i = 1; i < length; ++i) {
 					++pos;
 					wpos = pos & (windowsize - 1);

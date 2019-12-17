@@ -25,3 +25,7 @@ size_t A3PinholeCamera::size() const {
 	return sizeof(A3PinholeCamera)+__super::size();
 }
 
+std::shared_ptr<cgtools::Renderer> A3PinholeCamera::clone() {
+	return std::make_shared<A3PinholeCamera>(angle, position, background);
+}
+

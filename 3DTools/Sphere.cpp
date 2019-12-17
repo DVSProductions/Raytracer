@@ -3,8 +3,7 @@
 #include "Vanta.h"
 namespace DDD {
 	cgtools::direction Sphere::getNormal(cgtools::point at)const noexcept {
-		const auto top = at - this->p;
-		return cgtools::direction(top.x / radius, top.y / radius, top.z / radius);
+		return (at - p)/ radius;
 	}
 	Sphere::Sphere(std::string serialized) :renderable(cgtools::point(0, 0, 0)) {
 		this->load(serialized);
@@ -21,7 +20,7 @@ namespace DDD {
 	/// solves the equation. Using result pointers saves about 5% of render duration
 	/// </summary>
 	/// <returns></returns>
-	constexpr uint8_t findPoint(double a, double b, double Material, double* results1, double* results2) noexcept {
+	constexpr uint_fast8_t findPoint(double a, double b, double Material, double* results1, double* results2) noexcept {
 		const double c1 = b * b - 4 * a * Material;
 		if (c1 == 0) {
 			*results1 = b == 0 ? 0 : (-b) / (2 * a);
@@ -30,9 +29,9 @@ namespace DDD {
 		else if (c1 < 0)
 			return 0;
 		else {
+			const double a2 = 2 * a;
 			const double sqr = sqrt(c1);
 			const double mb = -b;
-			const double a2 = 2 * a;
 			*results1 = (mb + sqr) / a2;
 			*results2 = (mb - sqr) / a2;
 			return 2;
@@ -44,12 +43,28 @@ namespace DDD {
 		const auto x0 = r.x0 - p;
 		double results1 = 0, results2 = 0;
 		double t = 0;
-		const auto solutions = findPoint(r.dir[r.dir], 2 * x0[r.dir], x0[x0] - rsq, &results1, &results2);//Pointers save 5% vs passing array
-		if (solutions == 0)return Hit();
-		else if (solutions == 1)t = results1;
-		else t = results1 < results2 ? (results1 > r.tmin ? results1 : results2) : results2;
-		if (t < r.tmin || t > r.tmax)return Hit();
-		const auto intersection = t * r.dir;
+		switch (findPoint(r.dir[r.dir], x0[r.dir] * 2, x0[x0] - rsq, &results1, &results2)) {//Pointers save 5% vs passing array
+		case 1:
+			t = results1;
+			break;
+		case 2:
+			if (results1 < results2) {//r1 is smaller
+				if (results1 > r.tmin)//and within bounds
+					t = results1;
+				else t = results2;//outside of min bound? try r2
+			}
+			else {//r2 is smaller
+				if (results2 > r.tmin)//and within bounds
+					t = results2;
+				else t = results1;//outside of min bound? try r1
+			}
+			break;
+		default:
+			return Hit();
+		}
+		if (t < r.tmin || t > r.tmax)
+			return Hit();
+		const auto intersection = r.dir * t;
 		return Hit(t, intersection, getNormal(intersection), this->material);
 	}
 

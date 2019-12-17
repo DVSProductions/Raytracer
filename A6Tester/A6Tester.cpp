@@ -28,7 +28,7 @@ namespace A6Tester
 			cam->init();
 			cam->setScene(playground);
 			Raytracer::setsampleQuality(0);
-			Raytracer::setSingleThread();
+			Raytracer::setFullThreadCount();
 			Raytracer::RenderWorker(sceneOutputFile);
 		}
 	};

@@ -8,21 +8,30 @@ namespace DDD {
 #include "Hit.h"
 #include "Ray.h"
 #include <random>
+#define useRandfast 1
+#if useRandfast
+#include "../cgtools/randfast.h"
+#define RNG() dist.apply()
+#else
 #include "Ziggurat.hpp"
+#define RNG() dist(mt)
+#endif
 
 #define MaterialSplitter "}"
 
-#define useMT true
 namespace DDD {
 	class AMaterial : public ISerializable {
 	protected:
 		AMaterial() noexcept;
-		cxx::ziggurat_normal_distribution<double> dist;
-#if useMT
-		std::mt19937_64 mt;
+#if useRandfast
+		randfast dist;
+		void initRandom(double min, double max);
 #else
-		std::ranlux48_base mt;
+		void initRandom(double average, double diviation);
+		std::mt19937_64 mt;
+		cxx::ziggurat_normal_distribution<double> dist;
 #endif
+		void initRandom(double roughness);
 	public:
 		double scatterFactor = 0;
 		cgtools::Color emission;
@@ -32,6 +41,6 @@ namespace DDD {
 		static std::string includeClassID(std::string data, int CID);
 		static AMaterial* createFromSerialization(std::string data);
 		virtual AMaterial* clone() const = 0;
-		void operator=(const AMaterial& para) noexcept;
+		void operator=(const AMaterial& para) noexcept;		
 	};
 }

@@ -1,9 +1,9 @@
 #define _USE_MATH_DEFINES 
 #include "Aufgabe4.cpp"
-#include "Plane.h"
-#include "renderable.h"
-#include "Background.h"
-#include "Group.h"
+#include "../3DTools/Plane.h"
+#include "../3DTools/renderable.h"
+#include "../3DTools/Background.h"
+#include "../3DTools/Group.h"
 #include "CppUnitTest.h"
 #define dll(x) __declspec(dllexport) x __cdecl
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;

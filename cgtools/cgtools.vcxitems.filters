@@ -1,0 +1,127 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="$(MSBuildThisFileDirectory)transformStack.cpp">
+      <Filter>Transformation</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Translation.cpp">
+      <Filter>Transformation</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Scaling.cpp">
+      <Filter>Transformation</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Rotation.cpp">
+      <Filter>Transformation</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)ComplexRotation.cpp">
+      <Filter>Transformation</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)ATransformation.cpp">
+      <Filter>Transformation</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)vector.cpp">
+      <Filter>Atomics</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)direction.cpp">
+      <Filter>Atomics</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)point.cpp">
+      <Filter>Atomics</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Matrix.cpp">
+      <Filter>Atomics</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Color.cpp">
+      <Filter>Atomics</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)cgSampling.cpp">
+      <Filter>Utility Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Image.cpp">
+      <Filter>Utility Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)ImageWriter.cpp">
+      <Filter>Utility Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)lodepng.cpp">
+      <Filter>Utility Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)randfast.cpp">
+      <Filter>Utility Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)ISerializable.cpp">
+      <Filter>Interfaces</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="$(MSBuildThisFileDirectory)cgtools.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)transformStack.h">
+      <Filter>Transformation</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Translation.h">
+      <Filter>Transformation</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Scaling.h">
+      <Filter>Transformation</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Rotation.h">
+      <Filter>Transformation</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)ComplexRotation.h">
+      <Filter>Transformation</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)ATransformation.h">
+      <Filter>Transformation</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)vector.h">
+      <Filter>Atomics</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)direction.h">
+      <Filter>Atomics</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Matrix.h">
+      <Filter>Atomics</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)point.h">
+      <Filter>Atomics</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Color.h">
+      <Filter>Atomics</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)cgSampling.h">
+      <Filter>Utility Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Image.h">
+      <Filter>Utility Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)ImageWriter.h">
+      <Filter>Utility Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)lodepng.h">
+      <Filter>Utility Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)randfast.h">
+      <Filter>Utility Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Renderer.h">
+      <Filter>Interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)ISerializable.h">
+      <Filter>Interfaces</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Transformation">
+      <UniqueIdentifier>{e9328132-8cf2-4071-a301-a26bd8754788}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Atomics">
+      <UniqueIdentifier>{f7feac39-cd13-41cf-af26-da750c333f26}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Utility Classes">
+      <UniqueIdentifier>{45cd6dbf-b113-4fa4-b6bc-45afb06b9c52}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Interfaces">
+      <UniqueIdentifier>{cf4602c7-b65f-4744-be05-5a587e1bea75}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

@@ -1,17 +1,22 @@
-#include "DLLInfo.h"
+#include "../DLLFiles/DLLInfo.h"
 #include "PinholeCamera.h"
-#include <stack>
+#include <stdint.h>
 namespace DDD {
-	PinholeCamera::PinholeCamera(std::string serialized) :ACamera(cgtools::point(0, 0, 0), 0), background(cgtools::Color(0, 0, 0)) {
+	PinholeCamera::PinholeCamera(std::string serialized) :ACamera(0), background(cgtools::Color(0, 0, 0)) {
 		this->load(serialized);
 	}
-	PinholeCamera::PinholeCamera(double angle, const cgtools::point& position, Background background)noexcept :ACamera(position, angle), background(background) {
-		precalculation(angle);
-		this->background = background;
+	PinholeCamera::PinholeCamera():ACamera(0),background(cgtools::c_black) {}
+	PinholeCamera::PinholeCamera(double angle, Background background)noexcept :ACamera(angle), background(background) {
+		init();
 	}
 
-	PinholeCamera::PinholeCamera(double angle, const cgtools::point& position, Background background, unsigned short reflectionDepth) noexcept : PinholeCamera(angle, position, background) {
+	PinholeCamera::PinholeCamera(double angle, Background background, unsigned short reflectionDepth) noexcept : PinholeCamera(angle, background) {
 		this->reflectionDepth = reflectionDepth;
+		try {
+			eStack = std::make_unique<cgtools::Color[]>(reflectionDepth);
+			aStack = std::make_unique<cgtools::Color[]>(reflectionDepth);
+		}
+		catch(...){}
 	}
 
 	void PinholeCamera::init() noexcept {
@@ -21,20 +26,15 @@ namespace DDD {
 		zpre = -(w0_5 / a05tan);
 	}
 
-	void PinholeCamera::precalculation(double angle)noexcept {
-		init();
-	}
-
 	Ray PinholeCamera::generateRay(double x, double y)noexcept {
-		return Ray(position, ~cgtools::direction(x - w0_5, h0_5 - y, zpre), INFINITY, 0);
+		return Ray(cgtools::point(0,0,0), ~cgtools::direction(x - w0_5, h0_5 - y, zpre), INFINITY, 0);
 	}
 	cgtools::Color PinholeCamera::getColor(double x, double y) {
 		auto r = generateRay(x, y);
 		//const auto h = scene->intersect(r);
-		std::stack<cgtools::Color> eStack;
-		std::stack<cgtools::Color> aStack;
+		int_fast32_t StackSize = 0;
 		cgtools::Color ret = cgtools::c_black;
-		for (size_t n = 0; n != reflectionDepth; n++) {
+		for (uint_fast16_t n = 0; n != reflectionDepth; n++) {
 			const auto h = scene->intersect(r);
 			if (h.hit == false) {
 				ret = this->background.Material->emission;
@@ -45,31 +45,36 @@ namespace DDD {
 				if (reflectionDepth == 1)return h.shade();
 				break;
 			}
-			eStack.push(h.material->emission);
-			aStack.push(h.material->albedo);
+			eStack[StackSize] = h.material->emission;
+			aStack[StackSize++] = h.material->albedo;
 			r = h.material->scatteredRay(h, r);
 		}
-		while (!eStack.empty()) {
-			ret = eStack.top() + aStack.top() * ret;
-			eStack.pop();
-			aStack.pop();
-		}
+		while (--StackSize != -1)
+			ret = eStack[StackSize] + aStack[StackSize] * ret;
 		return ret;
 		//return h.hit ? h.shade() : background.intersect(r).c;
 	}
 
 	std::string PinholeCamera::serialize() const {
-		return ACamera::includeClassID(background.serializeFast() + "[" + __super::serialize() + "[", CLASSID);
+		return ACamera::includeClassID(background.serializeFast() + "[" + ACamera::serialize() + "[", CLASSID);
 	}
 
 	void PinholeCamera::load(std::string serialized) {
 		const auto s = Serializable::split(serialized, "[");
 		background.load(s.at(0));
-		__super::load(s.at(1));
+		ACamera::load(s.at(1));
+		if (eStack != nullptr) eStack.reset();
+		if (aStack != nullptr) aStack.reset();
+		eStack = std::make_unique<cgtools::Color[]>(reflectionDepth);
+		aStack = std::make_unique<cgtools::Color[]>(reflectionDepth);
 	}
 
 	size_t PinholeCamera::size() const {
-		return sizeof(PinholeCamera) + __super::size() - sizeof(ACamera);
+		return sizeof(PinholeCamera) + ACamera::size() - sizeof(ACamera);
 	}
-
+	std::shared_ptr <cgtools:: Renderer > PinholeCamera::clone() {
+		auto ret = std::make_shared<PinholeCamera>(angle, background, reflectionDepth);
+		ret->setScene(this->scene);
+		return ret;
+	}
 }

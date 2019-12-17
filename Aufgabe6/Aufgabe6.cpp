@@ -2,7 +2,6 @@
 #include <cmath>
 #include <utility>
 #include <direct.h>
-#include <Windows.h>
 #include <vector>
 #include <functional>
 #include <memory>
@@ -24,17 +23,17 @@
 /// -1 terminated array of Supported Element classes
 /// </summary>
 const std::string files[] = { "a06-mirrors-glass-1.png","a06-mirrors-glass-2.png","_" };
-const std::string libVersion = "2.1";
+const std::string libVersion = "2.2";
 
 void prepare() {
 	if (playground != nullptr)
 		playground->clear();
-	playground = std::make_shared <DDD::Scene>();
+	playground = std::make_shared <DDD::Scene>(); 
 	//Playground->addObject(new Sphere(point(100, 100, 100), 50, c_red));
 	const Color gray = Color::fromRGB(60, 60, 60).reverseGamma(2.2);//application background color
 	const Color red = Color::fromRGB(0x9B, 0x55, 0x55).reverseGamma(2.2);//application default red color
 	const Color b = Color(0, 0, 1);
-	cam = std::make_shared <DDD::PinholeCamera>(DDD::PinholeCamera(M_PI / 3, cgtools::point(0, 0, 0), DDD::Background(gray)));
+	cam = std::make_shared <DDD::PinholeCamera>(DDD::PinholeCamera(M_PI / 3, DDD::Background(gray)));
 	cam->setScene(playground);
 	Raytracer::setsampleQuality();
 }
@@ -126,4 +125,7 @@ void renderScene(int x, int y, int FSAA, std::string outputFilePath) {
 	Raytracer::setsampleQuality(FSAA);
 	Raytracer::setFullThreadCount();
 	Raytracer::RenderWorker(outputFilePath);
+}
+void abortRender() {
+	Raytracer::abort();
 }

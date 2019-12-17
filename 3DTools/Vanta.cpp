@@ -1,4 +1,5 @@
 #include "Vanta.h"
+#include <stdexcept>
 namespace DDD {
 	Vanta::Vanta(std::string serialized) {
 		load(serialized);

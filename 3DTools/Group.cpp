@@ -14,11 +14,14 @@ void DDD::Group::addObject(DDD::renderable* obj) {
 	objects->push_back(obj);
 }
 
-void DDD::Group::clear() {
-	const auto end = objects->size();
-	for (size_t n = 0; n != end; n++)
-		delete[](objects->at(n));
-	objects->clear();
+void DDD::Group::clear()noexcept {
+	try {
+		const auto end = objects->size();
+		for (size_t n = 0; n != end; n++)
+			delete[](objects->at(n));
+		objects->clear();
+		_CATCH_ALL
+	}
 }
 
 DDD::Hit DDD::Group::intersect(Ray r) const {
@@ -34,7 +37,7 @@ DDD::Hit DDD::Group::intersect(Ray r) const {
 }
 
 std::string DDD::Group::serialize() const {
-	const size_t siz = this->objects->size();
+	//const size_t siz = this->objects->size();
 	std::string ret = this->p.serialize() + "$";
 	for (auto e : *objects)
 		ret += e->serialize() + "$";

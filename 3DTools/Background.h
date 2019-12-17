@@ -1,13 +1,14 @@
 #pragma once
-#include <renderable.h>
-#include <Hit.h>
+#include "Hit.h"
 #include "Material.h"
-#include <Vanta.h>
+#include "Vanta.h"
+#include "renderable.h"
 namespace DDD {
 	class Background : public renderable {
 		std::shared_ptr<Vanta> Material;
 		friend class renderable;
 		friend class PinholeCamera;
+		friend class MovablePinholeCamera;
 		Background(std::string serialized);
 	public:
 		static const int CLASSID = -1;
@@ -17,7 +18,7 @@ namespace DDD {
 		std::string serializeFast()const;
 		void load(std::string serialized) override;
 		Background operator=(const Background& b)noexcept;
-		renderable* clone() const;
+		renderable* clone() const override;
 		size_t size()const noexcept override;
 	};
 }

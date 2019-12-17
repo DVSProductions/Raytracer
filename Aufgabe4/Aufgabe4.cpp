@@ -7,18 +7,16 @@
 #include <functional>
 #include <memory>
 //#include "CacheCow.h"
-#include "Raytracer.h"
+#include "../3DTools/Raytracer.h"
 
-#include "3DInfo.h"
-#include "Scene.h"
-#include "ACamera.h"
-#include "DllInfo.h"
-#include "cgtools.h"
-#include "Image.h"
-#include "cgSampling.h"
-#include "PinholeCamera.h"
-#include "Sphere.h"
-#include "Plane.h"
+#include "../3DDLL/3DInfo.h"
+#include "../DLLFiles/DLLInfo.h"
+#include "../cgtools/cgtools.h"
+#include "../cgtools/Image.h"
+#include "../cgtools/cgSampling.h"
+#include "../3DTools/PinholeCamera.h"
+#include "../3DTools/Sphere.h"
+#include "../3DTools/Plane.h"
 
 /// <summary>
 /// -1 terminated array of Supported Element classes
@@ -34,7 +32,7 @@ void prepare() {
 	const Color gray = Color::fromRGB(60, 60, 60).reverseGamma(2.2);//application background color
 	const Color red = Color::fromRGB(0x9B, 0x55, 0x55).reverseGamma(2.2);//application default red color
 	const Color b = Color(0, 0, 1);
-	cam = std::make_shared <DDD::PinholeCamera>(DDD::PinholeCamera(M_PI / 3, cgtools::point(0, 0, 0), DDD::Background(gray)));
+	cam = std::make_shared <DDD::PinholeCamera>(DDD::PinholeCamera(M_PI / 3, DDD::Background(gray)));
 	cam->setScene(playground);
 	Raytracer::setsampleQuality();
 }

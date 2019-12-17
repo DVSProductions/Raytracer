@@ -147,6 +147,7 @@
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <LanguageStandard>stdcpp17</LanguageStandard>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -184,4 +185,12 @@
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
+  <ItemGroup>
+    <ClCompile Update="C:\Users\DVSProductions\OneDrive\Uni\Medieninformatik\Semester 3\Computergrafik Grundlagen\Abgabe\cgtools\transformStack">
+      <FileType>Document</FileType>
+    </ClCompile>
+    <ClCompile Update="C:\Users\DVSProductions\OneDrive\Uni\Medieninformatik\Semester 3\Computergrafik Grundlagen\Abgabe\cgtools\transformStack.cpp">
+      <FileType>Document</FileType>
+    </ClCompile>
+  </ItemGroup>
 </Project>

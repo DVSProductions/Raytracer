@@ -38,6 +38,8 @@ namespace cgtools {
 		/// <param name="filename"></param>
 		/// <returns>lodepng response code</returns>
 		unsigned int write(std::string filename);
+		void dump(std::string dumpName);
+		size_t loadFromDump(std::string dumpNampe);
 	};
 
 }

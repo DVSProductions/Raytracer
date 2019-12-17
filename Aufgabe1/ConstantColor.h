@@ -7,5 +7,6 @@ public:
 	ConstantColor(const Color* color)noexcept;
 	ConstantColor(Color* color)noexcept;
 	Color getColor(double x, double y)noexcept override;
+	std::shared_ptr<Renderer> clone()override;
 };
 
