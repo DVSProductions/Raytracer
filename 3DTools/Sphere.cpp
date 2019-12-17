@@ -3,7 +3,7 @@
 #include "Vanta.h"
 namespace DDD {
 	cgtools::direction Sphere::getNormal(cgtools::point at)const noexcept {
-		return (at - p)/ radius;
+		return (at - p) / radius;
 	}
 	Sphere::Sphere(std::string serialized) :renderable(cgtools::point(0, 0, 0)) {
 		this->load(serialized);
@@ -64,7 +64,7 @@ namespace DDD {
 		}
 		if (t < r.tmin || t > r.tmax)
 			return Hit();
-		const auto intersection = r.dir * t;
+		const auto intersection = r.x0 + (r.dir * t);
 		return Hit(t, intersection, getNormal(intersection), this->material);
 	}
 
