@@ -3,6 +3,7 @@ namespace RayTracerInterface {
 	public class Plane : Renderable {
 		public const int TID = 1;
 		public override int TYPEID() => TID;
+		public override bool IsAtomic => true;
 		public double Radius = -1;
 		public AMaterial Color = new Vanta(new Color(0.9, 0.9, 0.9));
 		public Vec Direction = new Vec(0, 1, 0);

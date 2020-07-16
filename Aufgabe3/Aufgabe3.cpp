@@ -40,7 +40,7 @@ void RenderLoop(int offset, int total) {
 	cout << "->RL";
 	Sleep(1000);
 #endif
-	for (int x = offset; x < width; x += total, progress++)
+	for (unsigned int x = offset; x < width; x += total, progress++)
 		for (int y = 0; y != height; y++)
 #if DLL_DEBUG
 		{

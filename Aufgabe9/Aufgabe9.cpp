@@ -48,16 +48,16 @@ void loadGlass() {
 }
 
 void benchmark() {
-	
-	int tc = std::thread::hardware_concurrency();
+
+	const long tc = std::thread::hardware_concurrency();
 	std::vector<long long> durations;
 	progressOverride = 0;
 	for (int n = 0; n != tc; n++) {
 		loadGlass();
 		progress = 0;
 		Raytracer::setsampleQuality(10);
-		Raytracer::setThreadCount(n+1);
-		auto start = std::chrono::system_clock::now();
+		Raytracer::setThreadCount(n + 1);
+		const auto start = std::chrono::system_clock::now();
 		Raytracer::RenderWorker("tmp");
 		while (progress != width) {
 			auto v = (n * width + progress) / tc;
@@ -65,7 +65,7 @@ void benchmark() {
 			progressOverride = v;
 			Sleep(10);
 		}
-		auto dur = std::chrono::system_clock::now() - start;
+		const auto dur = std::chrono::system_clock::now() - start;
 		durations.push_back(dur.count());
 		while (lodepngReturn == -1)Sleep(10);
 	}
@@ -74,19 +74,19 @@ void benchmark() {
 	long long max = 0;
 	for (int n = 0; n != durations.size(); n++) {
 		if (durations[n] > max)max = durations[n];
-		resultfile << n+1 << ";" << durations[n] << std::endl;
+		resultfile << n + 1 << ";" << durations[n] << std::endl;
 	}
 	resultfile.close();
 	prepare3d();
 	playground->clear();
-	playground->addObject(new Plane(cgtools::point(0,-1,0),cgtools::direction(0,1,0),std::make_shared<Chalk>(
-		cgtools::c_black, cgtools::Color(0.75,0.75,0.75))));
-	double w = 2;
+	playground->addObject(new Plane(cgtools::point(0, -1, 0), cgtools::direction(0, 1, 0), std::make_shared<Chalk>(
+		cgtools::c_black, cgtools::Color(0.75, 0.75, 0.75))));
+	constexpr double w = 2;
 	for (int n = 0; n != durations.size(); n++) {
 		playground->addObject(new Cylinder(cgtools::point(
-			(w * ((double)n / ((double)durations.size()-1))) - (w/2), -0.5, -1),
-			w / (tc+5),
-			((long double)durations[n]/(long double)max) * 4.2,
+			(w * ((double)n / ((double)durations.size() - 1))) - (w / 2), -0.5, -1),
+			w / (tc + 5),
+			((long double)durations[n] / (long double)max) * 4.2,
 			std::make_shared<Chalk>(cgtools::c_black, cgtools::Color::getRandom(std::mt19937_64(std::random_device()())))
 		));
 	}
@@ -101,7 +101,7 @@ void benchmark() {
 		cam = sh;
 	cam->init();
 	cam->setScene(playground);
-	
+
 	Raytracer::setsampleQuality(20);
 	Raytracer::setFullThreadCount();
 	Raytracer::RenderWorker(files[1]);

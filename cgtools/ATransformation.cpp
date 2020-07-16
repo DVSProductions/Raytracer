@@ -7,12 +7,12 @@
 #else
 #include <stdexcept>
 #endif
-#define deserial(trans) case trans::CLASSID: return new trans(s.at(1))
+#define deserial(trans) case trans::CLASSID: return std::make_unique<trans>(s.at(1))
 namespace cgtools {
 	std::string ATransformation::includeClassID(std::string data, int CID) {
 		return std::to_string(CID) + "#" + data + "#";
 	}
-	ATransformation* ATransformation::createFromSerialization(std::string data) {
+	std::unique_ptr<ATransformation> ATransformation::createFromSerialization(std::string data) {
 		const auto s = Serializable::split(data, "#");
 		int n = -1;
 		f_chars(s.at(0), n);

@@ -149,9 +149,10 @@
 		<Grid.ColumnDefinitions>
 			<ColumnDefinition Width="150"/>
 			<ColumnDefinition Width="*"/>
-			<ColumnDefinition Width="250"/>
+			<ColumnDefinition Width="137.2"/>
+			<ColumnDefinition Width="112.4"/>
 		</Grid.ColumnDefinitions>
-		<Grid Grid.Column="0">
+		<Grid Grid.Column="0" Margin="0,0,0.4,-0.4">
 			<Grid.ColumnDefinitions>
 				<ColumnDefinition Width="10"/>
 				<ColumnDefinition/>
@@ -212,7 +213,7 @@
 			<Button Name="btImport" VerticalAlignment="Center" Grid.Row="2" Grid.Column="1" Style="{DynamicResource BTStyle}" Margin="0,0,5,0" Content="Import" Click="BtImport_Click" />
 			<Button Name="btExport" VerticalAlignment="Center" Grid.Row="2" Grid.Column="2" Style="{DynamicResource BTStyle}" Margin="5,0,0,0" Content="Export" Click="BtExport_Click" />
 		</Grid>
-		<Grid Grid.Column="1" Margin="10,0" Background="#33000000">
+		<Grid Grid.Column="1" Margin="9.6,0,10.4,-0.4" Background="#33000000">
 			<Grid.RowDefinitions>
 				<RowDefinition Height="25px"/>
 				<RowDefinition/>
@@ -226,9 +227,9 @@
 				<Button Width="30" Margin="2.5" x:Name="CS" Content="CS" Style="{DynamicResource BTStyle}" Click="CS_Click" />
 			</StackPanel>
 		</Grid>
-		<GridSplitter Width="1" Margin="10,0" Grid.Column="1" HorizontalAlignment="Left"  Background="#FF850000"/>
-		<GridSplitter Width="1" Margin="10,0" Grid.Column="1" HorizontalAlignment="Right" Background="#FF850000"/>
-		<ScrollViewer Grid.Column="2" VerticalScrollBarVisibility="Auto" Margin="0,0,10,40">
+		<GridSplitter Width="1" Margin="9.6,0,0,-0.4" Grid.Column="1" HorizontalAlignment="Left"  Background="#FF850000"/>
+		<GridSplitter Width="1" Margin="0,0,10.4,-0.4" Grid.Column="1" HorizontalAlignment="Right" Background="#FF850000"/>
+		<ScrollViewer Grid.Column="2" VerticalScrollBarVisibility="Auto" Margin="0,0,10,40" Grid.ColumnSpan="3">
 			<StackPanel>
 				<local:FieldSet Header="Ausgabe" Background="{DynamicResource BGColor}" Foreground="White" Padding="0,6.5,0,0" BorderThickness="2" BorderBrush="{DynamicResource LightRed}">
 					<StackPanel Margin="5,0,5,5">
@@ -267,6 +268,7 @@
 				</local:FieldSet>
 			</StackPanel>
 		</ScrollViewer>
-		<Button x:Name="btFullRender" Content="Full Render" Margin="0,0,10,5" Height="30" VerticalAlignment="Bottom" Grid.Column="2" Style="{DynamicResource BTStyle}" Click="BtFullRender_Click"/>
+		<Button x:Name="btFullRender" Content="Full Render" Margin="0,0,5,5" Height="30" VerticalAlignment="Bottom" Grid.Column="2" Style="{DynamicResource BTStyle}" Click="BtFullRender_Click" Grid.ColumnSpan="1"/>
+		<Button x:Name="btPlay" Content="Play" Margin="5,0,0,5" Height="30" VerticalAlignment="Bottom" Grid.Column="3" Style="{DynamicResource BTStyle}"  Grid.ColumnSpan="1" Click="btPlay_Click"/>
 	</Grid>
 </Page>

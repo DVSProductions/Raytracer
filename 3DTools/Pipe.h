@@ -9,11 +9,11 @@ namespace DDD {
 		Pipe(std::string serialized);
 		static const int CLASSID = 3;
 	public:
-		Pipe(cgtools::point position, double radius, double height, std::shared_ptr<AMaterial> mat);
+		Pipe(cgtools::point position, double radius, double height, std::shared_ptr<AMaterial> mat)noexcept;
 		Hit intersect(Ray r)const noexcept override;
 		std::string serialize()const override;
 		void load(std::string serialized) override;
 		renderable* clone() const override;
-		size_t size()const noexcept override;	
+		size_t size()const noexcept override;
 	};
 }

@@ -2,6 +2,7 @@
 
 namespace RayTracerInterface {
 	public class Cylinder : Renderable {
+		public override bool IsAtomic => true;
 		public const int TID = 4;
 		public override int TYPEID() => TID;
 		public double Radius = 1;

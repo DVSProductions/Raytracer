@@ -4,8 +4,9 @@
 #include <memory>
 namespace DDD {
 	class Scene : public renderable {
-		std::unique_ptr<std::vector<DDD::renderable*>> objects;
+		std::vector<DDD::renderable*> objects;
 	public:
+		Scene(const DDD::Scene& para);
 		Scene() noexcept;
 		~Scene();
 		void addObject(DDD::renderable* obj);

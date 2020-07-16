@@ -17,7 +17,9 @@ namespace RayTracerInterface {
 		/// </summary>
 		void AlertChanges() {
 			//if (pbrendering.Value < (pbrendering.Maximum / 2)) aborted = true;
+#pragma warning disable IDE0022 // Ausdruckskörper für Methoden verwenden
 			lastChange = DateTime.Now;//.AddSeconds(1);
+#pragma warning restore IDE0022 // Ausdruckskörper für Methoden verwenden
 		}
 		string GetSceneString() {
 			var scene = new Scene();

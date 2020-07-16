@@ -1,0 +1,579 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReflectedGraph xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <x>17</x>
+  <y>22</y>
+  <Makeup>
+    <GraphElementAbstraction>
+      <x>9</x>
+      <y>0</y>
+      <e xsi:type="GraphRoot">
+        <ID>3</ID>
+      </e>
+      <name>Scene Root</name>
+    </GraphElementAbstraction>
+    <GraphElementAbstraction>
+      <x>3</x>
+      <y>4</y>
+      <e xsi:type="GraphTransform">
+        <ID>4</ID>
+        <trans xsi:type="Translation">
+          <Position>
+            <x>0</x>
+            <y>0</y>
+            <z>0</z>
+          </Position>
+        </trans>
+      </e>
+      <name>Translation</name>
+    </GraphElementAbstraction>
+    <GraphElementAbstraction>
+      <x>9</x>
+      <y>4</y>
+      <e xsi:type="GraphTransform">
+        <ID>5</ID>
+        <trans xsi:type="Rotation">
+          <Axis>X</Axis>
+          <Angle>0</Angle>
+        </trans>
+      </e>
+      <name>Rotation</name>
+    </GraphElementAbstraction>
+    <GraphElementAbstraction>
+      <x>13</x>
+      <y>4</y>
+      <e xsi:type="GraphTransform">
+        <ID>6</ID>
+        <trans xsi:type="ComplexRotation">
+          <axis>
+            <x>0</x>
+            <y>1</y>
+            <z>0</z>
+          </axis>
+          <Angle>0</Angle>
+        </trans>
+      </e>
+      <name>ComplexRotation</name>
+    </GraphElementAbstraction>
+    <GraphElementAbstraction>
+      <x>5</x>
+      <y>6</y>
+      <e xsi:type="GraphShape">
+        <ID>7</ID>
+        <Shape xsi:type="Sphere">
+          <Position>
+            <x>0</x>
+            <y>0</y>
+            <z>-3</z>
+          </Position>
+          <name>Sphere#5</name>
+          <Name>Sphere#5</Name>
+          <Radius>1</Radius>
+          <Color xsi:type="Vanta">
+            <Emission>
+              <r>0.5</r>
+              <g>0.5</g>
+              <b>0.5</b>
+            </Emission>
+          </Color>
+        </Shape>
+      </e>
+      <name>Sphere</name>
+    </GraphElementAbstraction>
+    <GraphElementAbstraction>
+      <x>1</x>
+      <y>8</y>
+      <e xsi:type="GraphShape">
+        <ID>9</ID>
+        <Shape xsi:type="Cylinder">
+          <Position>
+            <x>0</x>
+            <y>0</y>
+            <z>-3</z>
+          </Position>
+          <name>Cylinder#7</name>
+          <Name>Cylinder#7</Name>
+          <Radius>1</Radius>
+          <Height>3</Height>
+          <Color xsi:type="Chalk">
+            <Emission>
+              <r>0</r>
+              <g>0</g>
+              <b>0</b>
+            </Emission>
+            <Albedo>
+              <r>0.95</r>
+              <g>0.95</g>
+              <b>0.95</b>
+            </Albedo>
+          </Color>
+        </Shape>
+      </e>
+      <name>Cylinder</name>
+    </GraphElementAbstraction>
+    <GraphElementAbstraction>
+      <x>9</x>
+      <y>10</y>
+      <e xsi:type="GraphShape">
+        <ID>8</ID>
+        <Shape xsi:type="Sphere">
+          <Position>
+            <x>0</x>
+            <y>0</y>
+            <z>-3</z>
+          </Position>
+          <name>Sphere#6</name>
+          <Name>Sphere#6</Name>
+          <Radius>1</Radius>
+          <Color xsi:type="Vanta">
+            <Emission>
+              <r>0.5</r>
+              <g>0.5</g>
+              <b>0.5</b>
+            </Emission>
+          </Color>
+        </Shape>
+      </e>
+      <name>Sphere</name>
+    </GraphElementAbstraction>
+    <GraphElementAbstraction>
+      <x>13</x>
+      <y>10</y>
+      <e xsi:type="Dice">
+        <ID>10</ID>
+      </e>
+      <name>Dice</name>
+    </GraphElementAbstraction>
+    <GraphElementAbstraction>
+      <x>11</x>
+      <y>14</y>
+      <e xsi:type="GraphTransform">
+        <ID>14</ID>
+        <trans xsi:type="Rotation">
+          <Axis>X</Axis>
+          <Angle>0</Angle>
+        </trans>
+      </e>
+      <name>Rotation</name>
+    </GraphElementAbstraction>
+    <GraphElementAbstraction>
+      <x>11</x>
+      <y>16</y>
+      <e xsi:type="GraphShape">
+        <ID>15</ID>
+        <Shape xsi:type="Plane">
+          <Position>
+            <x>0</x>
+            <y>-3</y>
+            <z>0</z>
+          </Position>
+          <name>Plane#8</name>
+          <Name>Plane#8</Name>
+          <Radius>-1</Radius>
+          <Color xsi:type="Vanta">
+            <Emission>
+              <r>0.9</r>
+              <g>0.9</g>
+              <b>0.9</b>
+            </Emission>
+          </Color>
+          <Direction>
+            <x>0</x>
+            <y>1</y>
+            <z>0</z>
+          </Direction>
+        </Shape>
+      </e>
+      <name>Plane</name>
+    </GraphElementAbstraction>
+    <GraphElementAbstraction>
+      <x>13</x>
+      <y>16</y>
+      <e xsi:type="GraphShape">
+        <ID>17</ID>
+        <Shape xsi:type="Pipe">
+          <Position>
+            <x>0</x>
+            <y>0</y>
+            <z>-3</z>
+          </Position>
+          <name>Pipe#10</name>
+          <Name>Pipe#10</Name>
+          <Radius>1</Radius>
+          <Height>3</Height>
+          <Color xsi:type="Chalk">
+            <Emission>
+              <r>0</r>
+              <g>0</g>
+              <b>0</b>
+            </Emission>
+            <Albedo>
+              <r>0.95</r>
+              <g>0.95</g>
+              <b>0.95</b>
+            </Albedo>
+          </Color>
+        </Shape>
+      </e>
+      <name>Pipe</name>
+    </GraphElementAbstraction>
+  </Makeup>
+  <Lines>
+    <DynamicLineAbstraction>
+      <Source xsi:type="GraphTransform">
+        <ID>14</ID>
+        <trans xsi:type="Rotation">
+          <Axis>X</Axis>
+          <Angle>0</Angle>
+        </trans>
+      </Source>
+      <Target xsi:type="GraphShape">
+        <ID>15</ID>
+        <Shape xsi:type="Plane">
+          <Position>
+            <x>0</x>
+            <y>-3</y>
+            <z>0</z>
+          </Position>
+          <name>Plane#8</name>
+          <Name>Plane#8</Name>
+          <Radius>-1</Radius>
+          <Color xsi:type="Vanta">
+            <Emission>
+              <r>0.9</r>
+              <g>0.9</g>
+              <b>0.9</b>
+            </Emission>
+          </Color>
+          <Direction>
+            <x>0</x>
+            <y>1</y>
+            <z>0</z>
+          </Direction>
+        </Shape>
+      </Target>
+    </DynamicLineAbstraction>
+    <DynamicLineAbstraction>
+      <Source xsi:type="GraphTransform">
+        <ID>14</ID>
+        <trans xsi:type="Rotation">
+          <Axis>X</Axis>
+          <Angle>0</Angle>
+        </trans>
+      </Source>
+      <Target xsi:type="GraphShape">
+        <ID>17</ID>
+        <Shape xsi:type="Pipe">
+          <Position>
+            <x>0</x>
+            <y>0</y>
+            <z>-3</z>
+          </Position>
+          <name>Pipe#10</name>
+          <Name>Pipe#10</Name>
+          <Radius>1</Radius>
+          <Height>3</Height>
+          <Color xsi:type="Chalk">
+            <Emission>
+              <r>0</r>
+              <g>0</g>
+              <b>0</b>
+            </Emission>
+            <Albedo>
+              <r>0.95</r>
+              <g>0.95</g>
+              <b>0.95</b>
+            </Albedo>
+          </Color>
+        </Shape>
+      </Target>
+    </DynamicLineAbstraction>
+    <DynamicLineAbstraction>
+      <Source xsi:type="Dice">
+        <ID>10</ID>
+      </Source>
+      <Target xsi:type="GraphTransform">
+        <ID>14</ID>
+        <trans xsi:type="Rotation">
+          <Axis>X</Axis>
+          <Angle>0</Angle>
+        </trans>
+      </Target>
+    </DynamicLineAbstraction>
+    <DynamicLineAbstraction>
+      <Source xsi:type="GraphTransform">
+        <ID>6</ID>
+        <trans xsi:type="ComplexRotation">
+          <axis>
+            <x>0</x>
+            <y>1</y>
+            <z>0</z>
+          </axis>
+          <Angle>0</Angle>
+        </trans>
+      </Source>
+      <Target xsi:type="Dice">
+        <ID>10</ID>
+      </Target>
+    </DynamicLineAbstraction>
+    <DynamicLineAbstraction>
+      <Source xsi:type="GraphTransform">
+        <ID>5</ID>
+        <trans xsi:type="Rotation">
+          <Axis>X</Axis>
+          <Angle>0</Angle>
+        </trans>
+      </Source>
+      <Target xsi:type="Dice">
+        <ID>10</ID>
+      </Target>
+    </DynamicLineAbstraction>
+    <DynamicLineAbstraction>
+      <Source xsi:type="GraphTransform">
+        <ID>5</ID>
+        <trans xsi:type="Rotation">
+          <Axis>X</Axis>
+          <Angle>0</Angle>
+        </trans>
+      </Source>
+      <Target xsi:type="GraphShape">
+        <ID>8</ID>
+        <Shape xsi:type="Sphere">
+          <Position>
+            <x>0</x>
+            <y>0</y>
+            <z>-3</z>
+          </Position>
+          <name>Sphere#6</name>
+          <Name>Sphere#6</Name>
+          <Radius>1</Radius>
+          <Color xsi:type="Vanta">
+            <Emission>
+              <r>0.5</r>
+              <g>0.5</g>
+              <b>0.5</b>
+            </Emission>
+          </Color>
+        </Shape>
+      </Target>
+    </DynamicLineAbstraction>
+    <DynamicLineAbstraction>
+      <Source xsi:type="GraphRoot">
+        <ID>3</ID>
+      </Source>
+      <Target xsi:type="GraphShape">
+        <ID>8</ID>
+        <Shape xsi:type="Sphere">
+          <Position>
+            <x>0</x>
+            <y>0</y>
+            <z>-3</z>
+          </Position>
+          <name>Sphere#6</name>
+          <Name>Sphere#6</Name>
+          <Radius>1</Radius>
+          <Color xsi:type="Vanta">
+            <Emission>
+              <r>0.5</r>
+              <g>0.5</g>
+              <b>0.5</b>
+            </Emission>
+          </Color>
+        </Shape>
+      </Target>
+    </DynamicLineAbstraction>
+    <DynamicLineAbstraction>
+      <Source xsi:type="GraphRoot">
+        <ID>3</ID>
+      </Source>
+      <Target xsi:type="GraphTransform">
+        <ID>5</ID>
+        <trans xsi:type="Rotation">
+          <Axis>X</Axis>
+          <Angle>0</Angle>
+        </trans>
+      </Target>
+    </DynamicLineAbstraction>
+    <DynamicLineAbstraction>
+      <Source xsi:type="GraphRoot">
+        <ID>3</ID>
+      </Source>
+      <Target xsi:type="GraphTransform">
+        <ID>6</ID>
+        <trans xsi:type="ComplexRotation">
+          <axis>
+            <x>0</x>
+            <y>1</y>
+            <z>0</z>
+          </axis>
+          <Angle>0</Angle>
+        </trans>
+      </Target>
+    </DynamicLineAbstraction>
+    <DynamicLineAbstraction>
+      <Source xsi:type="GraphRoot">
+        <ID>3</ID>
+      </Source>
+      <Target xsi:type="GraphTransform">
+        <ID>4</ID>
+        <trans xsi:type="Translation">
+          <Position>
+            <x>0</x>
+            <y>0</y>
+            <z>0</z>
+          </Position>
+        </trans>
+      </Target>
+    </DynamicLineAbstraction>
+    <DynamicLineAbstraction>
+      <Source xsi:type="GraphTransform">
+        <ID>5</ID>
+        <trans xsi:type="Rotation">
+          <Axis>X</Axis>
+          <Angle>0</Angle>
+        </trans>
+      </Source>
+      <Target xsi:type="GraphShape">
+        <ID>7</ID>
+        <Shape xsi:type="Sphere">
+          <Position>
+            <x>0</x>
+            <y>0</y>
+            <z>-3</z>
+          </Position>
+          <name>Sphere#5</name>
+          <Name>Sphere#5</Name>
+          <Radius>1</Radius>
+          <Color xsi:type="Vanta">
+            <Emission>
+              <r>0.5</r>
+              <g>0.5</g>
+              <b>0.5</b>
+            </Emission>
+          </Color>
+        </Shape>
+      </Target>
+    </DynamicLineAbstraction>
+    <DynamicLineAbstraction>
+      <Source xsi:type="GraphTransform">
+        <ID>4</ID>
+        <trans xsi:type="Translation">
+          <Position>
+            <x>0</x>
+            <y>0</y>
+            <z>0</z>
+          </Position>
+        </trans>
+      </Source>
+      <Target xsi:type="GraphShape">
+        <ID>9</ID>
+        <Shape xsi:type="Cylinder">
+          <Position>
+            <x>0</x>
+            <y>0</y>
+            <z>-3</z>
+          </Position>
+          <name>Cylinder#7</name>
+          <Name>Cylinder#7</Name>
+          <Radius>1</Radius>
+          <Height>3</Height>
+          <Color xsi:type="Chalk">
+            <Emission>
+              <r>0</r>
+              <g>0</g>
+              <b>0</b>
+            </Emission>
+            <Albedo>
+              <r>0.95</r>
+              <g>0.95</g>
+              <b>0.95</b>
+            </Albedo>
+          </Color>
+        </Shape>
+      </Target>
+    </DynamicLineAbstraction>
+    <DynamicLineAbstraction>
+      <Source xsi:type="GraphTransform">
+        <ID>4</ID>
+        <trans xsi:type="Translation">
+          <Position>
+            <x>0</x>
+            <y>0</y>
+            <z>0</z>
+          </Position>
+        </trans>
+      </Source>
+      <Target xsi:type="GraphShape">
+        <ID>7</ID>
+        <Shape xsi:type="Sphere">
+          <Position>
+            <x>0</x>
+            <y>0</y>
+            <z>-3</z>
+          </Position>
+          <name>Sphere#5</name>
+          <Name>Sphere#5</Name>
+          <Radius>1</Radius>
+          <Color xsi:type="Vanta">
+            <Emission>
+              <r>0.5</r>
+              <g>0.5</g>
+              <b>0.5</b>
+            </Emission>
+          </Color>
+        </Shape>
+      </Target>
+    </DynamicLineAbstraction>
+    <DynamicLineAbstraction>
+      <Source xsi:type="GraphTransform">
+        <ID>6</ID>
+        <trans xsi:type="ComplexRotation">
+          <axis>
+            <x>0</x>
+            <y>1</y>
+            <z>0</z>
+          </axis>
+          <Angle>0</Angle>
+        </trans>
+      </Source>
+      <Target xsi:type="GraphShape">
+        <ID>8</ID>
+        <Shape xsi:type="Sphere">
+          <Position>
+            <x>0</x>
+            <y>0</y>
+            <z>-3</z>
+          </Position>
+          <name>Sphere#6</name>
+          <Name>Sphere#6</Name>
+          <Radius>1</Radius>
+          <Color xsi:type="Vanta">
+            <Emission>
+              <r>0.5</r>
+              <g>0.5</g>
+              <b>0.5</b>
+            </Emission>
+          </Color>
+        </Shape>
+      </Target>
+    </DynamicLineAbstraction>
+    <DynamicLineAbstraction>
+      <Source xsi:type="GraphTransform">
+        <ID>4</ID>
+        <trans xsi:type="Translation">
+          <Position>
+            <x>0</x>
+            <y>0</y>
+            <z>0</z>
+          </Position>
+        </trans>
+      </Source>
+      <Target xsi:type="GraphTransform">
+        <ID>14</ID>
+        <trans xsi:type="Rotation">
+          <Axis>X</Axis>
+          <Angle>0</Angle>
+        </trans>
+      </Target>
+    </DynamicLineAbstraction>
+  </Lines>
+</ReflectedGraph>

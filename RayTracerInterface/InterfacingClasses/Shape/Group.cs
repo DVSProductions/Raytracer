@@ -3,6 +3,7 @@ using System.Text;
 namespace RayTracerInterface {
 	public class Group : Renderable {
 		public const int TID = 2;
+		public override bool IsAtomic => false;
 		public override int TYPEID() => TID;
 		public List<Renderable> objects = new List<Renderable>();
 		public override string Serialize() {

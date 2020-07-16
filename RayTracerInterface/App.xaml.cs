@@ -36,7 +36,7 @@ namespace RayTracerInterface {
 			wnd.WindowStyle = orig;
 		}
 		public const string Cleanup = "-cleanup";
-		void cleanup() {
+		static void cleanup() {
 			if (File.Exists(LibraryHandler.dll)) {
 				try {
 					File.Delete(LibraryHandler.dll);

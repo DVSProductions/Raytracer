@@ -62,7 +62,7 @@
       <HintPath>..\packages\Costura.Fody.4.1.0\lib\net40\Costura.dll</HintPath>
     </Reference>
     <Reference Include="DVSShaders">
-      <HintPath>..\..\..\..\..\..\Programmieren\DVSShaders\DVSShaders\bin\Release\DVSShaders.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\Programmieren\c#\DVSShaders\DVSShaders\bin\Release\DVSShaders.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CodeAnalysis, Version=3.4.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.CodeAnalysis.Common.3.4.0\lib\netstandard2.0\Microsoft.CodeAnalysis.dll</HintPath>
@@ -79,6 +79,8 @@
     </Reference>
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.IO.Compression" />
+    <Reference Include="System.IO.Compression.FileSystem" />
     <Reference Include="System.Memory, Version=4.0.1.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Memory.4.5.3\lib\netstandard2.0\System.Memory.dll</HintPath>
     </Reference>
@@ -108,16 +110,52 @@
     <Reference Include="System.Xaml">
       <RequiredTargetFramework>4.0</RequiredTargetFramework>
     </Reference>
+    <Reference Include="UIAutomationProvider" />
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
+    <Reference Include="WindowsFormsIntegration" />
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="GamePages\GameConfig.cs" />
+    <Compile Include="GamePages\GameGraphicSettings.xaml.cs">
+      <DependentUpon>GameGraphicSettings.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GamePages\GameKeybinds.xaml.cs">
+      <DependentUpon>GameKeybinds.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GamePages\GameMenu.xaml.cs">
+      <DependentUpon>GameMenu.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GamePages\GameOptions.xaml.cs">
+      <DependentUpon>GameOptions.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GamePages\GamePageUtil.cs" />
+    <Compile Include="GameView.xaml.cs">
+      <DependentUpon>GameView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MakeBitmapSource.cs" />
+    <Compile Include="TiteledTimeLog.cs" />
+    <Compile Include="TimeLog.cs" />
+    <Compile Include="UIHelpers\TimeBoundPress.cs" />
+    <Compile Include="Utilities\Anybase.cs" />
+    <Compile Include="Compass.xaml.cs">
+      <DependentUpon>Compass.xaml</DependentUpon>
+    </Compile>
     <Compile Include="GlobalSuppressions.cs" />
+    <Compile Include="GraphClasses\Generators\Dice.cs" />
+    <Compile Include="GraphClasses\Generator.cs" />
+    <Compile Include="GraphClasses\GraphParent.cs" />
+    <Compile Include="GraphClasses\GraphRoot.cs" />
+    <Compile Include="GraphClasses\GraphElement.cs" />
+    <Compile Include="GraphClasses\GraphShape.cs" />
+    <Compile Include="GraphClasses\Generators\Repeater.cs" />
+    <Compile Include="GraphClasses\GraphTransform.cs" />
+    <Compile Include="Utilities\ReflectedGraph.cs" />
     <Compile Include="InterfacingClasses\Material\AlbedoMat.cs" />
     <Compile Include="InterfacingClasses\Shape\Cylinder.cs" />
     <Compile Include="InterfacingClasses\Shape\Pipe.cs" />
@@ -141,10 +179,19 @@
     <Compile Include="InterfacingClasses\Transformation\ComplexRotation.cs" />
     <Compile Include="InterfacingClasses\Transformation\Translation.cs" />
     <Compile Include="InterfacingClasses\Transformation\Rotation.cs" />
+    <Compile Include="Renderer\GraphableRenderer.cs" />
     <Compile Include="Renderer\TransformableRenderer.cs" />
+    <Compile Include="SceneGraph.xaml.cs">
+      <DependentUpon>SceneGraph.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UIHelpers\DynamicLine.cs" />
     <Compile Include="UIHelpers\FieldSet.cs" />
+    <Compile Include="UIHelpers\SceneGraph.ToolbarHelper.cs" />
+    <Compile Include="UIHelpers\SceneGraph.TreeDragHelper.cs" />
+    <Compile Include="UIHelpers\SceneGraph.LineHelper.cs" />
     <Compile Include="UIHelpers\TransformSelector.cs" />
     <Compile Include="UIHelpers\SceneBuilder.XmlOutput.cs" />
+    <Compile Include="UIHelpers\VisualizationHelper.cs" />
     <Compile Include="UIHelpers\VisualStorage.cs" />
     <Compile Include="Abgabe.cs">
       <DependentUpon>Abgabe.xaml</DependentUpon>
@@ -155,11 +202,11 @@
     <Compile Include="UIHelpers\IRenderPage.cs" />
     <Compile Include="InterfacingClasses\Transformation\Scaling.cs" />
     <Compile Include="InterfacingClasses\Shape\Renderable.cs" />
-    <Compile Include="Renderer\Renderer.cs" />
+    <Compile Include="Renderer\BasicRenderer.cs" />
     <Compile Include="RenderPage.xaml.cs">
       <DependentUpon>RenderPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="SaveContainer.cs" />
+    <Compile Include="Utilities\SaveContainer.cs" />
     <Compile Include="Renderer\SceneBasedRenderer.cs" />
     <Compile Include="UIHelpers\SceneBuilder.ElementHelpers.cs" />
     <Compile Include="SceneBuilder.xaml.cs">
@@ -175,11 +222,35 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Compass.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="CompilationSettings.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="DND.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="GamePages\GameGraphicSettings.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="GamePages\GameKeybinds.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="GamePages\GameMenu.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="GamePages\GameOptions.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="GameView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -209,6 +280,10 @@
     <Page Include="SceneBuilder.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="SceneGraph.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="ShapeSelector.xaml">
       <SubType>Designer</SubType>

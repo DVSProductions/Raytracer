@@ -25,18 +25,18 @@ namespace DDD {
 		AMaterial() noexcept;
 #if useRandfast
 		randfast dist;
-		void initRandom(double min, double max);
+		void initRandom(double min, double max) noexcept;
 #else
 		void initRandom(double average, double diviation);
 		std::mt19937_64 mt;
 		cxx::ziggurat_normal_distribution<double> dist;
 #endif
-		void initRandom(double roughness);
+		void initRandom(double roughness)noexcept;
 	public:
 		double scatterFactor = 0;
 		cgtools::Color emission;
 		cgtools::Color albedo;
-		AMaterial(cgtools::Color emi, cgtools::Color alb);
+		AMaterial(cgtools::Color emi, cgtools::Color alb)noexcept;
 		virtual Ray scatteredRay(DDD::Hit origin, DDD::Ray originalRay) = 0;
 		static std::string includeClassID(std::string data, int CID);
 		static AMaterial* createFromSerialization(std::string data);

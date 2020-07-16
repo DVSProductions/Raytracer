@@ -1,0 +1,59 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="GraphElements">
+      <UniqueIdentifier>{b3304c86-82c5-44de-896b-daeefe2c9cff}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GraphElements\Generators">
+      <UniqueIdentifier>{90b57443-4c1a-41b7-8b66-6033327702ef}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="$(MSBuildThisFileDirectory)DLLGraph.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)generator.cpp">
+      <Filter>GraphElements</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Dice.cpp">
+      <Filter>GraphElements\Generators</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)ShapeElement.cpp">
+      <Filter>GraphElements</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)graphElement.cpp">
+      <Filter>GraphElements</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)TransformElement.cpp">
+      <Filter>GraphElements</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Repeater.cpp">
+      <Filter>GraphElements\Generators</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)GraphRoot.cpp">
+      <Filter>GraphElements</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="$(MSBuildThisFileDirectory)DLLGraph.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)generator.h">
+      <Filter>GraphElements</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Dice.h">
+      <Filter>GraphElements\Generators</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)ShapeElement.h">
+      <Filter>GraphElements</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)graphElement.h">
+      <Filter>GraphElements</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)TransformElement.h">
+      <Filter>GraphElements</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Repeater.h">
+      <Filter>GraphElements\Generators</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)GraphRoot.h">
+      <Filter>GraphElements</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

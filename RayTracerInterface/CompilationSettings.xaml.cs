@@ -12,15 +12,16 @@ namespace RayTracerInterface {
 		/// </summary>
 		readonly Action<IRenderPage> switchToRenderPage;
 		public Action GoBack { get; set; }
-		readonly LibraryHandler.Renderer renderer;
-		public CompilationSettings(Action<IRenderPage> switchToRenderPage, LibraryHandler.Renderer renderer) {
+		readonly Renderer.BasicRenderer renderer;
+		public CompilationSettings(Action<IRenderPage> switchToRenderPage, Renderer.BasicRenderer renderer) {
 			System.Diagnostics.Contracts.Contract.Requires(renderer != null);
 			this.renderer = renderer;
 			InitializeComponent();
 			foreach (var s in renderer.OutputFiles)
 				cbFiles.Items.Add(s);
-			if (cbFiles.Items.Count == 1) cbFiles.SelectedIndex = 0;
-			gbScene.Visibility = renderer is LibraryHandler.SceneBasedRenderer ? Visibility.Visible : Visibility.Collapsed;
+			if (cbFiles.Items.Count == 1)
+				cbFiles.SelectedIndex = 0;
+			gbScene.Visibility = renderer is Renderer.SceneBasedRenderer ? Visibility.Visible : Visibility.Collapsed;
 			this.switchToRenderPage = switchToRenderPage;
 		}
 		/// <summary>
@@ -86,11 +87,35 @@ namespace RayTracerInterface {
 			}
 		}
 		private void Button_Click_2(object sender, RoutedEventArgs e) {
-			if (renderer is LibraryHandler.SceneBasedRenderer sbr)
+			if (renderer is Renderer.SceneBasedRenderer sbr)
 				switchToRenderPage(new SceneBuilder(sbr, switchToRenderPage));
 			else
 				MessageBox.Show("ERROR THIS IS NOT A SCENE BASED RENDERER");
 		}
 		private void Button_Click_3(object sender, RoutedEventArgs e) => GoBack();
+
+		private void Button_Click_4(object sender, RoutedEventArgs e) {
+			var dlg = new Microsoft.Win32.OpenFileDialog {
+				DefaultExt = "*.xml;",
+				CheckFileExists = true,
+				CheckPathExists = true,
+				Multiselect = false,
+				RestoreDirectory = true,
+				DereferenceLinks = true,
+				Title = "Please select the Scene Definition to Decompress",
+				Filter = "Scene Definition Graph *.sdg|*.sdg"
+			};
+			if (dlg.ShowDialog() == true) {
+				try {
+					var fn = SceneGraph.DecompressFile(dlg.FileName);
+					var oldf = new System.IO.FileInfo(dlg.FileName);
+					var newf = new System.IO.FileInfo(fn);
+					MessageBox.Show($"File Decompression ok!\nSaved {((int)(1000 - (oldf.Length / (double)newf.Length * 1000))) / 10.0}%", "Decompression Sucessfull", MessageBoxButton.OK, MessageBoxImage.Information);
+				}
+				catch (Exception ex) {
+					MessageBox.Show(ex.Message, "Decompression Failed", MessageBoxButton.OK, MessageBoxImage.Error);
+				}
+			}
+		}
 	}
 }

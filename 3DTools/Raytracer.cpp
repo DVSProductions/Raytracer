@@ -25,7 +25,9 @@ std::unique_ptr<Image> image;
 std::shared_ptr<Renderer> renderer;
 std::shared_ptr <DDD::Scene> playground;//=std::shared_ptr<DDD::Scene>();
 std::shared_ptr <DDD::ACamera> cam; //= std::shared_ptr<DDD::ACamera>();
-void handlePause() noexcept{
+std::shared_ptr <DDD::GameCamera> gameCam; //= std::shared_ptr<DDD::ACamera>();
+
+void handlePause() noexcept {
 	while (pause) {
 #ifdef _WIN64 
 		Sleep(1000);
@@ -71,12 +73,55 @@ void Raytracer::rendercycle(std::string filename) {
 		}
 		workers.clear();
 	}
-	else RenderLoop(0, 1,renderer);
+	else RenderLoop(0, 1, renderer);
 	progress = width;
 	if (!abortRender)
 		lodepngReturn = image->write(filename);
 	image.reset();
 	abortRender = false;
+}
+Image TurboImage = Image(1, 1);
+void Raytracer::TurboRenderLoop(uint_fast32_t offset, uint_fast32_t total, std::shared_ptr<cgtools::Renderer> target) {
+	for (uint_fast32_t x = offset; x < width && !abortRender; x += total, progress++)
+		for (uint_fast32_t y = 0; y != height && !abortRender; y++)
+			TurboImage.setPixel(x, y, target->getColor(x, y));
+}
+void Raytracer::turboRendercycle(double gamma) {
+	if (TurboImage.getX() == 1 || TurboImage.getX() != width || TurboImage.getY() != height)
+		TurboImage = cgtools::Image(width, height, gamma);
+	std::vector<std::thread> workers;
+	for (uint_fast16_t n = 0; n < threadCount; n++)
+		workers.push_back(std::thread(TurboRenderLoop, n, threadCount, renderer->clone()));
+	const auto tc = threadCount;
+	for (uint_fast16_t n = 0; n != tc; n++) {
+		while (!workers.at(n).joinable()) {
+			//std::this_thread::sleep_for(100ms);
+			Sleep(1);
+		}
+		workers.at(n).join();
+	}
+	workers.clear();
+	progress = width;
+
+}
+
+void Raytracer::prepareTurboRender(int FSAA, int threads) {
+	threadCount = threads;
+	gameCam->setScene(playground);
+	if (renderer != nullptr)
+		renderer.reset();
+	if (FSAA <= 1)renderer = gameCam;
+	else
+		renderer = std::make_shared<cgSampling>(FSAA, gameCam);
+}
+
+void Raytracer::turboRender(int x, int y, double gamma) {
+	width = x;
+	height = y;
+	gameCam->init();
+	progress = 0;
+	worker = std::thread(Raytracer::turboRendercycle, gamma);
+	worker.detach();
 }
 
 /// <summary>
@@ -93,6 +138,12 @@ void Raytracer::RenderWorker(std::string filename) {
 		worker.detach();
 		//while (progress != width)std::this_thread::sleep_for(std::chrono::milliseconds(100));//Sleep(100);
 	}
+}
+void Raytracer::BlastImage(uint8_t** target) {
+	TurboImage.blastGameImage(target);
+}
+void Raytracer::BlastImage(void* target) {
+	TurboImage.blastGameImage(target);
 }
 
 void Raytracer::setsampleQuality(int samples) {
@@ -117,7 +168,7 @@ void Raytracer::setPreviewThreadCount() noexcept {
 
 void Raytracer::setFullThreadCount() noexcept {
 	threadCount = std::thread::hardware_concurrency();
-	printf("Tc is now %d", threadCount);
+	//printf("Tc is now %d", threadCount);
 }
 
 #endif

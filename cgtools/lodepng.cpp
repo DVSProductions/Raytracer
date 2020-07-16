@@ -721,7 +721,7 @@ About uivector, ucvector and string:
 		size = headsize;
 		for (i = 0; i < headsize; ++i) {
 			const unsigned l = maxlens[i];
-			if (l > FIRSTBITS) size += (1u << (l - FIRSTBITS));
+			if (l > FIRSTBITS) size += (1ull << (l - FIRSTBITS));
 		}
 		tree->table_len = (unsigned char*)lodepng_malloc(size * sizeof(*tree->table_len));
 		tree->table_value = (unsigned short*)lodepng_malloc(size * sizeof(*tree->table_value));
@@ -740,7 +740,7 @@ About uivector, ucvector and string:
 			if (l <= FIRSTBITS) continue;
 			tree->table_len[i] = l;
 			tree->table_value[i] = static_cast<unsigned short>(pointer);
-			pointer += (1u << (l - FIRSTBITS));
+			pointer += (1ull << (l - FIRSTBITS));
 		}
 		lodepng_free(maxlens);
 

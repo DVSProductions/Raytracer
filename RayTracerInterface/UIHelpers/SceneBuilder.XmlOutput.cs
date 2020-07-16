@@ -9,8 +9,8 @@ namespace RayTracerInterface {
 	public partial class SceneBuilder : Page, IRenderPage {
 		public void Save(string fileName) {
 			try {
-				using (var fs = new FileStream(fileName, FileMode.Create))
-					Save(fs);
+				using var fs = new FileStream(fileName, FileMode.Create);
+				Save(fs);
 			}
 			catch (Exception ex) {
 				MessageBox.Show($"ERROR WRITING OUTPUT FILE: {ex.ToString()}", ex.GetType().Name);

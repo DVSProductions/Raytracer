@@ -4,10 +4,11 @@
 #include "../cgtools/transformStack.h"
 namespace DDD {
 	class PinholeCamera;
-	class MovablePinholeCamera:public PinholeCamera {
-		cgtools::transformStack ts;
+	class MovablePinholeCamera :public PinholeCamera {
+		//cgtools::transformStack ts;
+	protected:
 		cgtools::matrix transformation;
-		cgtools::point newCenter=cgtools::point(0,0,0);
+		cgtools::point newCenter = cgtools::point(0, 0, 0);
 		MovablePinholeCamera(std::string serialized);
 		friend class ACamera;
 		const static int CLASSID = 1;
@@ -15,7 +16,7 @@ namespace DDD {
 		MovablePinholeCamera(double angle, Background background) noexcept;
 		MovablePinholeCamera(double angle, Background background, unsigned short reflectionDepth) noexcept;
 		MovablePinholeCamera(double angle, Background background, unsigned short reflectionDepth, cgtools::transformStack stack) noexcept;
-		void init() noexcept;
+		void init()noexcept override;
 		Ray generateRay(double x, double y) noexcept;
 		cgtools::Color getColor(double x, double y) override;
 		std::string serialize() const override;

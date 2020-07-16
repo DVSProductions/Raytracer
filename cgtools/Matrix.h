@@ -18,7 +18,11 @@ namespace cgtools {
 		static matrix createScaler(vector v) noexcept;
 		static matrix createScaler(double x, double y, double z) noexcept;
 		static matrix createRotation(direction caxis, double angle) noexcept;
+		static matrix createRotationX(double angle) noexcept;
+		static matrix createRotationY(double angle) noexcept;
+		static matrix createRotationZ(double angle) noexcept;
 		static matrix createTranslation(vector t) noexcept;
+		static matrix createTranslation(double x, double y, double z) noexcept;
 		matrix operator*(matrix m) const noexcept;
 		matrix operator*=(matrix m)noexcept;
 		point operator*(point p)const noexcept;

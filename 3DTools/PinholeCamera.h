@@ -2,18 +2,17 @@
 #include "ACamera.h"
 #include "Background.h"
 #include "../cgtools/Color.h"
+#include <vector>
 namespace DDD {
-	class PinholeCamera :public ACamera{
+	class PinholeCamera :public ACamera {
 		friend class ACamera;
 		const static int CLASSID = 0;
 		PinholeCamera(std::string serialized);
 	protected:
-		double w0_5, h0_5;
-		double a05tan;
-		double zpre;
+		double w0_5 = 0, h0_5 = 0, a05tan = 0, zpre = 0;
 		Background background;
-		std::unique_ptr<cgtools::Color[]> eStack;
-		std::unique_ptr<cgtools::Color[]> aStack;
+		std::vector<cgtools::Color> eStack;//std::unique_ptr<cgtools::Color[]> eStack;
+		std::vector<cgtools::Color> aStack;//std::unique_ptr<cgtools::Color[]> aStack;
 		PinholeCamera();
 	public:
 		PinholeCamera(double angle, Background background) noexcept;

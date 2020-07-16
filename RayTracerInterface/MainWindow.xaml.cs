@@ -13,9 +13,9 @@ namespace RayTracerInterface {
 		/// </summary>
 		/// <param name="p">The page to open</param>
 		void OpenPage3(IRenderPage p) {
-			if (p is SceneBuilder&& startingWidth == 0) {
+			if (p is SceneBuilder && startingWidth == 0) {
 				startingWidth = this.Width;
-				this.Width = this.Height * (16.0 / 9.0) + 300;
+				this.Width = (this.Height * (16.0 / 9.0)) + 300;
 			}
 			pageViewer.Content = p;
 			p.OnBack = () => pageViewer.GoBack();
@@ -23,14 +23,14 @@ namespace RayTracerInterface {
 		/// <summary>
 		/// Allows the drag&drop page <see cref="DND"/> to open the next page
 		/// </summary>
-		void OpenPage2(LibraryHandler.Renderer rend) => pageViewer.Content = new CompilationSettings(OpenPage3, rend) {
+		void OpenPage2(Renderer.BasicRenderer rend) => pageViewer.Content = new CompilationSettings(OpenPage3, rend) {
 			GoBack = () => {
 				pageViewer.GoBack();
 				pageViewer.Content = new DND(OpenPage2);
 				//else pageViewer.GoBack();
 			}
 		};
-		LibraryHandler.Renderer prefetchRenderer;
+		Renderer.BasicRenderer prefetchRenderer;
 		/// <summary>
 		/// Detects if this should immediatly open the <see cref="CompilationSettings"/> page based on the command line parameters
 		/// <para>
@@ -50,7 +50,8 @@ namespace RayTracerInterface {
 				//MessageBox.Show(s);
 			}
 			if (para.Length == 1) {
-				if (para[0] == Assembly.GetExecutingAssembly().Location) return;
+				if (para[0] == Assembly.GetExecutingAssembly().Location)
+					return;
 				prefetchRenderer = LibraryHandler.TryLoadLib(para[0]);
 			}
 			else if (para.Length > 1 && para[0] == Assembly.GetExecutingAssembly().Location)
@@ -62,9 +63,19 @@ namespace RayTracerInterface {
 		public MainWindow() {
 			Preexecution();
 			InitializeComponent();
-			if (LibraryHandler.IsLoaded) OpenPage2(prefetchRenderer);
-			else
-				pageViewer.Content = new DND(OpenPage2);
+			try {
+				if (MessageBox.Show("Show Graph?", "Debug", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.No)
+					throw new InvalidOperationException();
+				var lbr = LibraryHandler.TryLoadLib("Aufgabe9.dll");
+				//Environment.Exit(0);
+				new SceneGraph(lbr as Renderer.TransformableRenderer).ShowDialog();
+			}
+			catch {
+				if (LibraryHandler.IsLoaded)
+					OpenPage2(prefetchRenderer);
+				else
+					pageViewer.Content = new DND(OpenPage2);
+			}
 			App.MakeMeDark(this);
 		}
 		private void Window_Closed(object sender, EventArgs e) => _ = Process.Start(Assembly.GetExecutingAssembly().Location, App.Cleanup);

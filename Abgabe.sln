@@ -55,6 +55,10 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Aufgabe8", "Aufgabe8\Aufgab
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Aufgabe9", "Aufgabe9\Aufgabe9.vcxproj", "{0F3E87A6-6364-49D9-8DD5-2D6C30F7BE36}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DLLGraphable", "DLLGraphable\DLLGraphable.vcxitems", "{9E5FA70E-1EDF-445E-9663-64C9D4338BBA}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GameableDLL", "GameableDll\GameableDll.vcxitems", "{9D9A18FE-101D-4EBF-B24C-D3E4E0DFEE71}"
+EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		3DDLL\3DDLL.vcxitems*{01b9f5d2-0de1-4f3f-b989-2a47e727bf11}*SharedItemsImports = 9
@@ -64,6 +68,7 @@ Global
 		cgtools\cgtools.vcxitems*{0f3e87a6-6364-49d9-8dd5-2d6c30f7be36}*SharedItemsImports = 4
 		DLLFiles\DLLFiles.vcxitems*{0f3e87a6-6364-49d9-8dd5-2d6c30f7be36}*SharedItemsImports = 4
 		DLLTransformer\DLLTransformer.vcxitems*{0f3e87a6-6364-49d9-8dd5-2d6c30f7be36}*SharedItemsImports = 4
+		GameableDll\GameableDll.vcxitems*{0f3e87a6-6364-49d9-8dd5-2d6c30f7be36}*SharedItemsImports = 4
 		3DDLL\3DDLL.vcxitems*{1674be46-f0e6-461d-8e47-c2e71411b45a}*SharedItemsImports = 4
 		3DTools\3DTools.vcxitems*{1674be46-f0e6-461d-8e47-c2e71411b45a}*SharedItemsImports = 4
 		cgtools\cgtools.vcxitems*{1674be46-f0e6-461d-8e47-c2e71411b45a}*SharedItemsImports = 4
@@ -81,6 +86,13 @@ Global
 		DLLTransformer\DLLTransformer.vcxitems*{455b1b92-4075-4329-b4a3-6db7086aede3}*SharedItemsImports = 9
 		cgtools\cgtools.vcxitems*{4990afe0-d3c0-4fde-a55c-fb1f6ef47c0e}*SharedItemsImports = 4
 		DLLFiles\DLLFiles.vcxitems*{4990afe0-d3c0-4fde-a55c-fb1f6ef47c0e}*SharedItemsImports = 4
+		3DDLL\3DDLL.vcxitems*{58ba8f3b-c111-41d9-9a7c-eaae7e248396}*SharedItemsImports = 4
+		3DTools\3DTools.vcxitems*{58ba8f3b-c111-41d9-9a7c-eaae7e248396}*SharedItemsImports = 4
+		Abortable\Abortable.vcxitems*{58ba8f3b-c111-41d9-9a7c-eaae7e248396}*SharedItemsImports = 4
+		cgtools\cgtools.vcxitems*{58ba8f3b-c111-41d9-9a7c-eaae7e248396}*SharedItemsImports = 4
+		DLLFiles\DLLFiles.vcxitems*{58ba8f3b-c111-41d9-9a7c-eaae7e248396}*SharedItemsImports = 4
+		DLLGraphable\DLLGraphable.vcxitems*{58ba8f3b-c111-41d9-9a7c-eaae7e248396}*SharedItemsImports = 4
+		DLLTransformer\DLLTransformer.vcxitems*{58ba8f3b-c111-41d9-9a7c-eaae7e248396}*SharedItemsImports = 4
 		3DDLL\3DDLL.vcxitems*{69205834-e49c-44c0-abb4-120b2728516c}*SharedItemsImports = 4
 		3DTools\3DTools.vcxitems*{69205834-e49c-44c0-abb4-120b2728516c}*SharedItemsImports = 4
 		Abortable\Abortable.vcxitems*{69205834-e49c-44c0-abb4-120b2728516c}*SharedItemsImports = 4
@@ -92,6 +104,8 @@ Global
 		DLLFiles\DLLFiles.vcxitems*{6b4dbc8c-7192-4e18-a999-3ee6f8d304af}*SharedItemsImports = 4
 		cgtools\cgtools.vcxitems*{9b9d2a86-4bad-4afb-97d0-b8bea0486e1d}*SharedItemsImports = 9
 		3DTools\3DTools.vcxitems*{9bf4893b-6393-4894-bd45-843434d54cbf}*SharedItemsImports = 9
+		GameableDll\GameableDll.vcxitems*{9d9a18fe-101d-4ebf-b24c-d3e4e0dfee71}*SharedItemsImports = 9
+		DLLGraphable\DLLGraphable.vcxitems*{9e5fa70e-1edf-445e-9663-64c9d4338bba}*SharedItemsImports = 9
 		3DDLL\3DDLL.vcxitems*{ad363638-c359-4a00-a7d6-a5dd56ca2acc}*SharedItemsImports = 4
 		3DTools\3DTools.vcxitems*{ad363638-c359-4a00-a7d6-a5dd56ca2acc}*SharedItemsImports = 4
 		Abortable\Abortable.vcxitems*{ad363638-c359-4a00-a7d6-a5dd56ca2acc}*SharedItemsImports = 4

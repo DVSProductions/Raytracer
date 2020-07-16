@@ -38,7 +38,7 @@ namespace cgtools {
 		double v13,
 		double v14,
 		double v15
-		) noexcept {
+	) noexcept {
 		values[0] = v0;
 		values[1] = v1;
 		values[2] = v2;
@@ -102,11 +102,55 @@ namespace cgtools {
 		m.set(2, 2, icosa * rz * rz + cosa);
 		return m;
 	}
+	matrix matrix::createRotationX(double angle) noexcept {
+		matrix m;
+		const double rad = (angle / 180.0f) * (M_PI);
+		const double cosa = cos(rad);
+		const double sina = sin(rad);
+		const double icosa = 1 - cosa;
+
+		m.set(0, 0, icosa + cosa);
+		m.set(1, 2, sina);
+		m.set(2, 1, -sina);
+		m.set(2, 2, cosa);
+		return m;
+	}
+	matrix matrix::createRotationY(double angle) noexcept {
+		matrix m;
+		const double rad = (angle / 180.0f) * (M_PI);
+		const double cosa = cos(rad);
+		const double sina = sin(rad);
+		const double icosa = 1 - cosa;
+		m.set(0, 0, cosa);
+		m.set(0, 2, -sina);
+		m.set(1, 1, icosa + cosa);
+		m.set(2, 0, sina);
+		m.set(2, 2, cosa);
+		return m;
+	}
+	matrix matrix::createRotationZ(double angle) noexcept {
+		matrix m;
+		const double rad = (angle / 180.0f) * (M_PI);
+		const double cosa = cos(rad);
+		const double sina = sin(rad);
+		const double icosa = 1 - cosa;
+		m.set(0, 1, sina);
+		m.set(1, 0, -sina);
+		m.set(2, 2, icosa + cosa);
+		return m;
+	}
 	matrix matrix::createTranslation(vector t) noexcept {
 		matrix m;
 		m.set(3, 0, t.x);
 		m.set(3, 1, t.y);
 		m.set(3, 2, t.z);
+		return m;
+	}
+	matrix matrix::createTranslation(double x, double y, double z) noexcept {
+		matrix m;
+		m.set(3, 0, x);
+		m.set(3, 1, y);
+		m.set(3, 2, z);
 		return m;
 	}
 	matrix::matrix(direction b0, direction b1, direction b2)noexcept {
@@ -239,21 +283,21 @@ namespace cgtools {
 		tmp[11] = src[1] * src[4];
 		/* calculate second 8 elements (cofactors) */
 		__dst[8] = tmp[0] * src[13] + tmp[3] * src[14] + tmp[4] * src[15]
-			/*		    */ - tmp[1] * src[13] + tmp[2] * src[14] + tmp[5] * src[15];
+			/**/ - tmp[1] * src[13] + tmp[2] * src[14] + tmp[5] * src[15];
 		__dst[9] = tmp[1] * src[12] + tmp[6] * src[14] + tmp[9] * src[15]
-			/*		    */ - tmp[0] * src[12] + tmp[7] * src[14] + tmp[8] * src[15];
+			/**/ - tmp[0] * src[12] + tmp[7] * src[14] + tmp[8] * src[15];
 		__dst[10] = tmp[2] * src[12] + tmp[7] * src[13] + tmp[10] * src[15]
-			/*		    */ - tmp[3] * src[12] + tmp[6] * src[13] + tmp[11] * src[15];
+			/* */ - tmp[3] * src[12] + tmp[6] * src[13] + tmp[11] * src[15];
 		__dst[11] = tmp[5] * src[12] + tmp[8] * src[13] + tmp[11] * src[14]
-			/*		    */ - tmp[4] * src[12] + tmp[9] * src[13] + tmp[10] * src[14];
+			/* */ - tmp[4] * src[12] + tmp[9] * src[13] + tmp[10] * src[14];
 		__dst[12] = tmp[2] * src[10] + tmp[5] * src[11] + tmp[1] * src[9]
-			/*		    */ - tmp[4] * src[11] + tmp[0] * src[9] + tmp[3] * src[10];
+			/* */ - tmp[4] * src[11] + tmp[0] * src[9] + tmp[3] * src[10];
 		__dst[13] = tmp[8] * src[11] + tmp[0] * src[8] + tmp[7] * src[10]
-			/*		    */ - tmp[6] * src[10] + tmp[9] * src[11] + tmp[1] * src[8];
+			/* */ - tmp[6] * src[10] + tmp[9] * src[11] + tmp[1] * src[8];
 		__dst[14] = tmp[6] * src[9] + tmp[11] * src[11] + tmp[3] * src[8]
-			/*		    */ - tmp[10] * src[11] + tmp[2] * src[8] + tmp[7] * src[9];
+			/* */ - tmp[10] * src[11] + tmp[2] * src[8] + tmp[7] * src[9];
 		__dst[15] = tmp[10] * src[10] + tmp[4] * src[8] + tmp[9] * src[9]
-			/*		    */ - tmp[8] * src[9] + tmp[11] * src[10] + tmp[5] * src[8];
+			/* */ - tmp[8] * src[9] + tmp[11] * src[10] + tmp[5] * src[8];
 		/* calculate determinant */
 		double det = src[0] * __dst[0] + src[1] * __dst[1] + src[2] * __dst[2] + src[3] * __dst[3];
 		if (det == 0.0)
@@ -297,4 +341,4 @@ namespace cgtools {
 		}
 		return s;
 	}
-}
+	}

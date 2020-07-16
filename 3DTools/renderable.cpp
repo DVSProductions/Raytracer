@@ -1,5 +1,5 @@
 #include "renderable.h"
-/*PUT YOUR CLASSES BELOW AND IN THE DESCRIPTION*/
+/*PUT YOUR CLASSES BELOW AND IN THE SWITCH*/
 #include "Sphere.h"
 #include "Background.h"
 #include "Plane.h"
@@ -14,7 +14,7 @@ namespace DDD {
 		p.load(serialized);
 	}
 	std::string renderable::includeClassID(std::string data, int CID) {
-		return std::to_string(CID) + "!" + data;
+		return std::to_string(CID) + "!" + data + "!";
 	}
 	renderable* renderable::createFromSerialization(std::string data) {
 		const auto s = Serializable::split(data, "!");

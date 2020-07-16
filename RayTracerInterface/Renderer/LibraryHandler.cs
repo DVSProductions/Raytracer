@@ -1,4 +1,5 @@
 ﻿#pragma warning disable IDE1006 // Naming Styles
+using RayTracerInterface.Renderer;
 using System;
 using System.Diagnostics;
 using System.Globalization;
@@ -11,7 +12,7 @@ namespace RayTracerInterface {
 	/// <summary>
 	/// This class contains the basic interface with a renderer DLL
 	/// </summary>
-	public static partial class LibraryHandler {
+	public static class LibraryHandler {
 		public static bool IsLoaded { get; private set; } = false;
 		/// <summary>
 		/// Location of the local dll copy
@@ -24,47 +25,7 @@ namespace RayTracerInterface {
 		[DllImport(dll, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
 		[return: MarshalAs(UnmanagedType.BStr)]
 		private static extern string LibInfo();
-		/// <summary>
-		/// Turns a errorCode into a string
-		/// </summary>
-		/// <param name="errorCode">lodePNG error</param>
-		/// <returns></returns>
-		[DllImport(dll, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
-		[return: MarshalAs(UnmanagedType.BStr)]
-		private static extern string LodeReturnDecode(int errorCode);
-		/// <summary>
-		/// Calls the DLL to receive a output DLL filename
-		/// <para>
-		///		Returns "_" when the given index is out of range
-		/// </para>
-		/// </summary>
-		/// <param name="file">index in filename array</param>
-		/// <returns>filename or "_" on error</returns>
-		[DllImport(dll, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
-		[return: MarshalAs(UnmanagedType.BStr)]
-		private static extern string OutputFile(int file);
-		/// <summary>
-		/// Launches a render Job
-		/// </summary>
-		/// <param name="Option">File to render</param>
-		/// <param name="x">width</param>
-		/// <param name="y">height</param>
-		/// <returns></returns>
-		[DllImport(dll, CallingConvention = CallingConvention.Cdecl)]
-		[return: MarshalAs(UnmanagedType.U1)]
-		private static extern bool render(int Option, int x, int y);
-		/// <summary>
-		/// Returns the number of rendered columns
-		/// </summary>
-		/// <returns></returns>
-		[DllImport(dll, CallingConvention = CallingConvention.Cdecl)]
-		private static extern int status();
-		/// <summary>
-		/// gets the lodePNG return code
-		/// </summary>
-		/// <returns></returns>
-		[DllImport(dll, CallingConvention = CallingConvention.Cdecl)]
-		private static extern int returnValue();
+		public static string libInfo => LibInfo();
 		/// <summary>
 		/// Restarts the application in order to unload the old dll and then load in the new version
 		/// </summary>
@@ -78,8 +39,9 @@ namespace RayTracerInterface {
 		/// </summary>
 		/// <param name="path">Full path to DLL</param>
 		/// <returns></returns>
-		public static Renderer TryLoadLib(string path) {
-			if (IsLoaded) Reboot(path);
+		public static BasicRenderer TryLoadLib(string path) {
+			if (IsLoaded)
+				Reboot(path);
 			try {
 				if (File.Exists(dll)) {
 					for (var n = 0; n < 10; n++) {
@@ -93,15 +55,17 @@ namespace RayTracerInterface {
 					}
 				}
 				File.Copy(path, dll);
-				while (!File.Exists(dll)) Thread.Sleep(50);
+				while (!File.Exists(dll))
+					Thread.Sleep(50);
 				IsLoaded = true;
 				var libStr = LibInfo();
 				try {
 					var libnum = (uint)(double.Parse(libStr, CultureInfo.InvariantCulture) * 10.0);//removes floating point errors
-					return libnum == 10 ? new Renderer(libnum) :
+					return libnum == 10 ? new BasicRenderer(libnum) :
 						libnum == 20 ? new SceneBasedRenderer(libnum) :
-						libnum > 20 && libnum < 30 ? new MaterialRenderer(libnum) : 
-						libnum == 30 ? new TransformableRenderer(libnum):
+						libnum > 20 && libnum < 30 ? new MaterialRenderer(libnum) :
+						libnum == 30 ? new TransformableRenderer(libnum) :
+						libnum > 31 && libnum < 40 ? new GraphableRenderer(libnum):
 						throw new Exception("Unknown Lib");
 				}
 				catch {

@@ -5,7 +5,7 @@
 namespace cgtools {
 	direction::direction(double x, double y, double z) noexcept :vector(x, y, z) {}
 
-	inline direction::operator std::string() const {
+	direction::operator std::string() const {
 		return "(direction[" + std::to_string(x) + ", " + std::to_string(y) + ", " + std::to_string(z) + "])";
 	}
 

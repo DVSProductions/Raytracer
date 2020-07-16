@@ -15,14 +15,12 @@ namespace RayTracerInterface {
 			Contract.Requires(cam != null);
 			return Invariant($"{cam.angle}&{cam.Position.Serialize()}&{cam.Reflections}&");
 		}
-		public static Camera ConvertIDToObject(int TYPEID) {
-			return TYPEID switch
-			{
-				PinholeCamera.TID => new PinholeCamera(),
-				MovablePinholeCamera.TID=>new MovablePinholeCamera(),
-				_ => null,
-			};
-		}
+		public static Camera ConvertIDToObject(int TYPEID) => TYPEID switch
+		{
+			PinholeCamera.TID => new PinholeCamera(),
+			MovablePinholeCamera.TID => new MovablePinholeCamera(),
+			_ => null,
+		};
 		public static string SerializeThis(Camera cam) {
 			Contract.Requires(cam != null);
 			return Invariant($"{cam.TYPEID()}!{cam.Serialize()}!");

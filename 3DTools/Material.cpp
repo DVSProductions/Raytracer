@@ -8,11 +8,17 @@
 #include "Vanta.h"
 #define deserial(Material) case Material::CLASSID: return new Material(s.at(1))
 namespace DDD {
+	uint64_t progressiveEmergencySeed = 0;
 #if useRandfast
-	void AMaterial::initRandom(double min, double max) {
-		dist = randfast(std::mt19937_64(std::random_device()())(), min, max);
+	void AMaterial::initRandom(double min, double max) noexcept{
+		try {
+			dist = randfast(std::mt19937_64(std::random_device()())(), min, max);
+		}
+		catch (...) {
+			dist = randfast(++progressiveEmergencySeed);
+		}
 	}
-	void AMaterial::initRandom(double roughness) {
+	void AMaterial::initRandom(double roughness)noexcept {
 #if useRandfast
 		initRandom(-roughness, roughness);
 #else
@@ -31,7 +37,7 @@ namespace DDD {
 	}
 #endif
 
-	AMaterial::AMaterial(cgtools::Color emi, cgtools::Color alb) : AMaterial() {
+	AMaterial::AMaterial(cgtools::Color emi, cgtools::Color alb)noexcept : AMaterial()  {
 		emission = emi;
 		albedo = alb;
 	}

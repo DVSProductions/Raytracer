@@ -2,6 +2,7 @@
 #include "../Aufgabe7/Aufgabe7.cpp"
 #include "../cgtools/transformStack.h"
 #include "../cgtools/Rotation.h"
+#include "../cgtools/ComplexRotation.h"
 #include "../cgtools/Translation.h"
 #include "../cgtools/Matrix.h"
 #include "MovablePinholeCamera.h"
@@ -17,9 +18,9 @@ public:
 		width = 400;
 		height = 200;
 		cgtools::transformStack ts;
-		ts.add(new cgtools::Translation(point(0, 0, 10)));
-		ts.add(new cgtools::Rotation(1, 10));
-		ts.add(new cgtools::ComplexRotation(cgtools::direction(0, 1, 0), -10));
+		ts.add(std::move(std::make_unique<cgtools::Translation>(point(0, 0, 10))));
+		ts.add(std::move(std::make_unique<cgtools::Rotation>(Axis::x, 10)));
+		ts.add(std::move(std::make_unique<cgtools::ComplexRotation>(cgtools::direction(0, 1, 0), -10)));
 		auto c = new DDD::MovablePinholeCamera(1.5, DDD::Background(cgtools::c_white), 3, ts);
 		cam = (std::shared_ptr<DDD::ACamera>)c;
 		playground->load(scene);
@@ -60,9 +61,9 @@ public:
 		width = 400;
 		height = 200;
 		cgtools::transformStack ts;
-		ts.add(new cgtools::Translation(point(0, 0, 10)));
-		ts.add(new cgtools::Rotation(1, 10));
-		ts.add(new cgtools::ComplexRotation(cgtools::direction(0, 1, 0), -10));
+		ts.add(std::move(std::make_unique<cgtools::Translation>(point(0, 0, 10))));
+		ts.add(std::move(std::make_unique<cgtools::Rotation>(Axis::x, 10)));
+		ts.add(std::move(std::make_unique<cgtools::ComplexRotation>(cgtools::direction(0, 1, 0), -10)));
 		auto c = new DDD::MovablePinholeCamera(1.5, DDD::Background(cgtools::c_white), 3, ts);
 		cam = (std::shared_ptr<DDD::ACamera>)c;
 		playground->load(Scene2);

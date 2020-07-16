@@ -8,8 +8,8 @@ namespace RayTracerInterface {
 	/// Interaction logic for Abgabe.xaml
 	/// </summary>
 	public partial class Abgabe : Page, IRenderPage {
-		readonly LibraryHandler.Renderer lib;
-		public Abgabe(LibraryHandler.Renderer rend, int width, int height) {
+		readonly Renderer.BasicRenderer lib;
+		public Abgabe(Renderer.BasicRenderer rend, int width, int height) {
 			lib = rend;
 			InitializeComponent();
 			Render(width, height);
@@ -22,7 +22,7 @@ namespace RayTracerInterface {
 		async void Render(int w, int h) {
 			var target = System.IO.Path.GetFullPath("..\\..\\..\\doc\\");
 			if (!Directory.Exists(target)) Directory.CreateDirectory(target);
-			for (int n = 0; n < lib.OutputFiles.Count; n++) {
+			for (var n = 0; n < lib.OutputFiles.Count; n++) {
 				lib.Render(n, w, h);
 				tbConsole.Text += $"Rendering {lib.OutputFiles[n]}...\n";
 				while (w != lib.Status)

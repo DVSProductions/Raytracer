@@ -3,9 +3,11 @@
 #include <memory>
 #include "Scene.h"
 #include "ACamera.h"
+#include "GameCamera.h"
 #include "../3DDLL/3DInfo.h"
-extern std::shared_ptr <DDD::Scene> playground;//=std::shared_ptr<DDD::Scene>();
-extern std::shared_ptr <DDD::ACamera> cam; //= std::shared_ptr<DDD::ACamera>();s
+extern std::shared_ptr <DDD::Scene> playground;
+extern std::shared_ptr <DDD::ACamera> cam; 
+extern std::shared_ptr <DDD::GameCamera> gameCam;
 namespace Raytracer {
 	/// <summary>
 	/// Generates the colors for every pixel and updates it's progress
@@ -21,11 +23,17 @@ namespace Raytracer {
 	/// </summary>
 	/// <param name="filename">output filename</param>
 	void rendercycle(std::string filename);
+	void TurboRenderLoop(uint_fast32_t offset, uint_fast32_t total, std::shared_ptr<cgtools::Renderer> target);
+	void turboRendercycle(double gamma);
+	void prepareTurboRender(int FSAA, int threads);
+	void turboRender(int x, int y, double gamma);
 	/// <summary>
 	/// Launches the multithread worker
 	/// </summary>
 	/// <param name="rend">Renderer to use</param>
 	void RenderWorker(std::string filename);
+	void BlastImage(uint8_t** target);
+	void BlastImage(void* target);
 	void setsampleQuality(int samples = 10);
 	void setPreviewThreadCount() noexcept;
 	void setFullThreadCount() noexcept;

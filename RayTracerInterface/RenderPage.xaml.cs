@@ -16,7 +16,7 @@ namespace RayTracerInterface {
 		/// </summary>
 		public string Ofile { get; set; }
 		public Action OnBack { get; set; }
-		readonly LibraryHandler.Renderer renderer;
+		readonly Renderer.BasicRenderer renderer;
 		int s = 0;
 		Stopwatch sw;
 		void updateBlur() {
@@ -29,7 +29,8 @@ namespace RayTracerInterface {
 				RenderingBias = RenderingBias.Quality
 			};
 		}
-		public RenderPage(LibraryHandler.Renderer rend, int outputIndex, int width) {
+		public RenderPage(Renderer.BasicRenderer rend, int outputIndex, int width) {
+			sw = Stopwatch.StartNew();
 			Contract.Requires(rend != null);
 			renderer = rend;
 			InitializeComponent();
@@ -38,7 +39,7 @@ namespace RayTracerInterface {
 			updateBlur();
 			if (outputIndex != -1)
 				Ofile = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + "\\" + renderer.OutputFiles[outputIndex];
-			if (renderer is LibraryHandler.MaterialRenderer r && r.CanAbort)
+			if (renderer is Renderer.MaterialRenderer r && r.CanAbort)
 				btAbort.Visibility = Visibility.Visible;
 			Wait();
 			SizeChanged += (_, __) => updateBlur();
@@ -62,8 +63,7 @@ namespace RayTracerInterface {
 		/// This functions reads the states reported by the DLL in order to display a graph on the render progress.
 		/// After the image has been rendered successfully it will read the image from disk and show it in <see cref="iResults"/></para>
 		/// </summary>
-		async void Wait() {
-			sw = Stopwatch.StartNew();
+		async void Wait() {			
 			while (pbStatus.Maximum != pbStatus.Value) {				
 				pbStatus.Value = s = renderer.Status;
 				await Task.Delay(33);
@@ -98,7 +98,7 @@ namespace RayTracerInterface {
 		/// </summary>
 		private void BtExport_Click(object sender, RoutedEventArgs e) => _ = Process.Start("explorer", $"/select,\"{Ofile}\"");
 		private void btAbort_Click(object sender, RoutedEventArgs e) {
-			if (renderer is LibraryHandler.MaterialRenderer mr && mr.CanAbort) {
+			if (renderer is Renderer.MaterialRenderer mr && mr.CanAbort) {
 				mr.AbortRender();
 				OnBack();
 			}

@@ -3,7 +3,7 @@ namespace cgtools {
 	Translation::Translation(std::string str):offset(direction(0,0,0)) {
 		load(str);
 	}
-	Translation::Translation(vector offset):offset(offset) {}
+	Translation::Translation(vector offset)noexcept :offset(offset) {}
 	matrix Translation::operator()()const noexcept {
 		return matrix::createTranslation(offset);
 	}
@@ -15,5 +15,8 @@ namespace cgtools {
 	}
 	size_t Translation::size() const {
 		return sizeof(Translation);
+	}
+	vector Translation::getOffset() const noexcept{
+		return offset;
 	}
 }

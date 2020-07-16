@@ -14,9 +14,9 @@ namespace DDD {
 		double angle;
 		ACamera(const double& angle) noexcept;
 		ACamera(const cgtools::point& pos, const double& angle) noexcept;
-		~ACamera()noexcept;
 		static std::string includeClassID(std::string data, int CID);
 	public:
+		~ACamera()noexcept;
 		void setScene(std::shared_ptr<DDD::Scene> s)noexcept;
 		void move(const cgtools::point& newPos) noexcept;
 		void setAngle(const double& newAngle) noexcept;

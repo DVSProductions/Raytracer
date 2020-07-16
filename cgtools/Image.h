@@ -38,8 +38,12 @@ namespace cgtools {
 		/// <param name="filename"></param>
 		/// <returns>lodepng response code</returns>
 		unsigned int write(std::string filename);
+		void blastGameImage(void* data);
+		void blastGameImage(uint8_t** data);
 		void dump(std::string dumpName);
 		size_t loadFromDump(std::string dumpNampe);
+		size_t getX()const noexcept;
+		size_t getY()const noexcept;
 	};
 
 }

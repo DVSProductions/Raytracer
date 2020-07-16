@@ -67,6 +67,9 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)CacheCow.cpp">
       <Filter>Util</Filter>
     </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)GameCamera.cpp">
+      <Filter>Camera</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="$(MSBuildThisFileDirectory)ACamera.h">
@@ -137,6 +140,9 @@
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)CacheCow.h">
       <Filter>Util</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)GameCamera.h">
+      <Filter>Camera</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

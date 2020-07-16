@@ -1,7 +1,9 @@
 #include "Scaling.h"
 namespace cgtools {
-	Scaling::Scaling(std::string str) :factors(point(0,0,0)){}
-	Scaling::Scaling(vector factors):factors(factors) {}
+	Scaling::Scaling(std::string str) :factors(point(0,0,0)){
+		load(str);
+	}
+	Scaling::Scaling(vector factors)noexcept :factors(factors) {}
 	matrix Scaling::operator()() const noexcept {
 		return matrix::createScaler(this->factors);
 	}

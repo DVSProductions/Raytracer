@@ -13,3 +13,6 @@ csharp_style_expression_bodied_properties = true:warning
 dotnet_diagnostic.CA2007.severity = none
 # CA1034: Geschachtelte Typen dürfen nicht sichtbar sein
 dotnet_diagnostic.CA1034.severity = none
+
+# IDE0011: Geschweifte Klammern hinzufügen
+csharp_prefer_braces = false:warning

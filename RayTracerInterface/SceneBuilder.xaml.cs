@@ -17,15 +17,15 @@ namespace RayTracerInterface {
 		/// </summary>
 		double ratio = 16.0 / 9.0;
 		readonly Action<IRenderPage> RenderAction;
-		readonly LibraryHandler.SceneBasedRenderer sbr;
+		readonly Renderer.SceneBasedRenderer sbr;
 		Camera cam;
 		static readonly SolidColorBrush white = new SolidColorBrush(Colors.White);
 		readonly ObservableCollection<Renderable> Shapes;
 		//Label lbshapesContainer => lbshapesContainerContainer.Content as Label;
 		//ListBox Lbshapes => lbshapesContainer.Content as ListBox;
 		//List<Renderable> RenderObjects=new List<Renderable>();		
-		
-		public SceneBuilder(LibraryHandler.SceneBasedRenderer renderer, Action<IRenderPage> moveToRenderer) {
+
+		public SceneBuilder(Renderer.SceneBasedRenderer renderer, Action<IRenderPage> moveToRenderer) {
 			InitializeComponent();
 			Shapes = new ObservableCollection<Renderable>();
 			sbr = renderer;
@@ -34,6 +34,8 @@ namespace RayTracerInterface {
 			Lbshapes.ItemsSource = Shapes;
 			Lbshapes.ItemTemplateSelector = new ShapeTemplateSelector(FindResource("ShapeTemplateDefault") as DataTemplate, FindResource("ShapeTemplateGroup") as DataTemplate);
 			RenderLoop();
+			VisHelper = new UIHelpers.VisualizationHelper(this, sbr);
+			VisHelper.OnChanges += AlertChanges;
 		}
 		private void Lbshapes_SelectionChanged(object _, SelectionChangedEventArgs scea) {
 			spProperties.Children.Clear();
@@ -45,7 +47,7 @@ namespace RayTracerInterface {
 				});
 				return;
 			}
-			AddToSP(spProperties, VisualizeObject(scea.AddedItems[0]));
+			UIHelpers.VisualizationHelper.AddToSP(spProperties, VisHelper.VisualizeObject(scea.AddedItems[0]));
 		}
 		/// <summary>
 		/// Stores aspect ratio or unchecks itself if one of the given values is invalid
@@ -53,7 +55,7 @@ namespace RayTracerInterface {
 		private void CheckBox_Click(object sender, RoutedEventArgs _) {
 			if (sender is CheckBox cb && cb.IsChecked == true) {
 				try {
-					ratio = double.Parse(tbW.Text,CultureInfo.InvariantCulture) / double.Parse(tbH.Text, CultureInfo.InvariantCulture);
+					ratio = double.Parse(tbW.Text, CultureInfo.InvariantCulture) / double.Parse(tbH.Text, CultureInfo.InvariantCulture);
 				}
 				catch {
 					cb.IsChecked = false;
@@ -74,7 +76,7 @@ namespace RayTracerInterface {
 			if (cbLink.IsChecked == true && int.TryParse(tbH.Text, out var i))
 				tbW.Text = ((int)(ratio * i)).ToString();
 		}
-		static T FindParentT<T>(FrameworkElement o) where T : FrameworkElement => o == null ? null : (o is T t ? t : FindParentT<T>((o.Parent ?? VisualTreeHelper.GetParent(o)) as FrameworkElement));
+		public static T FindParentT<T>(FrameworkElement o) where T : FrameworkElement => o == null ? null : (o is T t ? t : FindParentT<T>((o.Parent ?? VisualTreeHelper.GetParent(o)) as FrameworkElement));
 		ListBox FindParentListBox(FrameworkElement source) =>
 			source == null ?
 				null :
@@ -96,7 +98,7 @@ namespace RayTracerInterface {
 			(FindParentListBox(snd).ItemsSource as ObservableCollection<Renderable>).Remove(((snd.Parent as Grid).Children[0] as VisualStorage).Storage as Renderable);
 			AlertChanges();
 		}
-		
+
 		private void SelectCameraClick(object _, RoutedEventArgs __) {
 			var Selector = new CameraSelector(sbr);
 			Selector.Init();
@@ -133,7 +135,7 @@ namespace RayTracerInterface {
 				Load(dlg.FileName);
 		}
 		private void BtFullRender_Click(object _, RoutedEventArgs __) {
-			if (int.TryParse(tbH.Text, out var h) && int.TryParse(tbW.Text, out var w) && int.TryParse(tbSX.Text, out int FSAA)) {
+			if (int.TryParse(tbH.Text, out var h) && int.TryParse(tbW.Text, out var w) && int.TryParse(tbSX.Text, out var FSAA)) {
 				var dlg = new Microsoft.Win32.SaveFileDialog {
 					DefaultExt = "*.png;",
 					CheckPathExists = true,
@@ -143,14 +145,7 @@ namespace RayTracerInterface {
 					Filter = "HQ Rendered Image *.png|*.png"
 				};
 				if (dlg.ShowDialog() == true) {
-					if (rendering) {
-						if (sbr is LibraryHandler.MaterialRenderer mathand && mathand.CanAbort) {
-							mathand.AbortRender();
-							aborted = true;
-						}
-						else
-							while (rendering) Task.Delay(100).Wait();
-					}
+					WaitForOrAbortRender();
 					sbr.StartSuperRender(w, h, FSAA, dlg.FileName);
 					RenderAction(new RenderPage(sbr, -1, w) { Ofile = dlg.FileName });
 				}
@@ -159,7 +154,25 @@ namespace RayTracerInterface {
 				MessageBox.Show("A image dimension field is invalid!", "Invalid Field", MessageBoxButton.OK, MessageBoxImage.Error);
 			}
 		}
-		private void CS_Click(object _, RoutedEventArgs __) => Clipboard.SetText(GetSceneString().Replace(',', '.'));
-		private void CC_Click(object _, RoutedEventArgs __) => Clipboard.SetText(Camera.SerializeThis(cam).Replace(',', '.'));
+
+		private void WaitForOrAbortRender() {
+			if (rendering) {
+				if (sbr is Renderer.MaterialRenderer matRend && matRend.CanAbort) {
+					matRend.AbortRender();
+					aborted = true;
+				}
+				else
+					while (rendering)
+						Task.Delay(100).Wait();
+			}
+		}
+
+		private void CS_Click(object _, RoutedEventArgs __) => Clipboard.SetText(GetSceneString());
+		private void CC_Click(object _, RoutedEventArgs __) => Clipboard.SetText(Camera.SerializeThis(cam));
+
+		private void btPlay_Click(object sender, RoutedEventArgs e) {
+			WaitForOrAbortRender();
+			new GameView(sbr as Renderer.TransformableRenderer, GetSceneString(), cam).ShowDialog();
+		}
 	}
 }

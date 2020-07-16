@@ -9,8 +9,8 @@ namespace DDD {
 		friend class renderable;
 		friend class PinholeCamera;
 		friend class MovablePinholeCamera;
-		Background(std::string serialized);
 	public:
+		Background(std::string serialized);
 		static const int CLASSID = -1;
 		Background(cgtools::Color color);
 		Hit intersect(Ray r)const noexcept override;

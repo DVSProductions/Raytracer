@@ -10,7 +10,7 @@ namespace DDD {
 		static double getSchlick(cgtools::direction d, cgtools::direction n, double n1, double n2)noexcept;
 	public:
 		Glass(cgtools::Color Emi, cgtools::Color Albedo, double refractionIndex) noexcept;
-		cgtools::direction getScatteredDirection(Hit origin, Ray originalRay);
+		cgtools::direction getScatteredDirection(Hit origin, Ray originalRay) noexcept;
 		Ray scatteredRay(Hit origin, Ray originalRay)override;
 		std::string serialize()const override;
 		void load(std::string serialized) override;

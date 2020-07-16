@@ -1,20 +1,26 @@
 ﻿using System.ComponentModel;
 using System.Diagnostics.Contracts;
+using System.Xml.Serialization;
+
 namespace RayTracerInterface {
+	[XmlInclude(typeof(Sphere))]
+	[XmlInclude(typeof(Plane))]
+	[XmlInclude(typeof(Group))]
+	[XmlInclude(typeof(Pipe))]
+	[XmlInclude(typeof(Cylinder))]
 	public abstract class Renderable : ISerializable, INotifyPropertyChanged {
+		public abstract bool IsAtomic { get; }
 		private static int ObjectIDCounter = 0;
 		private readonly int ObjectID = ObjectIDCounter++;
-		public static Renderable ConvertIDToObject(int TYPEID) {
-			return TYPEID switch
-			{
-				Sphere.TID => new Sphere(),
-				Plane.TID => new Plane(),
-				Group.TID => new Group(),
-				Pipe.TID=>new Pipe(),
-				Cylinder.TID=>new Cylinder(),
-				_ => null,
-			};
-		}
+		public static Renderable ConvertIDToObject(int TYPEID) => TYPEID switch
+		{
+			Sphere.TID => new Sphere(),
+			Plane.TID => new Plane(),
+			Group.TID => new Group(),
+			Pipe.TID => new Pipe(),
+			Cylinder.TID => new Cylinder(),
+			_ => null,
+		};
 		public abstract int TYPEID();
 		public Vec Position = new Vec(0, 0, -3);
 		public string name;
@@ -24,7 +30,7 @@ namespace RayTracerInterface {
 			Contract.Requires(targetName != null);
 			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(targetName));
 		}
-		protected Renderable() => Name = $"{this.GetType().Name}#{ObjectID}";
+		protected Renderable() => name = $"{GetType().Name}#{ObjectID}";
 		/// <summary>
 		/// use <see cref="Renderable.SerializeThis(Renderable)"/> for actual serialization
 		/// </summary>
@@ -34,6 +40,6 @@ namespace RayTracerInterface {
 			Contract.Requires(target != null);
 			return target.TYPEID() != -1 ? $"{target.TYPEID()}!{target.Serialize()}!" : target.Serialize();
 		}
-		public override string ToString() => Name;
+		public override string ToString() => name;
 	}
 }

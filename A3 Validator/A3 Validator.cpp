@@ -38,7 +38,7 @@ public:
 	TEST_METHOD(A3_2_2) {
 		auto c = A3PinholeCamera(M_PI / 2.0, cgtools::point(0, 0, 0), cgtools::c_black);
 		auto r = c.generateRay(0, 0);
-		Assert::IsTrue(r.dir.reduceAccuracy(4) == direction(-1 / sqrt(3), 1 / sqrt(3), -1 / sqrt(3)).reduceAccuracy(4), StringToWString("Richtung falsch: " + str(r.dir)).c_str());
+		Assert::IsTrue(r.dir.reduceAccuracy(4) == direction(-1.0 / sqrt(3), 1.0 / sqrt(3), -1.0 / sqrt(3)).reduceAccuracy(4), StringToWString("Richtung falsch: " + str(r.dir)).c_str());
 	}
 	TEST_METHOD(A3_2_3) {
 		auto c = A3PinholeCamera(M_PI / 2.0, cgtools::point(0, 0, 0), cgtools::c_black);

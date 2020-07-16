@@ -15,7 +15,7 @@ namespace DDD {
 		makeChildren();
 	}
 	std::string Cylinder::serialize() const {
-		return renderable::includeClassID(std::to_string(radius) + "]" +std::to_string(height) + "]" + material->serialize() + "]" + p.serialize() + "]", CLASSID);
+		return includeClassID(std::to_string(radius) + "]" +std::to_string(height) + "]" + material->serialize() + "]" + p.serialize() + "]", CLASSID);
 	}
 	void Cylinder::load(std::string serialized) {
 		auto ret = Serializable::split(serialized, "]");
@@ -29,8 +29,8 @@ namespace DDD {
 	}
 	renderable* Cylinder::clone() const {
 		const auto ret = new Cylinder(p,radius, height,material);
-		const auto end = objects->end();
-		for (auto it = objects->begin(); it != end; it++)
+		const auto end = objects.end();
+		for (auto it = objects.begin(); it != end; it++)
 			ret->addObject((*it)->clone());
 		return ret;
 	}

@@ -33,7 +33,7 @@ DDD::Hit DDD::Plane::intersect(Ray r) const noexcept {
 }
 
 std::string DDD::Plane::serialize() const {
-	return renderable::includeClassID(std::to_string(r) + "&" + n.serialize() + "&" + Material->serialize() + "&" + p.serialize() + "&", Plane::CLASSID);
+	return includeClassID(std::to_string(r) + "&" + n.serialize() + "&" + Material->serialize() + "&" + p.serialize() + "&", Plane::CLASSID);
 }
 
 void DDD::Plane::load(std::string serialized) {

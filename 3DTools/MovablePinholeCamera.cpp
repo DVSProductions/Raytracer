@@ -9,18 +9,18 @@ namespace DDD {
 	MovablePinholeCamera::MovablePinholeCamera(double angle, Background background, unsigned short reflectionDepth) noexcept : MovablePinholeCamera(angle, background) {
 		this->reflectionDepth = reflectionDepth;
 		try {
-			eStack = std::make_unique<cgtools::Color[]>(reflectionDepth);
-			aStack = std::make_unique<cgtools::Color[]>(reflectionDepth);
+			eStack = std::vector<cgtools::Color>(reflectionDepth);
+			aStack = std::vector<cgtools::Color>(reflectionDepth);
 		}
 		catch (...) {}
 	}
 	MovablePinholeCamera::MovablePinholeCamera(double angle, Background background, unsigned short reflectionDepth, cgtools::transformStack stack) noexcept : MovablePinholeCamera(angle, background, reflectionDepth) {
-		ts = stack;
+		transformation = stack();
 	}
 
 	void MovablePinholeCamera::init() noexcept {
 		PinholeCamera::init();
-		transformation = ts();
+		//transformation = ts();
 		newCenter = transformation * cgtools::point(0, 0, 0);
 	}
 	Ray MovablePinholeCamera::generateRay(double x, double y)noexcept {
@@ -29,46 +29,50 @@ namespace DDD {
 
 	cgtools::Color MovablePinholeCamera::getColor(double x, double y) {
 		auto r = generateRay(x, y);
-		int_fast32_t StackSize = 0;
+		eStack.clear();
+		aStack.clear();
 		cgtools::Color ret = cgtools::c_black;
 		for (uint_fast16_t n = 0; n != reflectionDepth; n++) {
 			//r = r.transform(transformation);
 			const auto h = scene->intersect(r);
+			if (reflectionDepth == 1)return cgtools::Color((1 + h.n.x) / 2, (1 + h.n.y) / 2, (1 + h.n.z) / 2);// h.shade();
 			if (h.hit == false) {
 				ret = this->background.Material->emission;
 				break;
 			}
 			else if (h.material->albedo == cgtools::c_black) {
 				ret = h.material->emission;
-				if (reflectionDepth == 1)return cgtools::Color(h.n.x,h.n.y,h.n.z);// h.shade();
+				if (reflectionDepth == 1)return cgtools::Color(h.n.x, h.n.y, h.n.z);// h.shade();
 				break;
 			}
-			eStack[StackSize] = h.material->emission;
-			aStack[StackSize++] = h.material->albedo;
+			eStack.push_back(h.material->emission);
+			aStack.push_back(h.material->albedo);
 			r = h.material->scatteredRay(h, r);
 		}
-		while (--StackSize != -1)
-			ret = eStack[StackSize] + aStack[StackSize] * ret;
+		for (auto e = eStack.begin(), a = aStack.begin(), end = eStack.end(); e != end; ++e, ++a)
+			ret = (*e + *a) * ret;
 		return ret;
 	}
 
 	std::string MovablePinholeCamera::serialize() const {
-		return ACamera::includeClassID(background.serializeFast() + "[" + ACamera::serialize() + "[" + ts.serialize() + "[", CLASSID);
+		//return ACamera::includeClassID(background.serializeFast() + "[" + ACamera::serialize() + "[" + ts.serialize() + "[", CLASSID);
+		return "";
 	}
 
 	void MovablePinholeCamera::load(std::string serialized) {
 		const auto s = Serializable::split(serialized, "[");
 		PinholeCamera::load(serialized);
-		ts.load(s.at(2));
+		transformation = cgtools::transformStack(s.at(2))();
 		init();
 	}
 
 	size_t MovablePinholeCamera::size() const {
-		return sizeof(MovablePinholeCamera) + ACamera::size() - sizeof(ACamera) + ts.size();
+		return sizeof(MovablePinholeCamera) + ACamera::size() - sizeof(ACamera) ;
 	}
 	std::shared_ptr <cgtools::Renderer > MovablePinholeCamera::clone() {
-		auto ret = std::make_shared<MovablePinholeCamera>(angle, background, reflectionDepth, ts.clone());
+		auto ret = std::make_shared<MovablePinholeCamera>(angle, background, reflectionDepth);
 		ret->setScene(this->scene);
+		ret->transformation = transformation;
 		ret->init();
 		return ret;
 	}

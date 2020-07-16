@@ -8,9 +8,9 @@ namespace RayTracerInterface {
 #pragma warning disable CA1051 // Sichtbare Instanzfelder nicht deklarieren
 		public Renderable result = null;
 		protected readonly List<string> shapes = new List<string>();
-		protected LibraryHandler.SceneBasedRenderer sbr;
+		protected Renderer.SceneBasedRenderer sbr;
 #pragma warning restore CA1051 // Sichtbare Instanzfelder nicht deklarieren
-		public ShapeSelector(LibraryHandler.SceneBasedRenderer sbr) {
+		public ShapeSelector(Renderer.SceneBasedRenderer sbr) {
 			this.WindowStartupLocation = WindowStartupLocation.CenterOwner;
 			App.MakeMeDarkModal(this);
 			this.sbr = sbr;

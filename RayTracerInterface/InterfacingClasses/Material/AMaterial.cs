@@ -13,18 +13,16 @@ namespace RayTracerInterface {
 		private readonly int ObjectID = ObjectIDCounter++;
 		public abstract int TYPEID();
 		public Color Emission = new Color(0, 0, 0);
-		public static AMaterial ConvertIDToObject(int TYPEID) {
-			return TYPEID switch
-			{
-				Vanta.TID => new Vanta(),
-				Mirror.TID => new Mirror(),
-				Chalk.TID => new Chalk(),
-				LightSource.TID => new LightSource(),
-				Metal.TID => new Metal(),
-				Glass.TID => new Glass(),
-				_ => null,
-			};
-		}
+		public static AMaterial ConvertIDToObject(int TYPEID) => TYPEID switch
+		{
+			Vanta.TID => new Vanta(),
+			Mirror.TID => new Mirror(),
+			Chalk.TID => new Chalk(),
+			LightSource.TID => new LightSource(),
+			Metal.TID => new Metal(),
+			Glass.TID => new Glass(),
+			_ => null,
+		};
 		public abstract string Serialize();
 		public static string SerializeThis(AMaterial mat) {
 			Contract.Requires(mat != null);

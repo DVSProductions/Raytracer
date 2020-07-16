@@ -1,6 +1,6 @@
 #include "point.h"
 namespace cgtools {
-	inline point::operator std::string() const {
+	point::operator std::string() const {
 		return "(point[" + std::to_string(x) + ", " + std::to_string(y) + ", " + std::to_string(z) + "])";
 	}
 	point point::operator-() noexcept {

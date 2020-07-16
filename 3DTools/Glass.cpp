@@ -22,7 +22,7 @@ namespace DDD {
 		this->refractionIndex = refractionIndex;
 		initRandom(0, 1);
 	}
-	cgtools::direction Glass::getScatteredDirection(Hit origin, Ray originalRay) {
+	cgtools::direction Glass::getScatteredDirection(Hit origin, Ray originalRay) noexcept{
 		cgtools::direction localn = origin.n;
 		double n1 = 1;
 		double n2 = this->refractionIndex;

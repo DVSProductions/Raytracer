@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup Label="Globals">
+    <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <HasSharedItems>true</HasSharedItems>
+    <ItemsProjectGuid>{9e5fa70e-1edf-445e-9663-64c9d4338bba}</ItemsProjectGuid>
+  </PropertyGroup>
+  <ItemDefinitionGroup>
+    <ClCompile>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories);$(MSBuildThisFileDirectory)</AdditionalIncludeDirectories>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ProjectCapability Include="SourceItemsFromImports" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="$(MSBuildThisFileDirectory)GraphRoot.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Repeater.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)TransformElement.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Dice.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)generator.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)DLLGraph.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)graphElement.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)ShapeElement.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="$(MSBuildThisFileDirectory)GraphRoot.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Repeater.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)TransformElement.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Dice.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)generator.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)DLLGraph.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)graphElement.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)ShapeElement.h" />
+  </ItemGroup>
+</Project>

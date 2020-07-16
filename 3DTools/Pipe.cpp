@@ -3,7 +3,7 @@ namespace DDD {
 	Pipe::Pipe(std::string serialized):renderable(cgtools::point(0,0,0)) {
 		load(serialized);
 	}
-	Pipe::Pipe(cgtools::point position, double radius, double height, std::shared_ptr<AMaterial> mat) :renderable(position), radius(radius), rsq(radius* radius),height(height) {
+	Pipe::Pipe(cgtools::point position, double radius, double height, std::shared_ptr<AMaterial> mat) noexcept :renderable(position), radius(radius), rsq(radius* radius),height(height) {
 		material = mat;
 	}
 
@@ -58,12 +58,12 @@ namespace DDD {
 			return Hit();
 		const auto intersection = r.getPoint(t);
 		return (intersection.y > (p.y - height / 2) && intersection.y < ((p.y + height / 2))) ?
-			Hit(t, intersection, cgtools::direction(intersection.x - p.x, 0, intersection.z - p.z), material) :
+			Hit(t, intersection, ~cgtools::direction(intersection.x - p.x, 0, intersection.z - p.z), material) :
 			Hit();
 	}
 
 	std::string Pipe::serialize() const {
-		return renderable::includeClassID(std::to_string(radius) + "&" + std::to_string(height) + "&" + material->serialize() + "&" + p.serialize() + "&", CLASSID);
+		return includeClassID(std::to_string(radius) + "&" + std::to_string(height) + "&" + material->serialize() + "&" + p.serialize() + "&", CLASSID);
 	}
 
 	void Pipe::load(std::string serialized) {

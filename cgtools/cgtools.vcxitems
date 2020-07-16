@@ -14,12 +14,14 @@
     <ProjectCapability Include="SourceItemsFromImports" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Anybase.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)ATransformation.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)cgSampling.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)cgtools.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Color.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)ComplexRotation.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)direction.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)ImageTexture.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)ISerializable.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Matrix.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)point.h" />
@@ -35,12 +37,14 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)vector.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Anybase.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)ATransformation.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)cgSampling.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Color.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)ComplexRotation.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)direction.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Image.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)ImageTexture.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)ImageWriter.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)ISerializable.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)lodepng.cpp" />

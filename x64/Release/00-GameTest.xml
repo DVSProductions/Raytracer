@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<SaveContainer xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <shapes />
+  <camera xsi:type="MovablePinholeCamera">
+    <angle>1.5707963267948966</angle>
+    <Position>
+      <x>0</x>
+      <y>0</y>
+      <z>0</z>
+    </Position>
+    <Reflections>2</Reflections>
+    <Background>
+      <Color>
+        <r>1</r>
+        <g>1</g>
+        <b>1</b>
+      </Color>
+    </Background>
+    <Transformations />
+  </camera>
+</SaveContainer>

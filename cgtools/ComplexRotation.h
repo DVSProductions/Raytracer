@@ -7,8 +7,8 @@ namespace cgtools {
 		const static int CLASSID = 3;
 		direction caxis;
 		double angle;
-		ComplexRotation(std::string str);
 	public:
+		ComplexRotation(std::string str);
 		ComplexRotation(direction axis, double angle) noexcept;
 		matrix operator()()const noexcept override;
 		std::string serialize()const override;

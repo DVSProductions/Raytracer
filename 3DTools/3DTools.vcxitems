@@ -19,6 +19,7 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)CacheCow.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Chalk.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Cylinder.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)GameCamera.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Glass.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Group.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Hit.cpp" />
@@ -43,6 +44,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)CacheCow.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Chalk.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Cylinder.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)GameCamera.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Glass.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Group.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Hit.h" />

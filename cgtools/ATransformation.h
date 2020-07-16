@@ -7,6 +7,6 @@ namespace cgtools {
 		static std::string includeClassID(std::string data, int CID);
 	public:
 		virtual matrix operator()() const noexcept = 0 ;
-		static ATransformation* createFromSerialization(std::string data);
+		static std::unique_ptr<ATransformation> createFromSerialization(std::string data);
 	};
 }

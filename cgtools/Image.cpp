@@ -50,4 +50,23 @@ namespace cgtools {
 		in.close();
 		return n;
 	}
+	size_t Image::getX() const noexcept {
+		return sizeX;
+	}
+	size_t Image::getY() const noexcept {
+		return sizeY;
+	}
+	void Image::blastGameImage(void* data) {
+		if (data == NULL)return;
+		const size_t max = sizeX * sizeY * 4ul;
+		const auto src = buffer.get();
+		uint8_t* ret = (uint8_t*)data;
+		for (size_t source = 0, target = 0; source < max; source++) {
+			if ((source + 1) % 4 != 0)
+				ret[target++] = src[source];
+		}
+	}
+	void Image::blastGameImage(uint8_t** data) {
+		*data = buffer.get();
+	}
 }
