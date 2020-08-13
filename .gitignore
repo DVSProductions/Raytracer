@@ -228,6 +228,8 @@ ClientBin/
 ~$*
 *~
 *.dbmdl
+*.png
+*.jpg
 *.dbproj.schemaview
 *.jfm
 *.pfx
