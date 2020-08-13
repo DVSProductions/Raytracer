@@ -50,7 +50,7 @@ namespace DDD {
 			r = h.material->scatteredRay(h, r);
 		}
 		for (auto e = eStack.begin(), a = aStack.begin(), end = eStack.end(); e != end; ++e, ++a)
-			ret = (*e + *a) * ret;
+			ret = *e + *a * ret;
 		return ret;
 	}
 
@@ -67,11 +67,12 @@ namespace DDD {
 	}
 
 	size_t MovablePinholeCamera::size() const {
-		return sizeof(MovablePinholeCamera) + ACamera::size() - sizeof(ACamera) ;
+		return sizeof(MovablePinholeCamera) + ACamera::size() - sizeof(ACamera);
 	}
 	std::shared_ptr <cgtools::Renderer > MovablePinholeCamera::clone() {
 		auto ret = std::make_shared<MovablePinholeCamera>(angle, background, reflectionDepth);
-		ret->setScene(this->scene);
+		if (this->scene)
+			ret->setScene(this->scene);
 		ret->transformation = transformation;
 		ret->init();
 		return ret;

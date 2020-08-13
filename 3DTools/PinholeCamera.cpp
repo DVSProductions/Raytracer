@@ -34,8 +34,6 @@ namespace DDD {
 	}
 	cgtools::Color PinholeCamera::getColor(double x, double y) {
 		auto r = generateRay(x, y);
-		//const auto h = scene->intersect(r);
-		//int_fast32_t StackSize = 0;
 		eStack.clear();
 		aStack.clear();
 		cgtools::Color ret = cgtools::c_black;
@@ -55,7 +53,7 @@ namespace DDD {
 			r = h.material->scatteredRay(h, r);
 		}
 		for (auto e = eStack.begin(), a = aStack.begin(), end = eStack.end(); e != end; ++e, ++a)
-			ret = (*e + *a) * ret;
+			ret = *e + *a * ret;
 		return ret;
 		//return h.hit ? h.shade() : background.intersect(r).c;
 	}
@@ -68,10 +66,6 @@ namespace DDD {
 		const auto s = Serializable::split(serialized, "[");
 		background.load(s.at(0));
 		ACamera::load(s.at(1));
-		//if (eStack != nullptr) eStack.reset();
-		//if (aStack != nullptr) aStack.reset();
-		//eStack = std::make_unique<cgtools::Color[]>(reflectionDepth);
-		//aStack = std::make_unique<cgtools::Color[]>(reflectionDepth);
 		eStack.clear();
 		eStack.reserve(reflectionDepth);
 		aStack.clear();
@@ -83,7 +77,8 @@ namespace DDD {
 	}
 	std::shared_ptr <cgtools::Renderer > PinholeCamera::clone() {
 		auto ret = std::make_shared<PinholeCamera>(angle, background, reflectionDepth);
-		ret->setScene(this->scene);
+		if (this->scene)
+			ret->setScene(this->scene);
 		return ret;
 	}
 }

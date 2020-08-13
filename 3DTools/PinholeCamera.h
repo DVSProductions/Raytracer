@@ -11,8 +11,8 @@ namespace DDD {
 	protected:
 		double w0_5 = 0, h0_5 = 0, a05tan = 0, zpre = 0;
 		Background background;
-		std::vector<cgtools::Color> eStack;//std::unique_ptr<cgtools::Color[]> eStack;
-		std::vector<cgtools::Color> aStack;//std::unique_ptr<cgtools::Color[]> aStack;
+		std::vector<cgtools::Color> eStack;
+		std::vector<cgtools::Color> aStack;
 		PinholeCamera();
 	public:
 		PinholeCamera(double angle, Background background) noexcept;

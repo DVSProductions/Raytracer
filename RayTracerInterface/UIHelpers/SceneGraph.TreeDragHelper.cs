@@ -93,7 +93,7 @@ namespace RayTracerInterface {
 			newElement = MakeContentSub(snd.Header as string, ge);
 		}
 		protected SolidColorBrush _LightRed = null;
-		protected SolidColorBrush LightRed => _LightRed ?? (_LightRed = (SolidColorBrush)FindResource("LightRed"));
+		protected SolidColorBrush LightRed => _LightRed ??= (SolidColorBrush)FindResource("LightRed");
 		private Grid MakeContentSub(string Header, GraphElement value) {
 			var ret = new Grid() {
 				VerticalAlignment = VerticalAlignment.Stretch,
@@ -255,7 +255,7 @@ namespace RayTracerInterface {
 				return;
 			}
 			foreach (var l in Lines) {
-				if (!(l.StartLabel == fallbackLabel ? l.MoveStart(newParent) : l.StopLabel == fallbackLabel ? l.LinkTo(newParent) : true))
+				if (!(l.StartLabel == fallbackLabel ? l.MoveStart(newParent) : l.StopLabel != fallbackLabel || l.LinkTo(newParent)))
 					throw new StackOverflowException("Previous location was invalidated!");
 			}
 		}
